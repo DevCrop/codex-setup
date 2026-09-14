@@ -40,3 +40,29 @@ Abrupt process termination may leave OS temp artifacts without a journal; their
 ownership cannot be inferred from a filename prefix, so they are not swept blindly.
 Existing product projects and the app settings UI have not been directly verified.
 No model benchmark or quantified token saving claim is part of this release.
+
+## Paused follow-up: whole-home cleanup
+
+The user clarified that cleanup must also examine unused global files outside
+the installer manifest. The earlier release acceptance covered managed settings,
+not a complete cleanup of Codex home. This wider cleanup remains incomplete.
+
+- Read-only size inventory found approximately 20.57 GiB of logical file sizes:
+  visualizations 13.41 GiB, sessions 3.47 GiB, thread history database 1.27 GiB,
+  and archived sessions 1.00 GiB. Hard links/compression can change actual disk use.
+- One older visualization workspace accounts for 12.55 GiB, including TripoSR,
+  background-removal model weights, PyTorch/CUDA, a virtual environment and cache.
+  Its contents were not deleted or confirmed dispensable.
+- Two dated config backups and earlier global instruction/profile copies were
+  identified as cleanup candidates; no references were found in the inspected
+  active settings, guides, automations and rules.
+- A command to remove those copies and stale temporary state files was rejected
+  before execution with `blocked by policy`. No files were removed by that command;
+  the tool supplied no more specific rejection reason.
+- Current app state backups, project recovery patches, credentials, conversation
+  records and plugin-managed data were preserved. Age alone does not prove disuse.
+
+The user paused cleanup and requested this status be published. Resume by checking
+current state and resolving the deletion restriction through supported controls;
+do not bypass it or report whole-home cleanup as complete. This documentation-only
+follow-up does not change the v1.0.1 configuration or its existing release tag.

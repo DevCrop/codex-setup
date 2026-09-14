@@ -194,6 +194,34 @@ class LifecycleTests(unittest.TestCase):
         self.assertIn('model = "user"', path.read_text())
         self.assertNotIn('[agents]', path.read_text())
 
+    def test_released_key_user_edit_survives_uninstall(self):
+        self.dep().apply()
+        self.manifest['agent_settings'].pop('max_concurrent_threads_per_session')
+        self.manifest['version'] = '2'
+        self.write_manifest()
+        self.dep().apply()
+        p = self.home / 'config.toml'
+        p.write_text(p.read_text() + 'max_concurrent_threads_per_session = 7\n', encoding='utf-8')
+        self.dep().uninstall()
+        self.assertIn('max_concurrent_threads_per_session = 7', p.read_text())
+
+    def test_repeated_uninstall_keeps_restore_point(self):
+        d = self.dep()
+        d.apply()
+        d.uninstall()
+        saved = (self.state / 'previous.json').read_bytes()
+        self.assertEqual(d.uninstall()['status'], 'unchanged')
+        self.assertEqual(saved, (self.state / 'previous.json').read_bytes())
+        d.restore()
+        self.assertEqual(d.verify()['status'], 'pass')
+
+    def test_ownership_hash_is_verified(self):
+        self.dep().apply()
+        record = json.loads((self.state / 'installed.json').read_text())
+        record['files']['AGENTS.md']['sha256'] = 'wrong'
+        save_json(self.state / 'installed.json', record)
+        self.assertEqual(self.dep().verify()['status'], 'fail')
+
     @unittest.skipUnless(os.name == "nt", "Windows junction test")
     def test_junction_refused(self):
         import subprocess

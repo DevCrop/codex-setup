@@ -8,7 +8,8 @@ as prompt context.
 
 The official skill installer bootstrapped upstream packages. Subsequent managed
 updates use setup.py so removal and rollback have the same ownership contract.
-The standalone install_skills helper remains an optional bootstrap/hash checker.
+The former standalone bootstrap helper was removed in v1.0.1. It duplicated the
+manifest install path and did not participate in transactional updates/removal.
 
 Two specifically fingerprinted historical config backup files were retired from
 the active Codex directory. Their contents remain only in the local prior restore

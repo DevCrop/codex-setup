@@ -14,7 +14,6 @@ Run these commands from the checkout, or invoke the script by absolute path:
 python -B scripts/setup.py plan
 python -B scripts/setup.py apply
 python -B scripts/setup.py verify
-python -B scripts/install_skills.py --check
 ```
 
 For reviewed pre-existing personal instructions/profiles, inspect `plan --adopt-existing`
@@ -24,7 +23,7 @@ local deployment state. Defaults use supported per-user locations, not drive let
 The complete reviewed upstream skill packages are bundled in `vendor/` and managed
 by the same manifest for offline installation, removal, and rollback. They retain
 upstream instructions unchanged; the global working agreement limits applicability.
-The optional skill helper performs original upstream bootstrap/verification only.
+`setup.py` is the sole install/update/verify/remove entry point, including skills.
 
 ## Lifecycle
 
@@ -57,7 +56,7 @@ in that project's own repository and describe inspected source.
 ## Checks and maintenance
 
 ```text
-python -B -m unittest discover -s scripts -p test_setup.py -v
+python -B -m unittest discover -s scripts -p 'test_*.py' -v
 python -B scripts/validate_repo.py
 python -B scripts/index_docs.py
 ```

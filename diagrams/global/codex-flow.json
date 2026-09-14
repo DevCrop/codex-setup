@@ -2,7 +2,7 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "TRACE Setup v1 · 글로벌 운영 흐름",
+    "title": "TRACE Setup v1.0.1 · 글로벌 운영 흐름",
     "quality_profile": "showcase"
   },
   "lanes": [
@@ -12,7 +12,7 @@
     },
     {
       "id": "delegate",
-      "label": "선택적 위임"
+      "label": "위임·예외 처리"
     },
     {
       "id": "maintain",
@@ -54,7 +54,7 @@
     {
       "id": "verify",
       "lane": "work",
-      "col": 4,
+      "col": 3,
       "type": "security",
       "label": "통합·검증",
       "sublabel": "수행한 검사만 보고"
@@ -70,18 +70,10 @@
     {
       "id": "child",
       "lane": "delegate",
-      "col": 2,
+      "col": 3,
       "type": "backend",
       "label": "독립 작업 위임",
       "sublabel": "부모 상속 · 최대 2개"
-    },
-    {
-      "id": "findings",
-      "lane": "delegate",
-      "col": 4,
-      "type": "messagebus",
-      "label": "결과·근거 반환",
-      "sublabel": "부모가 통합 책임"
     },
     {
       "id": "watch",
@@ -123,6 +115,14 @@
       "label": "글로벌 flow 갱신",
       "sublabel": "Archify · 대상 버전",
       "width": 150
+    },
+    {
+      "id": "rollback",
+      "lane": "delegate",
+      "col": 5,
+      "type": "security",
+      "label": "복원·충돌 보고",
+      "sublabel": "사용자 수정 보존"
     }
   ],
   "edges": [
@@ -158,19 +158,6 @@
       "label": "위임 가치 있음"
     },
     {
-      "id": "child-findings",
-      "to": "findings",
-      "role": "branch",
-      "from": "child"
-    },
-    {
-      "id": "findings-verify",
-      "to": "verify",
-      "role": "return",
-      "from": "findings",
-      "label": "검토"
-    },
-    {
       "id": "watch-candidate",
       "to": "candidate",
       "role": "main",
@@ -196,6 +183,20 @@
       "role": "main",
       "from": "apply",
       "label": "구조 변경"
+    },
+    {
+      "id": "child-verify",
+      "from": "child",
+      "to": "verify",
+      "role": "return",
+      "label": "근거 반환"
+    },
+    {
+      "id": "apply-rollback",
+      "from": "apply",
+      "to": "rollback",
+      "role": "branch",
+      "label": "검증 실패"
     }
   ],
   "cards": [
@@ -211,8 +212,8 @@
       "dot": "emerald",
       "title": "적용과 복원",
       "items": [
-        "관리 파일만 교체·제거하고 충돌 보존",
-        "검증 실패 시 이전 상태로 복원"
+        "정확한 manifest 소유 파일만 설치·제거",
+        "복원도 충돌 시 중단하고 사용자 수정 보존"
       ]
     }
   ]

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "diagram_type": "workflow",
-  "specification_sha256": "a782b3910043c96c7e7eee94a3e510b3e85bdf66998250c000b75ac026a0778b",
-  "artifact_sha256": "b2aff2827e5d866cb031d11383bcc76866f23019c67a4b0ad3405d3a22e9b529",
+  "specification_sha256": "7f03f17f726714b22509ad63c6bb953fc091e02c3a20faeb39e403db28c1c6a9",
+  "artifact_sha256": "0fc692550263962b4bf69016ba2c3926e14d0d5b40b8c083563c6d6b1899201f",
   "validation": {
     "checks_passed": 9,
     "checks_total": 9,
@@ -42,7 +42,7 @@
     "2048x1320 light screenshot",
     "1440x900 dark screenshot"
   ],
-  "correction_rounds": 1,
+  "correction_rounds": 3,
   "language": "Authored content is Korean; fixed viewer UI and html lang fall back to English.",
   "diagram_scope": "Approved global operating policy, not a runtime trace or project architecture map."
 }

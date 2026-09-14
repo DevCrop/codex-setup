@@ -293,6 +293,8 @@ class Deployment:
             raise ValueError("Interrupted transaction requires recovery")
         wanted = self.desired()
         errors = []
+        if self.record.get("version") != self.manifest["version"]:
+            errors.append("Installed version differs from manifest")
         if set(self.record["files"]) != set(wanted):
             errors.append("Ownership inventory differs from manifest")
         for p, data in wanted.items():
@@ -303,6 +305,8 @@ class Deployment:
                     errors.append(p)
             elif actual != data:
                 errors.append(p)
+            elif self.record["files"].get(p, {}).get("sha256") != digest(data):
+                errors.append("ownership-hash:" + p)
         for item in self.manifest.get("retired", []):
             if safe(self.home, item["target"]).exists():
                 errors.append("retired:" + item["target"])
@@ -312,6 +316,8 @@ class Deployment:
     def uninstall(self):
         if (self.state / "pending.json").exists():
             raise ValueError("Recover pending transaction first")
+        if not self.record["files"]:
+            return {"status": "unchanged", "reason": "No managed installation"}
         targets = {}
         for p, row in self.record["files"].items():
             actual = content(safe(self.home, p))
@@ -325,7 +331,10 @@ class Deployment:
                 if actual == expected:
                     targets[p] = origin_bytes
                 else:
-                    targets[p] = patch_agents(actual, self.record["original_agents"])
+                    # Restore only keys we still own. Released keys may have
+                    # subsequently been edited by the user.
+                    targets[p] = patch_agents(actual, {k: self.record["original_agents"].get(k)
+                                                       for k in self.record["agent_settings"]})
                     origin_parsed = tomllib.loads((origin_bytes or b"").decode("utf-8-sig"))
                     restored = tomllib.loads(targets[p].decode())
                     if "agents" not in origin_parsed and restored.get("agents") == {}:
@@ -341,13 +350,20 @@ class Deployment:
         save_json(self.state / "pending.json", journal)
         try:
             for p, data in targets.items():
+                before = base64.b64decode(journal["files"][p]["before"])
+                if content(safe(self.home, p)) != before:
+                    raise ValueError(f"Concurrent edit detected during uninstall: {p}")
                 self._write(p, data)
+            for p, data in targets.items():
+                if content(safe(self.home, p)) != data:
+                    raise ValueError(f"Uninstall verification failed: {p}")
             save_json(self.state / "installed.json", {"files": {}})
             os.replace(self.state / "pending.json", self.state / "previous.json")
+            self.record = {"files": {}}
         except Exception:
             self.restore("pending.json")
             raise
-        return {"status": "uninstalled", "limit": "Third-party skills use their separate ownership inventory."}
+        return {"status": "uninstalled", "limit": "Removed manifest-owned files, including bundled skills; preserved unmanaged files."}
 
 
 def main():

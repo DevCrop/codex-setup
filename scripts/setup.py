@@ -326,6 +326,12 @@ class Deployment:
                     targets[p] = origin_bytes
                 else:
                     targets[p] = patch_agents(actual, self.record["original_agents"])
+                    origin_parsed = tomllib.loads((origin_bytes or b"").decode("utf-8-sig"))
+                    restored = tomllib.loads(targets[p].decode())
+                    if "agents" not in origin_parsed and restored.get("agents") == {}:
+                        cleaned = re.sub(r"(?m)^\[agents\][ \t]*(?:#.*)?\n(?:[ \t]*\n)*", "", targets[p].decode())
+                        if tomllib.loads(cleaned) == {k: v for k, v in restored.items() if k != "agents"}:
+                            targets[p] = cleaned.encode()
             else:
                 if digest(actual) != row["sha256"]:
                     raise ValueError(f"Modified managed file: {p}")

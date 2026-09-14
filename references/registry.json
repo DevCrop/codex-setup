@@ -887,6 +887,19 @@
         "docs/operations.md"
       ],
       "monitor": true
+    },
+    {
+      "id": "R38",
+      "url": "https://developers.openai.com/blog",
+      "canonical_url": "https://developers.openai.com/blog",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "monitor-only",
+      "reason": "Discover new official posts; index changes require relevance review before policy adoption.",
+      "review_status": "index-only",
+      "body_fetched": false,
+      "snapshot": null,
+      "monitor": true
     }
   ]
 }

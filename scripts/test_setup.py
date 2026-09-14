@@ -186,6 +186,14 @@ class LifecycleTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             patch_agents(raw, self.manifest["agent_settings"])
 
+    def test_uninstall_removes_empty_created_table_preserving_user_model(self):
+        self.dep().apply()
+        path = self.home / "config.toml"
+        path.write_text('model = "user"\n' + path.read_text(), encoding="utf-8")
+        self.dep().uninstall()
+        self.assertIn('model = "user"', path.read_text())
+        self.assertNotIn('[agents]', path.read_text())
+
     @unittest.skipUnless(os.name == "nt", "Windows junction test")
     def test_junction_refused(self):
         import subprocess

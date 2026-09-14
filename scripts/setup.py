@@ -82,6 +82,11 @@ def safe(root, relative):
         raise ValueError(f"Unsafe path spelling: {relative}")
     target = root.joinpath(*p.parts)
     for ancestor in [target, *target.parents]:
+        # macOS ships these filesystem aliases. Permit only their exact system
+        # destinations, not arbitrary user symlinks or linked deployment roots.
+        if sys.platform == "darwin" and str(ancestor) in ("/var", "/tmp", "/etc"):
+            if ancestor.resolve() == Path("/private") / ancestor.name:
+                continue
         if ancestor.is_symlink() or (ancestor.exists() and getattr(ancestor.lstat(), "st_file_attributes", 0) & 0x400):
             raise ValueError(f"Linked path refused: {ancestor}")
     if target.exists() and not target.is_file():

@@ -1,6 +1,7 @@
 """Read-only source monitor; reports candidates without changing managed policy."""
 import argparse
 import concurrent.futures
+import difflib
 import hashlib
 from html.parser import HTMLParser
 import json
@@ -41,12 +42,15 @@ def fetch(item):
             if len(data) > 4_000_000:
                 raise ValueError("Response exceeds monitor limit")
             text = data.decode("utf-8")
+            if url.startswith("https://api.github.com/"):
+                commits = json.loads(text)
+                text = json.dumps({"sha": commits[0]["sha"], "message": commits[0]["commit"]["message"]}, sort_keys=True)
             if "text/html" in response.headers.get("Content-Type", ""):
                 body = Body()
                 body.feed(text)
                 text = " ".join(body.parts)
             normalized = re.sub(r"\s+", " ", text).strip()
-            if len(normalized) < 100:
+            if len(normalized) < 50:
                 raise ValueError("Empty or unexpectedly short body")
             if any(marker in normalized.lower() for marker in ("verify you are human", "just a moment...", "access denied")):
                 raise ValueError("Access challenge instead of document")
@@ -74,6 +78,10 @@ def main():
             if row["status"] == "fetched":
                 old = previous.get(row["id"])
                 row["change"] = "baseline" if not old else "unchanged" if old["sha256"] == row["sha256"] else "candidate"
+                if old and row["change"] == "candidate":
+                    row["diff_excerpt"] = "\n".join(difflib.unified_diff(
+                        old["body"].split(". "), row["body"].split(". "),
+                        fromfile="previous", tofile="current", lineterm=""))[:12000]
                 # State keeps one body per source, not a growing history. Actual
                 # policy updates and upstream version adoption require approval.
                 previous[row["id"]] = {"sha256": row["sha256"], "body": row.pop("body")}

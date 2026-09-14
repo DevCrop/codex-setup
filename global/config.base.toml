@@ -1,0 +1,5 @@
+# Merge managed keys only. Preserve the user's model, auth, MCP and permissions.
+# Local operating limit; not an official cost-optimal value.
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2

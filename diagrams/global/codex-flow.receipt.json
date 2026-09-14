@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "specification_sha256": "a782b3910043c96c7e7eee94a3e510b3e85bdf66998250c000b75ac026a0778b",
+  "artifact_sha256": "b2aff2827e5d866cb031d11383bcc76866f23019c67a4b0ad3405d3a22e9b529",
+  "validation": {
+    "checks_passed": 9,
+    "checks_total": 9,
+    "profile": "showcase",
+    "errors": 0,
+    "warnings": 0
+  },
+  "browser_evidence": "passed",
+  "viewport_containment": [
+    {
+      "width": 1440,
+      "height": 900,
+      "overflow_x": false,
+      "overflow_y": false
+    },
+    {
+      "width": 1600,
+      "height": 1000,
+      "overflow_x": false,
+      "overflow_y": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "overflow_x": false,
+      "overflow_y": false
+    },
+    {
+      "width": 2048,
+      "height": 1320,
+      "overflow_x": false,
+      "overflow_y": false
+    }
+  ],
+  "visual_review": "passed",
+  "visual_review_scope": [
+    "2048x1320 light screenshot",
+    "1440x900 dark screenshot"
+  ],
+  "correction_rounds": 1,
+  "language": "Authored content is Korean; fixed viewer UI and html lang fall back to English.",
+  "diagram_scope": "Approved global operating policy, not a runtime trace or project architecture map."
+}

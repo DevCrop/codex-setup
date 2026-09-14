@@ -1,0 +1,219 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "TRACE Setup v1 · 글로벌 운영 흐름",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "work",
+      "label": "작업 실행"
+    },
+    {
+      "id": "delegate",
+      "label": "선택적 위임"
+    },
+    {
+      "id": "maintain",
+      "label": "설정 유지관리"
+    }
+  ],
+  "mainPath": [
+    "request",
+    "context",
+    "execute",
+    "verify",
+    "report"
+  ],
+  "nodes": [
+    {
+      "id": "request",
+      "lane": "work",
+      "col": 0,
+      "type": "external",
+      "label": "사용자 요청",
+      "sublabel": "모델·추론 강도 선택"
+    },
+    {
+      "id": "context",
+      "lane": "work",
+      "col": 1,
+      "type": "database",
+      "label": "관련 문서 확인",
+      "sublabel": "글로벌 + 프로젝트"
+    },
+    {
+      "id": "execute",
+      "lane": "work",
+      "col": 2,
+      "type": "backend",
+      "label": "직접 처리 기본",
+      "sublabel": "Ponytail 적용 범위"
+    },
+    {
+      "id": "verify",
+      "lane": "work",
+      "col": 4,
+      "type": "security",
+      "label": "통합·검증",
+      "sublabel": "수행한 검사만 보고"
+    },
+    {
+      "id": "report",
+      "lane": "work",
+      "col": 5,
+      "type": "frontend",
+      "label": "결과 전달",
+      "sublabel": "근거와 남은 제약"
+    },
+    {
+      "id": "child",
+      "lane": "delegate",
+      "col": 2,
+      "type": "backend",
+      "label": "독립 작업 위임",
+      "sublabel": "부모 상속 · 최대 2개"
+    },
+    {
+      "id": "findings",
+      "lane": "delegate",
+      "col": 4,
+      "type": "messagebus",
+      "label": "결과·근거 반환",
+      "sublabel": "부모가 통합 책임"
+    },
+    {
+      "id": "watch",
+      "lane": "maintain",
+      "col": 0,
+      "type": "cloud",
+      "label": "주간 변경 감지",
+      "sublabel": "공식 문서·릴리스"
+    },
+    {
+      "id": "candidate",
+      "lane": "maintain",
+      "col": 1,
+      "type": "database",
+      "label": "변경 후보",
+      "sublabel": "출처·영향·검증"
+    },
+    {
+      "id": "approve",
+      "lane": "maintain",
+      "col": 2,
+      "type": "security",
+      "label": "사용자 승인",
+      "sublabel": "적용 범위 확정"
+    },
+    {
+      "id": "apply",
+      "lane": "maintain",
+      "col": 4,
+      "type": "backend",
+      "label": "버전 적용",
+      "sublabel": "설치·제거·검증"
+    },
+    {
+      "id": "flow",
+      "lane": "maintain",
+      "col": 5,
+      "type": "frontend",
+      "label": "글로벌 flow 갱신",
+      "sublabel": "Archify · 대상 버전",
+      "width": 150
+    }
+  ],
+  "edges": [
+    {
+      "id": "request-context",
+      "to": "context",
+      "role": "main",
+      "from": "request"
+    },
+    {
+      "id": "context-execute",
+      "to": "execute",
+      "role": "main",
+      "from": "context"
+    },
+    {
+      "id": "execute-verify",
+      "to": "verify",
+      "role": "main",
+      "from": "execute"
+    },
+    {
+      "id": "verify-report",
+      "to": "report",
+      "role": "main",
+      "from": "verify"
+    },
+    {
+      "id": "execute-child",
+      "to": "child",
+      "role": "branch",
+      "from": "execute",
+      "label": "위임 가치 있음"
+    },
+    {
+      "id": "child-findings",
+      "to": "findings",
+      "role": "branch",
+      "from": "child"
+    },
+    {
+      "id": "findings-verify",
+      "to": "verify",
+      "role": "return",
+      "from": "findings",
+      "label": "검토"
+    },
+    {
+      "id": "watch-candidate",
+      "to": "candidate",
+      "role": "main",
+      "from": "watch",
+      "label": "관련 변경"
+    },
+    {
+      "id": "candidate-approve",
+      "to": "approve",
+      "role": "main",
+      "from": "candidate"
+    },
+    {
+      "id": "approve-apply",
+      "to": "apply",
+      "role": "main",
+      "from": "approve",
+      "label": "승인됨"
+    },
+    {
+      "id": "apply-flow",
+      "to": "flow",
+      "role": "main",
+      "from": "apply",
+      "label": "구조 변경"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "프로젝트와 독립",
+      "items": [
+        "글로벌: 공통 지침과 운영 정책",
+        "프로젝트: 실제 코드·규칙·별도 flow"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "적용과 복원",
+      "items": [
+        "관리 파일만 교체·제거하고 충돌 보존",
+        "검증 실패 시 이전 상태로 복원"
+      ]
+    }
+  ]
+}

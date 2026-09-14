@@ -1,0 +1,92 @@
+"""Read-only source monitor; reports candidates without changing managed policy."""
+import argparse
+import concurrent.futures
+import hashlib
+from html.parser import HTMLParser
+import json
+from pathlib import Path
+import re
+import urllib.request
+from datetime import datetime, timezone
+
+from setup import ROOT, Deployment, read_json, save_json
+
+
+class Body(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.depth = 0
+        self.ignore = 0
+        self.parts = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style", "nav", "footer", "header"):
+            self.ignore += 1
+
+    def handle_endtag(self, tag):
+        if tag in ("script", "style", "nav", "footer", "header"):
+            self.ignore = max(0, self.ignore - 1)
+
+    def handle_data(self, text):
+        if not self.ignore:
+            self.parts.append(text)
+
+
+def fetch(item):
+    url = item["url"]
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "TRACE-Setup-source-monitor/1"})
+        with urllib.request.urlopen(req, timeout=25) as response:
+            data = response.read(4_000_001)
+            if len(data) > 4_000_000:
+                raise ValueError("Response exceeds monitor limit")
+            text = data.decode("utf-8")
+            if "text/html" in response.headers.get("Content-Type", ""):
+                body = Body()
+                body.feed(text)
+                text = " ".join(body.parts)
+            normalized = re.sub(r"\s+", " ", text).strip()
+            if len(normalized) < 100:
+                raise ValueError("Empty or unexpectedly short body")
+            if any(marker in normalized.lower() for marker in ("verify you are human", "just a moment...", "access denied")):
+                raise ValueError("Access challenge instead of document")
+            return {"id": item["id"], "url": url, "status": "fetched",
+                    "sha256": hashlib.sha256(normalized.encode()).hexdigest(),
+                    "body": normalized}
+    except Exception as exc:
+        return {"id": item["id"], "url": url, "status": "error", "error": type(exc).__name__}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--state", type=Path)
+    args = parser.parse_args()
+    state = args.state or Deployment().state
+    registry = read_json(ROOT / "references/registry.json")
+    items = [x for x in registry["sources"] if x.get("monitor")]
+    lock = read_json(ROOT / "versions.lock.json")
+    for s in lock["skills"]:
+        items.append({"id": "upstream-" + s["name"], "url": f'https://api.github.com/repos/{s["repository"]}/commits?per_page=1'})
+    previous = read_json(state / "source-status.json", {})
+    results = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+        for row in pool.map(fetch, items):
+            if row["status"] == "fetched":
+                old = previous.get(row["id"])
+                row["change"] = "baseline" if not old else "unchanged" if old["sha256"] == row["sha256"] else "candidate"
+                # State keeps one body per source, not a growing history. Actual
+                # policy updates and upstream version adoption require approval.
+                previous[row["id"]] = {"sha256": row["sha256"], "body": row.pop("body")}
+            results.append(row)
+    now = datetime.now(timezone.utc).isoformat()
+    report = {"checked_at": now, "results": results,
+              "limit": "Hash change is a review candidate, not a verified semantic or policy change."}
+    save_json(state / "source-status.json", previous)
+    save_json(state / "source-report.json", report)
+    if all(r["status"] == "fetched" for r in results):
+        save_json(state / "source-success.json", {"last_success": now})
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

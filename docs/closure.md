@@ -15,12 +15,21 @@
 
 | Behavior | Authoritative location | Verification |
 |---|---|---|
-| Global work and delegation policy | ../global/AGENTS.md | Fresh CLI prompt rendering; model compliance remains separate |
-| Installed files and retired targets | ../manifest.json | setup.py verify and lifecycle tests |
-| Upstream package versions | ../versions.lock.json | Exact vendored file hashes |
-| Official source decisions | ../references/registry.json | Snapshot hashes and review statuses |
-| Failure/rollback branch | ../diagrams/global/codex-flow.json | Archify showcase plus browser containment |
-| Project adoption | ../templates/project/README.md | Requires selected project's actual source and commands |
+| Global work and delegation policy | [Global agreement](../global/AGENTS.md) | Fresh CLI prompt rendering; model compliance remains separate |
+| Installed files and retired targets | [Manifest](../manifest.json) | setup.py verify and lifecycle tests |
+| Upstream package versions | [Version lock](../versions.lock.json) | Exact vendored file hashes |
+| Official source decisions | [Source registry](../references/registry.json) | Snapshot hashes and review statuses |
+| Failure/rollback branch | [Global flow](../diagrams/global/codex-flow.html) | Archify showcase plus browser containment |
+| Project adoption | [Project template](../templates/project/README.md) | Requires selected project's actual source and commands |
+
+## Active installation audit
+
+The v1.0.1 local installation contains 223 owned files and passes manifest
+verification. No pending transaction remains; one restore point exists. The
+global instruction entry is AGENTS.md with no AGENTS override sibling. The
+managed guides/profiles directories contain no unaccounted files. Six generated
+visual-check sidecars were removed after the compact diagram receipt was updated.
+These checks do not classify unrelated Codex home contents as legacy.
 
 ## Boundaries
 

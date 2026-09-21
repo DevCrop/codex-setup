@@ -2,6 +2,19 @@
 
 Date: 2026-09-21. This is configuration/lifecycle verification, not a model benchmark.
 
+## v1.1.1 documentation follow-up
+
+Added a human-facing skill selection guide and refined one agreement bullet to
+use task-appropriate checks with a clear stopping condition. Installer code and
+upstream packages are unchanged. Repository integrity and current-host verification
+passed; exactly one managed file changed and repeated apply was unchanged. The
+user explicitly selected Ponytail in the desktop conversation and its full skill
+attachment was received, establishing explicit loading on this host. Archify
+invocation and task performance were not exercised by this documentation change.
+The previous restore point now targets v1.1.0; use that checkout after rollback.
+
+## v1.1.0 evidence
+
 - Global agreement, normalized UTF-8/LF: 4,334 → 1,458 bytes; whitespace-delimited words: 599 → 193. These are text-size measurements, not measured tokens, subscription savings or performance.
 - Windows local Python: 35 tests, 33 passed, two symlink-creation cases skipped because this host does not grant symlink creation. Junction refusal is tested separately. Tests include both-root migration, user-edit conflicts, interrupted recovery, rollback and the complete pinned release payload's install/uninstall/restore.
 - Repository integrity: 224 manifest assets plus the existing managed config keys (225 deployed files), 38 references, two unchanged pinned upstream packages. TRACE owns two additional explicit-invocation YAML files separately from upstream hashes.

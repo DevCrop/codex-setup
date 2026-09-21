@@ -32,6 +32,10 @@ two skills. Invoke `$ponytail` or `$archify` explicitly (or select the skill in 
 app). This retains their full upstream procedures; it does not shorten the skills.
 `setup.py` is the sole install/update/verify/remove entry point, including skills.
 
+See [Ponytail·Archify usage examples](docs/skill-usage.md) for explicit selection,
+task scope, intensity and completion criteria. The English personalization source
+is [global/AGENTS.md](global/AGENTS.md); do not maintain a second edited copy.
+
 ## Lifecycle
 
 ```text
@@ -76,7 +80,7 @@ or upstream adoption before applying. No application-managed plugin cache is cop
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.1.0` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.1.1` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 

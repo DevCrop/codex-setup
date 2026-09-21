@@ -571,9 +571,9 @@
       "canonical_url": "https://learn.chatgpt.com/docs/build-skills",
       "origin": "additional",
       "authority": "official-vendor",
-      "disposition": "conditional",
-      "reason": "Relevant authoritative reference; review changed relevant sections before codifying new behavior.",
-      "review_status": "fetched-not-semantically-reviewed",
+      "disposition": "adopted",
+      "reason": "Reviewed explicit-only invocation policy: agents/openai.yaml policy.allow_implicit_invocation=false. Upstream skill content is unchanged.",
+      "review_status": "relevant-section-reviewed",
       "body_fetched": true,
       "historical_provenance": {
         "inventory": "inventory/s2-20260912T150322Z/sources.json",
@@ -585,8 +585,12 @@
         "error": null
       },
       "snapshot": null,
-      "applicable_files": [],
-      "monitor": true
+      "applicable_files": [
+        "global/skill-policy/openai.yaml",
+        "manifest.json"
+      ],
+      "monitor": true,
+      "last_reviewed": "2026-09-21"
     },
     {
       "id": "R25",

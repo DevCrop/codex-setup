@@ -2,11 +2,36 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from check_updates import Body, check
+from check_updates import Body, check, resolve_candidate
 from setup import read_json, save_json
 
 
 class MonitorTests(unittest.TestCase):
+    def test_candidate_survives_unchanged_and_resolution_is_hash_bound(self):
+        with tempfile.TemporaryDirectory() as d:
+            state = Path(d)
+            items = [{'id': 'A', 'url': 'https://example.org'}]
+            save_json(state / 'source-status.json', {'A': {'sha256': 'old', 'body': 'old body'}})
+            fetch = lambda item: {**item, 'status': 'fetched', 'sha256': 'new', 'body': 'new body'}
+            check(state, items, fetch)
+            again = check(state, items, fetch)
+            self.assertEqual(again['results'][0]['change'], 'unchanged')
+            self.assertEqual(len(again['pending']), 1)
+            with self.assertRaises(ValueError):
+                resolve_candidate(state, 'A', 'outdated', 'reviewed')
+            resolve_candidate(state, 'A', 'new', 'example-only change, no policy adoption')
+            self.assertEqual(check(state, items, fetch)['pending'], [])
+
+    def test_punctuation_noise_and_legacy_pending_import(self):
+        with tempfile.TemporaryDirectory() as d:
+            state = Path(d)
+            save_json(state / 'source-status.json', {'A': {'sha256': 'old', 'body': "it's unchanged"}})
+            save_json(state / 'source-report.json', {'results': [{'id': 'A', 'sha256': 'old', 'change': 'candidate'}]})
+            report = check(state, [{'id': 'A', 'url': 'https://example.org'}],
+                           lambda item: {**item, 'status': 'fetched', 'sha256': 'new', 'body': 'it’s unchanged'})
+            self.assertEqual(report['results'][0]['change'], 'unchanged')
+            self.assertEqual(len(report['pending']), 1)
+
     def test_main_body_excludes_navigation(self):
         parser = Body()
         parser.feed('<header>changing navigation</header><main>real <article>body</article></main><footer>noise</footer>')

@@ -1,7 +1,17 @@
 {
-  "schema_version": 1,
-  "version": "1.0.1",
+  "schema_version": 2,
+  "version": "1.1.0",
   "files": [
+    {
+      "source": "global/skill-policy/openai.yaml",
+      "target": "skills/ponytail/agents/openai.yaml",
+      "kind": "invocation-policy"
+    },
+    {
+      "source": "global/skill-policy/openai.yaml",
+      "target": "skills/archify/agents/openai.yaml",
+      "kind": "invocation-policy"
+    },
     {
       "source": "global/AGENTS.md",
       "target": "AGENTS.md"
@@ -1110,6 +1120,18 @@
     "max_concurrent_threads_per_session": 2
   },
   "retired": [
+    {
+      "root": "personal_skills",
+      "target": "encoding-safety/SKILL.md",
+      "sha256": "713c40add05bbb9852de0e956e8956b528a934fdd757317eff9990078f2a3f80",
+      "reason": "UTF-8 covered by global agreement; database guidance moved to project reference. Exact reviewed legacy bytes only."
+    },
+    {
+      "root": "personal_skills",
+      "target": "official-source-workflow/SKILL.md",
+      "sha256": "9dbe15a934f69ac38323bd6c8f032eb28414844a4e6983f9d45c3b48cdceb56e",
+      "reason": "Duplicate discovery entry consolidated into conditional official-source guide. Exact reviewed legacy bytes only."
+    },
     {
       "target": "config.toml.backup-20260830T124457Z",
       "sha256": "f2a6cb09980187446618427ac4c48a744d47a9f99ca8c854616696987781ce3e",

@@ -69,7 +69,7 @@ python -B scripts/index_docs.py
 ```
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
-[release verification](docs/verification.md). Update detection produces review
+[release verification](docs/verification-v1.1.md). Update detection produces review
 candidates only. One designated desktop host runs weekly checks; inactive hosts
 cannot guarantee scheduled execution. Review source changes and approve any policy
 or upstream adoption before applying. No application-managed plugin cache is copied.

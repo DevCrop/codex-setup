@@ -57,7 +57,7 @@ def fetch(item):
                 body = Body()
                 body.feed(text)
                 text = " ".join(body.primary or body.parts)
-            normalized = re.sub(r"\s+", " ", text).strip()
+            normalized = normalize(text)
             if len(normalized) < 50:
                 raise ValueError("Empty or unexpectedly short body")
             if any(marker in normalized.lower() for marker in ("verify you are human", "just a moment...", "access denied")):
@@ -69,29 +69,63 @@ def fetch(item):
         return {"id": item["id"], "url": url, "status": "error", "error": type(exc).__name__}
 
 
+def normalize(text):
+    return re.sub(r'\s+', ' ', text.translate(str.maketrans({'’': "'", '‘': "'", '“': '"', '”': '"'}))).strip()
+
+
+def resolve_candidate(state, source_id, expected_sha, reason):
+    pending = read_json(state / 'source-pending.json', {})
+    candidate = pending.get(source_id)
+    if not candidate or candidate['sha256'] != expected_sha or not reason.strip():
+        raise ValueError('Candidate changed, missing, or review reason empty')
+    del pending[source_id]
+    save_json(state / 'source-pending.json', pending)
+    # One current review record per source, not a growing archive.
+    reviews = read_json(state / 'source-reviews.json', {})
+    reviews[source_id] = {'sha256': expected_sha, 'reason': reason,
+                          'reviewed_at': datetime.now(timezone.utc).isoformat()}
+    save_json(state / 'source-reviews.json', reviews)
+
+
 def check(state, items, fetcher=fetch):
     if not items or len({item['id'] for item in items}) != len(items):
         raise ValueError('Monitor requires nonempty, unique source IDs')
     previous = read_json(state / "source-status.json", {})
     previous = {k: v for k, v in previous.items() if k in {item['id'] for item in items}}
+    pending_path = state / 'source-pending.json'
+    pending = read_json(pending_path, {})
+    # Upgrade from v1.0: retain unresolved candidates in the last report.
+    if not pending_path.exists():
+        pending = {r['id']: r for r in read_json(state / 'source-report.json', {}).get('results', [])
+                   if r.get('change') == 'candidate'}
+    pending = {k: v for k, v in pending.items() if k in {item['id'] for item in items}}
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         for row in pool.map(fetcher, items):
             if row["status"] == "fetched":
                 old = previous.get(row["id"])
                 row["change"] = "baseline" if not old else "unchanged" if old["sha256"] == row["sha256"] else "candidate"
+                if old and normalize(old['body']) == normalize(row['body']):
+                    row['change'] = 'unchanged'
                 if old and row["change"] == "candidate":
                     row["diff_excerpt"] = "\n".join(difflib.unified_diff(
                         old["body"].split(". "), row["body"].split(". "),
                         fromfile="previous", tofile="current", lineterm=""))[:12000]
+                    prior = pending.get(row['id'])
+                    pending[row['id']] = {k: v for k, v in row.items() if k != 'body'}
+                    pending[row['id']]['first_detected_at'] = (prior or {}).get('first_detected_at', datetime.now(timezone.utc).isoformat())
+                    if prior and prior.get('sha256') != row['sha256']:
+                        pending[row['id']]['earlier_unreviewed_diff'] = prior.get('earlier_unreviewed_diff', prior.get('diff_excerpt', ''))[:12000]
                 # State keeps one body per source, not a growing history. Actual
                 # policy updates and upstream version adoption require approval.
                 previous[row["id"]] = {"sha256": row["sha256"], "body": row.pop("body")}
             results.append(row)
     now = datetime.now(timezone.utc).isoformat()
-    report = {"checked_at": now, "results": results,
+    report = {"checked_at": now, "results": results, 'pending': list(pending.values()),
+              'last_policy_applied_at': read_json(state / 'installed.json', {}).get('applied_at'),
               "limit": "Hash change is a review candidate, not a verified semantic or policy change."}
     save_json(state / "source-status.json", previous)
+    save_json(pending_path, pending)
     save_json(state / "source-report.json", report)
     if all(r["status"] == "fetched" for r in results):
         save_json(state / "source-success.json", {"last_success": now})
@@ -101,8 +135,17 @@ def check(state, items, fetcher=fetch):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--state", type=Path)
+    parser.add_argument('--resolve', help='Resolve a reviewed source ID; never applies policy')
+    parser.add_argument('--expected-sha')
+    parser.add_argument('--reason')
     args = parser.parse_args()
     state = args.state or Deployment().state
+    if args.resolve:
+        if not args.expected_sha or not args.reason:
+            parser.error('--resolve requires --expected-sha and --reason')
+        resolve_candidate(state, args.resolve, args.expected_sha, args.reason)
+        print(json.dumps({'status': 'review-recorded', 'id': args.resolve}))
+        return 0
     registry = read_json(ROOT / "references/registry.json")
     items = [x for x in registry["sources"] if x.get("monitor")]
     for s in read_json(ROOT / "versions.lock.json")["skills"]:

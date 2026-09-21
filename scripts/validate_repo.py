@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import tomllib
 
-from setup import ROOT, read_json, safe
+from setup import ROOT, read_json, safe, target_key
 from index_docs import render
 
 
@@ -20,10 +20,22 @@ def main():
         raise ValueError('Config documentation differs from deployed manifest values')
     targets = set()
     for f in manifest["files"]:
-        if f["target"] in targets:
+        key = target_key(f)
+        if key in targets:
             raise ValueError("Duplicate manifest target")
-        targets.add(f["target"])
+        targets.add(key)
         assert safe(ROOT, f["source"]).is_file()
+    retired = set()
+    for entry in manifest.get('retired', []):
+        key = target_key(entry)
+        safe(ROOT, entry['target'])
+        assert key not in targets and key not in retired
+        assert re.fullmatch('[0-9a-f]{64}', entry['sha256'])
+        retired.add(key)
+    policies = [f for f in manifest['files'] if f.get('kind') == 'invocation-policy']
+    assert {f['target'] for f in policies} == {'skills/archify/agents/openai.yaml', 'skills/ponytail/agents/openai.yaml'}
+    for f in policies:
+        assert (ROOT / f['source']).read_text(encoding='utf-8').strip() == 'policy:\n  allow_implicit_invocation: false'
     for skill in read_json(ROOT / "versions.lock.json")["skills"]:
         folder = ROOT / "vendor" / skill["name"]
         actual = {p.relative_to(folder).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()

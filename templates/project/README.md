@@ -10,3 +10,9 @@ This directory is an authoring template, not a ready-to-install project policy. 
 6. Run the project's stated checks and verify instruction application in a fresh session.
 
 Do not invent typography tokens, helper paths, lint commands, architecture or successful checks. Global incidents stay in the global troubleshooting index. Project-only incidents belong in the project. Project updates require their own review; global updates must not overwrite project rules.
+
+For PHP/MySQL encoding work only, consult [the optional database reference](database-encoding-reference.md).
+For a small SCSS edit, read the applicable style/token rules and affected code; a TS
+logic change uses its module contracts and relevant checks. A documentation review
+does not trigger implementation or a database scan. These are routing examples,
+not a mandate to load every rule or to create new tests for every change.

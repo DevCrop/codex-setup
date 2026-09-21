@@ -1,5 +1,7 @@
 # Release verification
 
+Current release: [v1.1 verification](verification-v1.1.md). The following is historical v1.0.1 evidence.
+
 Date: 2026-09-14. This is configuration validation, not a model-efficiency benchmark.
 
 - v1.0.1 Windows/Python 3.14 local: 27 lifecycle/monitor tests, 26 passed and one symlink-creation test skipped because the host denied symlink creation. Windows junction refusal was exercised separately and passed.

@@ -3,7 +3,8 @@ from __future__ import annotations
 
 import argparse
 import base64
-from contextlib import contextmanager
+from contextlib import contextmanager, ExitStack
+from datetime import datetime, timezone
 import hashlib
 import json
 import os
@@ -149,23 +150,62 @@ def patch_agents(raw, updates):
     return result
 
 
+def target_key(entry):
+    root = entry.get('root', 'codex')
+    if root not in ('codex', 'personal_skills'):
+        raise ValueError('Unknown target root: ' + root)
+    if entry['target'].startswith('@'):
+        raise ValueError('Reserved target prefix')
+    return ('@personal/' if root == 'personal_skills' else '') + entry['target']
+
+
 class Deployment:
-    def __init__(self, source=ROOT, home=None, state=None):
+    def __init__(self, source=ROOT, home=None, state=None, personal_skills=None):
         self.source = Path(source).absolute()
         self.home = Path(home or os.environ.get("CODEX_HOME", Path.home() / ".codex")).expanduser().absolute()
         self.state = Path(state or default_state(self.home)).absolute()
+        self.personal_skills = Path(personal_skills or Path.home() / '.agents/skills').expanduser().absolute()
+        if self.personal_skills == self.home or self.personal_skills in self.home.parents or self.home in self.personal_skills.parents:
+            raise ValueError('Deployment roots must not overlap')
         safe(self.home, "config.toml")
         safe(self.state, "installed.json")
         self.manifest = read_json(self.source / "manifest.json")
         self.record = read_json(self.state / "installed.json", {"files": {}})
         if self.record.get("home", str(self.home)) != str(self.home):
             raise ValueError("State belongs to a different Codex home")
+        if self.record.get('personal_skills', str(self.personal_skills)) != str(self.personal_skills):
+            raise ValueError('State belongs to a different personal skills root')
+
+    def path(self, key):
+        if key.startswith('@personal/'):
+            return safe(self.personal_skills, key[len('@personal/'):])
+        if key.startswith('@'):
+            raise ValueError('Unknown root in ownership record')
+        return safe(self.home, key)
+
+    def inventory(self):
+        unmanaged = []
+        for root, prefix in ((self.home / 'skills', 'skills/'), (self.personal_skills, '@personal/')):
+            if root.is_symlink() or (root.exists() and getattr(root.lstat(), 'st_file_attributes', 0) & 0x400):
+                unmanaged.append(prefix + '[linked root; not scanned]')
+                continue
+            if root.is_dir():
+                for folder in root.iterdir():
+                    if folder.name == '.system':
+                        continue
+                    key = prefix + folder.name + '/SKILL.md'
+                    try:
+                        if self.path(key).is_file() and key not in self.record['files']:
+                            unmanaged.append(key)
+                    except ValueError:
+                        unmanaged.append(prefix + folder.name + '/[linked; not scanned]')
+        return sorted(unmanaged)
 
     def desired(self):
         result = {}
         for entry in self.manifest["files"]:
-            target = entry["target"]
-            safe(self.home, target)
+            target = target_key(entry)
+            self.path(target)
             if target in result:
                 raise ValueError(f"Duplicate target: {target}")
             data = safe(self.source, entry["source"]).read_bytes()
@@ -185,7 +225,7 @@ class Deployment:
         wanted = self.desired()
         changes = []
         for rel in sorted(set(wanted) | set(self.record["files"])):
-            before = content(safe(self.home, rel))
+            before = content(self.path(rel))
             after = wanted.get(rel)
             known = self.record["files"].get(rel)
             conflict = False
@@ -202,23 +242,24 @@ class Deployment:
                             "action": "conflict" if conflict else "keep" if before == after else "remove" if after is None else "write"})
         # Explicit legacy retirement only with previously reviewed fingerprints.
         for legacy in self.manifest.get("retired", []):
-            rel = legacy["target"]
+            rel = target_key(legacy)
             if rel in wanted or rel in self.record["files"]:
                 raise ValueError(f"Retired target collides with managed target: {rel}")
-            before = content(safe(self.home, rel))
+            before = content(self.path(rel))
             if before is not None:
                 changes.append({"path": rel, "before": digest(before), "after": None,
                                 "action": "remove" if digest(before) == legacy["sha256"] else "conflict"})
         return changes
 
     def _write(self, rel, data):
-        path = safe(self.home, rel)
+        path = self.path(rel)
+        root = self.personal_skills if rel.startswith('@personal/') else self.home
         if data is None:
             if path.exists():
                 path.unlink()
             # Prune only parents of an owned removed file, and only when empty.
             parent = path.parent
-            while parent != self.home:
+            while parent != root:
                 try:
                     parent.rmdir()
                 except OSError:
@@ -243,25 +284,27 @@ class Deployment:
         changed = [x for x in changes if x["action"] != "keep"]
         if not changed and self.record.get("version") == self.manifest["version"]:
             return {"status": "unchanged", "files": len(changes)}
-        journal = {"home": str(self.home), "record": self.record, "files": {}}
+        journal = {"home": str(self.home), "personal_skills": str(self.personal_skills), "record": self.record, "files": {}}
         for row in changed:
-            before = content(safe(self.home, row["path"]))
+            before = content(self.path(row["path"]))
             if digest(before) != row["before"]:
                 raise ValueError("File changed while planning")
             journal["files"][row["path"]] = {"before": None if before is None else base64.b64encode(before).decode(), "after": row["after"]}
         save_json(self.state / "pending.json", journal)
         try:
             for row in changed:
-                if digest(content(safe(self.home, row["path"]))) != row["before"]:
+                if digest(content(self.path(row["path"]))) != row["before"]:
                     raise ValueError("Concurrent edit detected")
                 self._write(row["path"], wanted.get(row["path"]))
             record = {"version": self.manifest["version"], "home": str(self.home),
+                      "applied_at": datetime.now(timezone.utc).isoformat(),
+                      "personal_skills": str(self.personal_skills),
                       "files": {p: {"sha256": digest(d)} for p, d in wanted.items()},
                       "agent_settings": self.manifest["agent_settings"],
                       "original_agents": original_agents,
                       "original_config": self.record.get("original_config", None if original_config is None else base64.b64encode(original_config).decode())}
             for p, data in wanted.items():
-                if digest(content(safe(self.home, p))) != digest(data):
+                if digest(content(self.path(p))) != digest(data):
                     raise ValueError(f"Post-write verification failed: {p}")
             save_json(self.state / "installed.json", record)
             os.replace(self.state / "pending.json", self.state / "previous.json")
@@ -276,9 +319,11 @@ class Deployment:
         journal = read_json(path)
         if not journal or journal["home"] != str(self.home):
             raise ValueError("No matching restore point")
+        if journal.get('personal_skills', str(self.personal_skills)) != str(self.personal_skills):
+            raise ValueError('Restore point belongs to a different personal skills root')
         decoded = {p: None if v["before"] is None else base64.b64decode(v["before"]) for p, v in journal["files"].items()}
         for p, row in journal["files"].items():
-            actual = digest(content(safe(self.home, p)))
+            actual = digest(content(self.path(p)))
             if actual not in (row["after"], digest(decoded[p])):
                 raise ValueError(f"Restore conflicts with local edits: {p}")
         for p, data in decoded.items():
@@ -298,7 +343,7 @@ class Deployment:
         if set(self.record["files"]) != set(wanted):
             errors.append("Ownership inventory differs from manifest")
         for p, data in wanted.items():
-            actual = content(safe(self.home, p))
+            actual = content(self.path(p))
             if p == "config.toml":
                 parsed = tomllib.loads((actual or b"").decode("utf-8-sig"))
                 if any(parsed.get("agents", {}).get(k) != v for k, v in self.manifest["agent_settings"].items()):
@@ -308,8 +353,9 @@ class Deployment:
             elif self.record["files"].get(p, {}).get("sha256") != digest(data):
                 errors.append("ownership-hash:" + p)
         for item in self.manifest.get("retired", []):
-            if safe(self.home, item["target"]).exists():
-                errors.append("retired:" + item["target"])
+            key = target_key(item)
+            if self.path(key).exists():
+                errors.append("retired:" + key)
         return {"status": "pass" if not errors else "fail", "errors": errors,
                 "limit": "Only manifest-owned files and retired targets are verified; app runtime exposure is separate."}
 
@@ -320,7 +366,7 @@ class Deployment:
             return {"status": "unchanged", "reason": "No managed installation"}
         targets = {}
         for p, row in self.record["files"].items():
-            actual = content(safe(self.home, p))
+            actual = content(self.path(p))
             if p == "config.toml":
                 parsed = tomllib.loads((actual or b"").decode("utf-8-sig"))
                 if any(parsed.get("agents", {}).get(k) != v for k, v in self.record["agent_settings"].items()):
@@ -345,17 +391,17 @@ class Deployment:
                 if digest(actual) != row["sha256"]:
                     raise ValueError(f"Modified managed file: {p}")
                 targets[p] = None
-        journal = {"home": str(self.home), "record": self.record, "files": {
-            p: {"before": base64.b64encode(content(safe(self.home, p))).decode(), "after": digest(data)} for p, data in targets.items()}}
+        journal = {"home": str(self.home), "personal_skills": str(self.personal_skills), "record": self.record, "files": {
+            p: {"before": base64.b64encode(content(self.path(p))).decode(), "after": digest(data)} for p, data in targets.items()}}
         save_json(self.state / "pending.json", journal)
         try:
             for p, data in targets.items():
                 before = base64.b64decode(journal["files"][p]["before"])
-                if content(safe(self.home, p)) != before:
+                if content(self.path(p)) != before:
                     raise ValueError(f"Concurrent edit detected during uninstall: {p}")
                 self._write(p, data)
             for p, data in targets.items():
-                if content(safe(self.home, p)) != data:
+                if content(self.path(p)) != data:
                     raise ValueError(f"Uninstall verification failed: {p}")
             save_json(self.state / "installed.json", {"files": {}})
             os.replace(self.state / "pending.json", self.state / "previous.json")
@@ -371,24 +417,30 @@ def main():
     parser.add_argument("command", choices=["plan", "apply", "verify", "rollback", "recover", "uninstall", "doctor"])
     parser.add_argument("--home", type=Path)
     parser.add_argument("--state", type=Path)
+    parser.add_argument('--personal-skills', type=Path, help='Personal skill root; defaults to ~/.agents/skills independently of CODEX_HOME')
     parser.add_argument("--source", type=Path, default=ROOT)
     parser.add_argument("--adopt-existing", action="store_true", help="Adopt reviewed pre-existing target files on first install")
     parser.add_argument("--codex", help="Explicit CLI executable")
     args = parser.parse_args()
     try:
-        dep = Deployment(args.source, args.home, args.state)
+        dep = Deployment(args.source, args.home, args.state, args.personal_skills)
         if args.command == "doctor":
             exe = args.codex or shutil.which("codex")
             if not exe:
                 raise ValueError("Codex CLI not on PATH; provide --codex with an executable path")
             proc = subprocess.run([exe, "--version"], capture_output=True, text=True, timeout=15)
             result = {"codex_version": proc.stdout.strip(), "exit_code": proc.returncode,
-                      "home_exists": dep.home.is_dir(), "python": sys.version.split()[0]}
+                      "home_exists": dep.home.is_dir(), "python": sys.version.split()[0],
+                      'unmanaged_skills': dep.inventory(),
+                      'skill_roots': {'codex': str(dep.home), 'personal_skills': str(dep.personal_skills)}}
         elif args.command == "plan":
             result = dep.plan(args.adopt_existing)
         elif args.command in ("apply", "rollback", "recover", "uninstall"):
-            with deployment_lock(dep.state):
-                dep = Deployment(args.source, args.home, args.state)
+            # Different CODEX_HOME installs may share one personal skill root.
+            with ExitStack() as locks:
+                for lock_state in sorted({dep.state, default_state(dep.personal_skills)}, key=str):
+                    locks.enter_context(deployment_lock(lock_state))
+                dep = Deployment(args.source, args.home, args.state, args.personal_skills)
                 if args.command == "apply":
                     result = dep.apply(args.adopt_existing)
                 elif args.command in ("rollback", "recover"):

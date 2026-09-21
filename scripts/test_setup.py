@@ -28,7 +28,83 @@ class LifecycleTests(unittest.TestCase):
         save_json(self.source / "manifest.json", self.manifest)
 
     def dep(self):
-        return Deployment(self.source, self.home, self.state)
+        return Deployment(self.source, self.home, self.state, self.root / 'personal skills')
+
+    def test_v1_migration_two_roots_and_restore(self):
+        self.dep().apply()
+        record_path = self.state / 'installed.json'
+        record = json.loads(record_path.read_text())
+        record.pop('personal_skills')  # A v1.0.1 ownership record.
+        save_json(record_path, record)
+        old = self.root / 'personal skills/old/SKILL.md'
+        old.parent.mkdir(parents=True)
+        old.write_bytes(b'old skill')
+        self.manifest['version'] = '1.1.0'
+        self.manifest['retired'] = [{'root': 'personal_skills', 'target': 'old/SKILL.md', 'sha256': digest(b'old skill')}]
+        self.manifest['files'].append({'root': 'personal_skills', 'source': 'rules.md', 'target': 'new/SKILL.md'})
+        self.write_manifest()
+        d = self.dep()
+        d.apply()
+        self.assertFalse(old.exists())
+        self.assertEqual(d.verify()['status'], 'pass')
+        self.assertEqual(d.apply()['status'], 'unchanged')
+        d.restore()
+        self.assertEqual(old.read_bytes(), b'old skill')
+        self.assertFalse((old.parent.parent / 'new/SKILL.md').exists())
+
+    def test_personal_retirement_conflict_and_wrong_root_restore(self):
+        old = self.root / 'personal skills/old/SKILL.md'
+        old.parent.mkdir(parents=True)
+        old.write_bytes(b'user edit')
+        self.manifest['retired'] = [{'root': 'personal_skills', 'target': 'old/SKILL.md', 'sha256': digest(b'old')}]
+        self.write_manifest()
+        with self.assertRaises(ValueError):
+            self.dep().apply(True)
+        old.write_bytes(b'old')
+        self.dep().apply()
+        with self.assertRaises(ValueError):
+            Deployment(self.source, self.home, self.state, self.root / 'wrong').restore()
+
+    def test_personal_traversal_and_unknown_roots(self):
+        d = self.dep()
+        for key in ('@personal/../outside', '@personal/C:/outside', '@other/file'):
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                d.path(key)
+        self.manifest['files'][0]['root'] = 'unknown'
+        self.write_manifest()
+        with self.assertRaises(ValueError):
+            self.dep().plan()
+
+    def test_personal_uninstall_and_failure_recovery(self):
+        from unittest.mock import patch
+        self.manifest['files'].append({'root': 'personal_skills', 'source': 'rules.md', 'target': 'new/SKILL.md'})
+        self.write_manifest()
+        d = self.dep()
+        original = d._write
+        def failure(key, data):
+            if key == 'AGENTS.md' and data is not None:
+                raise OSError('failure after personal write')
+            original(key, data)
+        with patch.object(d, '_write', failure), self.assertRaises(OSError):
+            d.apply()
+        self.assertFalse((self.root / 'personal skills/new/SKILL.md').exists())
+        d.apply()
+        d.uninstall()
+        self.assertFalse((self.root / 'personal skills/new/SKILL.md').exists())
+        d.restore()
+        self.assertEqual(d.verify()['status'], 'pass')
+
+    def test_personal_symlink_refused(self):
+        root = self.root / 'personal skills'
+        root.mkdir()
+        outside = self.root / 'outside'
+        outside.mkdir()
+        try:
+            (root / 'linked').symlink_to(outside, target_is_directory=True)
+        except OSError:
+            self.skipTest('Symlink creation unavailable')
+        with self.assertRaises(ValueError):
+            self.dep().path('@personal/linked/SKILL.md')
 
     def test_install_idempotent_rollback(self):
         d = self.dep()

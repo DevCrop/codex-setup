@@ -2,6 +2,17 @@
 
 Date: 2026-09-21. This is configuration/lifecycle verification, not a model benchmark.
 
+## v1.1.2 maintenance — 2026-09-24
+
+- Approved `sol` preset now selects `gpt-6-sol` with `medium`. Base user model and both Astra presets are unchanged.
+- Restored the installed agreement's missing final newline only, after confirming all other bytes match. No instruction policy was added.
+- npm stable dist-tag and [official changelog](https://learn.chatgpt.com/docs/changelog) both identified CLI 0.156.1. Updated the existing npm CLI from 0.147.0 to that exact version; `codex --version` and ChatGPT `login status` succeeded. This is a host CLI update, not a desktop app upgrade or a mandatory automatic update on other machines. Roll back the CLI separately with `npm install -g @openai/codex@0.147.0` if necessary.
+- Repository integrity, 225-file deployment verification and unchanged repeat application passed. No installer logic changed, model calls or benchmarks were run. Help output is not proof of model execution.
+- Source refresh succeeded for all 13 endpoints. Reviewed exact-hash typography, example, repository-statistics and unrelated blog candidates were resolved locally. GPT-6 selection guidance was reviewed; inheritance remains unchanged. Release-feed remainder (R27) and Archify upstream adoption remain pending: the latest commit title does not establish the safety of all intervening revisions. Neither upstream skill was upgraded.
+- One managed restore point now restores the v1.1.1 profile state; it does not roll back npm. Authentication, project files and caches were not migrated or removed.
+
+Sources: [model selection](https://learn.chatgpt.com/docs/models#pick-a-reasoning-effort), [CLI installation](https://learn.chatgpt.com/docs/codex/cli). Sol Medium is the documented starting point, not a measured optimum for every task.
+
 ## v1.1.1 documentation follow-up
 
 Added a human-facing skill selection guide and refined one agreement bullet to

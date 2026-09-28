@@ -435,7 +435,7 @@
       "authority": "project-primary",
       "disposition": "adopted-tool",
       "reason": "User requires this tool; upstream describes its implementation, not measured routing savings.",
-      "review_status": "fetched-not-semantically-reviewed",
+      "review_status": "reviewed-release-adopted",
       "body_fetched": true,
       "historical_provenance": {
         "inventory": "inventory/s2-20260912T150322Z/sources.json",
@@ -447,8 +447,18 @@
         "error": null
       },
       "snapshot": null,
-      "applicable_files": [],
-      "monitor": false
+      "applicable_files": [
+        "versions.lock.json",
+        "vendor/archify",
+        "diagrams/global"
+      ],
+      "monitor": false,
+      "last_review": {
+        "date": "2026-09-28",
+        "version": "3.0.0",
+        "url": "https://github.com/tt-a1i/archify/releases/tag/v3.0.0",
+        "claim": "Canonical release package; existing schema-v1 supported, guided/story views removed; finalize gates verified locally."
+      }
     },
     {
       "id": "R19",
@@ -646,7 +656,7 @@
       "authority": "official-vendor",
       "disposition": "conditional",
       "reason": "Relevant authoritative reference; review changed relevant sections before codifying new behavior.",
-      "review_status": "fetched-not-semantically-reviewed",
+      "review_status": "partially-reviewed",
       "body_fetched": true,
       "historical_provenance": {
         "inventory": "inventory/s2-20260912T150322Z/sources.json",
@@ -659,7 +669,12 @@
       },
       "snapshot": null,
       "applicable_files": [],
-      "monitor": true
+      "monitor": true,
+      "last_review": {
+        "date": "2026-09-28",
+        "version": "0.157.1",
+        "claim": "Approved host CLI adoption; version and subscription login verified. Interactive daemon startup and unrelated release features not validated."
+      }
     },
     {
       "id": "R28",

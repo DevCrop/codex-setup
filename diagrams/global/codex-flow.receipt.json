@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "diagram_type": "workflow",
-  "specification_sha256": "dfc2bcf8608338a9306d31606598c72377e32d609bb0c8a45c627a2b1cb2e488",
-  "artifact_sha256": "4620169d5f991ef919c8b6f22bc30c2f066199fcf5156b40fc1f350717ff9377",
+  "specification_sha256": "e6dbd2d16acfe34cb256089d10909823d4c147ddd91426c408b366ba2339f1fd",
+  "artifact_sha256": "1fceef190315b4b89e548d55da257ac8d39f211feb656de1d05e670219069299",
   "validation": {
     "checks_passed": 9,
     "checks_total": 9,
@@ -10,39 +10,48 @@
     "errors": 0,
     "warnings": 0
   },
-  "browser_evidence": "passed",
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "browser_evidence": "pass",
   "viewport_containment": [
     {
       "width": 1440,
       "height": 900,
-      "overflow_x": false,
-      "overflow_y": false
+      "theme": "light",
+      "overflowX": false,
+      "overflowY": false,
+      "ok": true
     },
     {
       "width": 1600,
       "height": 1000,
-      "overflow_x": false,
-      "overflow_y": false
+      "theme": "light",
+      "overflowX": false,
+      "overflowY": false,
+      "ok": true
     },
     {
       "width": 1920,
       "height": 1080,
-      "overflow_x": false,
-      "overflow_y": false
+      "theme": "light",
+      "overflowX": false,
+      "overflowY": false,
+      "ok": true
     },
     {
       "width": 2048,
       "height": 1320,
-      "overflow_x": false,
-      "overflow_y": false
+      "theme": "light",
+      "overflowX": false,
+      "overflowY": false,
+      "ok": true
     }
   ],
-  "visual_review": "passed",
-  "visual_review_scope": [
-    "2048x1320 light screenshot",
-    "1440x900 dark screenshot"
-  ],
-  "correction_rounds": 0,
-  "language": "Authored content is Korean; fixed viewer UI and html lang fall back to English.",
-  "diagram_scope": "Approved global operating policy, not a runtime trace or project architecture map."
+  "visual_review": "not-performed",
+  "diagram_scope": "Approved global operating policy, not a runtime trace or project architecture map.",
+  "renderer_version": "3.0.0"
 }

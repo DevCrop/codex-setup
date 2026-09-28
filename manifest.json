@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "version": "1.1.2",
+  "version": "1.1.3",
   "files": [
     {
       "source": "global/skill-policy/openai.yaml",
@@ -45,6 +45,26 @@
       "target": "sol.config.toml"
     },
     {
+      "source": "vendor/ponytail/SKILL.md",
+      "target": "skills/ponytail/SKILL.md",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/LICENSE",
+      "target": "skills/archify/LICENSE",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/SKILL.md",
+      "target": "skills/archify/SKILL.md",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/THIRD_PARTY_NOTICES.md",
+      "target": "skills/archify/THIRD_PARTY_NOTICES.md",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/assets/JetBrainsMono-OFL.txt",
       "target": "skills/archify/assets/JetBrainsMono-OFL.txt",
       "kind": "upstream-skill"
@@ -60,6 +80,11 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/bin/finalize.mjs",
+      "target": "skills/archify/bin/finalize.mjs",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/bin/open-artifact.mjs",
       "target": "skills/archify/bin/open-artifact.mjs",
       "kind": "upstream-skill"
@@ -70,18 +95,23 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/bin/recover-output.mjs",
+      "target": "skills/archify/bin/recover-output.mjs",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/bin/visual-check.mjs",
       "target": "skills/archify/bin/visual-check.mjs",
       "kind": "upstream-skill"
     },
     {
-      "source": "vendor/archify/brand-marks/catalog.json",
-      "target": "skills/archify/brand-marks/catalog.json",
+      "source": "vendor/archify/brand-marks/README.md",
+      "target": "skills/archify/brand-marks/README.md",
       "kind": "upstream-skill"
     },
     {
-      "source": "vendor/archify/brand-marks/README.md",
-      "target": "skills/archify/brand-marks/README.md",
+      "source": "vendor/archify/brand-marks/catalog.json",
+      "target": "skills/archify/brand-marks/catalog.json",
       "kind": "upstream-skill"
     },
     {
@@ -140,6 +170,11 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/examples/holiday-planning.workflow.json",
+      "target": "skills/archify/examples/holiday-planning.workflow.json",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/examples/incident-response.workflow.json",
       "target": "skills/archify/examples/incident-response.workflow.json",
       "kind": "upstream-skill"
@@ -147,6 +182,51 @@
     {
       "source": "vendor/archify/examples/lifecycle-agent-run.html",
       "target": "skills/archify/examples/lifecycle-agent-run.html",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/de.json",
+      "target": "skills/archify/examples/locales/de.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/es.json",
+      "target": "skills/archify/examples/locales/es.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/fr.json",
+      "target": "skills/archify/examples/locales/fr.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/fr.partial.json",
+      "target": "skills/archify/examples/locales/fr.partial.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/it.json",
+      "target": "skills/archify/examples/locales/it.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/ja.json",
+      "target": "skills/archify/examples/locales/ja.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/ko.json",
+      "target": "skills/archify/examples/locales/ko.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/pt.json",
+      "target": "skills/archify/examples/locales/pt.json",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/examples/locales/ru.json",
+      "target": "skills/archify/examples/locales/ru.json",
       "kind": "upstream-skill"
     },
     {
@@ -185,18 +265,8 @@
       "kind": "upstream-skill"
     },
     {
-      "source": "vendor/archify/LICENSE",
-      "target": "skills/archify/LICENSE",
-      "kind": "upstream-skill"
-    },
-    {
       "source": "vendor/archify/migrations/workflow-v2.mjs",
       "target": "skills/archify/migrations/workflow-v2.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/package-lock.json",
-      "target": "skills/archify/package-lock.json",
       "kind": "upstream-skill"
     },
     {
@@ -210,8 +280,18 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/references/architecture-layout-repair.md",
+      "target": "skills/archify/references/architecture-layout-repair.md",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/references/authoring-contract.md",
       "target": "skills/archify/references/authoring-contract.md",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/references/authoring-defaults.md",
+      "target": "skills/archify/references/authoring-defaults.md",
       "kind": "upstream-skill"
     },
     {
@@ -225,6 +305,16 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/references/repository-authoring.md",
+      "target": "skills/archify/references/repository-authoring.md",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/references/update-awareness.md",
+      "target": "skills/archify/references/update-awareness.md",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/references/viewer-runtime.md",
       "target": "skills/archify/references/viewer-runtime.md",
       "kind": "upstream-skill"
@@ -235,8 +325,18 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/renderers/architecture/labels.mjs",
+      "target": "skills/archify/renderers/architecture/labels.mjs",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/renderers/architecture/render-architecture.mjs",
       "target": "skills/archify/renderers/architecture/render-architecture.mjs",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/renderers/architecture/routing.mjs",
+      "target": "skills/archify/renderers/architecture/routing.mjs",
       "kind": "upstream-skill"
     },
     {
@@ -255,6 +355,11 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/renderers/lifecycle/grid-routing.mjs",
+      "target": "skills/archify/renderers/lifecycle/grid-routing.mjs",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/renderers/lifecycle/render-lifecycle.mjs",
       "target": "skills/archify/renderers/lifecycle/render-lifecycle.mjs",
       "kind": "upstream-skill"
@@ -267,6 +372,11 @@
     {
       "source": "vendor/archify/renderers/sequence/render-sequence.mjs",
       "target": "skills/archify/renderers/sequence/render-sequence.mjs",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/renderers/shared/atomic-output.mjs",
+      "target": "skills/archify/renderers/shared/atomic-output.mjs",
       "kind": "upstream-skill"
     },
     {
@@ -330,6 +440,16 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/renderers/shared/path-semantics.mjs",
+      "target": "skills/archify/renderers/shared/path-semantics.mjs",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/renderers/shared/portable-path.mjs",
+      "target": "skills/archify/renderers/shared/portable-path.mjs",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/renderers/shared/repository-evidence.mjs",
       "target": "skills/archify/renderers/shared/repository-evidence.mjs",
       "kind": "upstream-skill"
@@ -337,6 +457,21 @@
     {
       "source": "vendor/archify/renderers/shared/repository-location.mjs",
       "target": "skills/archify/renderers/shared/repository-location.mjs",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/renderers/shared/route-quality.mjs",
+      "target": "skills/archify/renderers/shared/route-quality.mjs",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/renderers/shared/sidecar-path.mjs",
+      "target": "skills/archify/renderers/shared/sidecar-path.mjs",
+      "kind": "upstream-skill"
+    },
+    {
+      "source": "vendor/archify/renderers/shared/spatial-grid.mjs",
+      "target": "skills/archify/renderers/shared/spatial-grid.mjs",
       "kind": "upstream-skill"
     },
     {
@@ -375,6 +510,11 @@
       "kind": "upstream-skill"
     },
     {
+      "source": "vendor/archify/schemas/README.md",
+      "target": "skills/archify/schemas/README.md",
+      "kind": "upstream-skill"
+    },
+    {
       "source": "vendor/archify/schemas/architecture.schema.json",
       "target": "skills/archify/schemas/architecture.schema.json",
       "kind": "upstream-skill"
@@ -392,11 +532,6 @@
     {
       "source": "vendor/archify/schemas/lifecycle.schema.json",
       "target": "skills/archify/schemas/lifecycle.schema.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/schemas/README.md",
-      "target": "skills/archify/schemas/README.md",
       "kind": "upstream-skill"
     },
     {
@@ -420,16 +555,6 @@
       "kind": "upstream-skill"
     },
     {
-      "source": "vendor/archify/scripts/generate-brand-marks.mjs",
-      "target": "skills/archify/scripts/generate-brand-marks.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/scripts/generate-validators.mjs",
-      "target": "skills/archify/scripts/generate-validators.mjs",
-      "kind": "upstream-skill"
-    },
-    {
       "source": "vendor/archify/scripts/render-examples.mjs",
       "target": "skills/archify/scripts/render-examples.mjs",
       "kind": "upstream-skill"
@@ -442,676 +567,6 @@
     {
       "source": "vendor/archify/skill-release.json",
       "target": "skills/archify/skill-release.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/SKILL.md",
-      "target": "skills/archify/SKILL.md",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/adaptive-reader-layout.test.mjs",
-      "target": "skills/archify/test/adaptive-reader-layout.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/animation.test.mjs",
-      "target": "skills/archify/test/animation.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/architecture-delta.test.mjs",
-      "target": "skills/archify/test/architecture-delta.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/artifact-receipt-flush.test.mjs",
-      "target": "skills/archify/test/artifact-receipt-flush.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/authored-reachability.test.mjs",
-      "target": "skills/archify/test/authored-reachability.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/authoring-safety-contract.test.mjs",
-      "target": "skills/archify/test/authoring-safety-contract.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/automatic-port-spread.test.mjs",
-      "target": "skills/archify/test/automatic-port-spread.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/base-input-compatibility.test.mjs",
-      "target": "skills/archify/test/base-input-compatibility.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/brand-marks.test.mjs",
-      "target": "skills/archify/test/brand-marks.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/chapter-delta-preview.test.mjs",
-      "target": "skills/archify/test/chapter-delta-preview.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/chapter-handoff.test.mjs",
-      "target": "skills/archify/test/chapter-handoff.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/chapter-rail.test.mjs",
-      "target": "skills/archify/test/chapter-rail.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/checkout-line-endings.test.mjs",
-      "target": "skills/archify/test/checkout-line-endings.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/clean-skill-staging.test.mjs",
-      "target": "skills/archify/test/clean-skill-staging.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/cli-output-types.test.mjs",
-      "target": "skills/archify/test/cli-output-types.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/cli.test.mjs",
-      "target": "skills/archify/test/cli.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/community-proof-intake.test.mjs",
-      "target": "skills/archify/test/community-proof-intake.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/cursor-onboarding.test.mjs",
-      "target": "skills/archify/test/cursor-onboarding.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/degraded.test.mjs",
-      "target": "skills/archify/test/degraded.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/delivery-contract.test.mjs",
-      "target": "skills/archify/test/delivery-contract.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/desktop-reader-browser.test.mjs",
-      "target": "skills/archify/test/desktop-reader-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/diagram-guide.test.mjs",
-      "target": "skills/archify/test/diagram-guide.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/engineering-profile.test.mjs",
-      "target": "skills/archify/test/engineering-profile.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/export-browser.test.mjs",
-      "target": "skills/archify/test/export-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/export-cleanup-browser.test.mjs",
-      "target": "skills/archify/test/export-cleanup-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/finder-browser.test.mjs",
-      "target": "skills/archify/test/finder-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/finder.test.mjs",
-      "target": "skills/archify/test/finder.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/automatic-routing-node-border-clearance.workflow.json",
-      "target": "skills/archify/test/fixtures/automatic-routing-node-border-clearance.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/fail-migration-cleanup.mjs",
-      "target": "skills/archify/test/fixtures/fail-migration-cleanup.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/issue-126/custom-widths.workflow.json",
-      "target": "skills/archify/test/fixtures/issue-126/custom-widths.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/issue-126/explicit-route.workflow.json",
-      "target": "skills/archify/test/fixtures/issue-126/explicit-route.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/issue-126/explicit-viewbox.workflow.json",
-      "target": "skills/archify/test/fixtures/issue-126/explicit-viewbox.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/issue-126/labels.workflow.json",
-      "target": "skills/archify/test/fixtures/issue-126/labels.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-baseline/agent-run.lifecycle.json",
-      "target": "skills/archify/test/fixtures/v1-baseline/agent-run.lifecycle.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-baseline/agent-tool-call.workflow.json",
-      "target": "skills/archify/test/fixtures/v1-baseline/agent-tool-call.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-baseline/cache-miss-request.sequence.json",
-      "target": "skills/archify/test/fixtures/v1-baseline/cache-miss-request.sequence.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-baseline/event-stream.dataflow.json",
-      "target": "skills/archify/test/fixtures/v1-baseline/event-stream.dataflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-baseline/product-analytics.dataflow.json",
-      "target": "skills/archify/test/fixtures/v1-baseline/product-analytics.dataflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-baseline/production-deployment.architecture.json",
-      "target": "skills/archify/test/fixtures/v1-baseline/production-deployment.architecture.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-baseline/web-app.architecture.json",
-      "target": "skills/archify/test/fixtures/v1-baseline/web-app.architecture.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-workflow-700x400.workflow.json",
-      "target": "skills/archify/test/fixtures/v1-workflow-700x400.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/fixtures/v1-workflow-explicit-coordinates.workflow.json",
-      "target": "skills/archify/test/fixtures/v1-workflow-explicit-coordinates.workflow.json",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/focus-browser.test.mjs",
-      "target": "skills/archify/test/focus-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/gallery.test.mjs",
-      "target": "skills/archify/test/gallery.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/generate-validators.test.mjs",
-      "target": "skills/archify/test/generate-validators.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/generate-viewer.test.mjs",
-      "target": "skills/archify/test/generate-viewer.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/generated-artifact-xml.test.mjs",
-      "target": "skills/archify/test/generated-artifact-xml.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/geometry.test.mjs",
-      "target": "skills/archify/test/geometry.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/golden.mjs",
-      "target": "skills/archify/test/golden.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/grid.test.mjs",
-      "target": "skills/archify/test/grid.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/guide-page.test.mjs",
-      "target": "skills/archify/test/guide-page.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/guide.test.mjs",
-      "target": "skills/archify/test/guide.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/guided-views-browser.test.mjs",
-      "target": "skills/archify/test/guided-views-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/guided-views.test.mjs",
-      "target": "skills/archify/test/guided-views.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/helpers/desktop-browser.mjs",
-      "target": "skills/archify/test/helpers/desktop-browser.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/helpers/offline-fonts.mjs",
-      "target": "skills/archify/test/helpers/offline-fonts.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/helpers/viewer-click.mjs",
-      "target": "skills/archify/test/helpers/viewer-click.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/helpers/xml.mjs",
-      "target": "skills/archify/test/helpers/xml.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/i18n.test.mjs",
-      "target": "skills/archify/test/i18n.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/intent-trace-browser.test.mjs",
-      "target": "skills/archify/test/intent-trace-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/intent-trace.test.mjs",
-      "target": "skills/archify/test/intent-trace.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/landing.test.mjs",
-      "target": "skills/archify/test/landing.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/layout-rules.test.mjs",
-      "target": "skills/archify/test/layout-rules.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/legend-contract.test.mjs",
-      "target": "skills/archify/test/legend-contract.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/motion-governor-browser.test.mjs",
-      "target": "skills/archify/test/motion-governor-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/motion-governor.test.mjs",
-      "target": "skills/archify/test/motion-governor.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/offline-font-browser.test.mjs",
-      "target": "skills/archify/test/offline-font-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/offline-self-containment.test.mjs",
-      "target": "skills/archify/test/offline-self-containment.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/open-artifact.test.mjs",
-      "target": "skills/archify/test/open-artifact.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/ordinary-model-floor.test.mjs",
-      "target": "skills/archify/test/ordinary-model-floor.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/output-path.test.mjs",
-      "target": "skills/archify/test/output-path.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/presentation.test.mjs",
-      "target": "skills/archify/test/presentation.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/preset-tryon.test.mjs",
-      "target": "skills/archify/test/preset-tryon.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/preview-contract.test.mjs",
-      "target": "skills/archify/test/preview-contract.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/preview.test.mjs",
-      "target": "skills/archify/test/preview.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/proof-aperture.test.mjs",
-      "target": "skills/archify/test/proof-aperture.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/reach-share-card.test.mjs",
-      "target": "skills/archify/test/reach-share-card.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/reader-layout-browser.test.mjs",
-      "target": "skills/archify/test/reader-layout-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/readme-showcase.test.mjs",
-      "target": "skills/archify/test/readme-showcase.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/real-repository-proof.test.mjs",
-      "target": "skills/archify/test/real-repository-proof.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/relationship-direct-explorer.test.mjs",
-      "target": "skills/archify/test/relationship-direct-explorer.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/relationship-lens.test.mjs",
-      "target": "skills/archify/test/relationship-lens.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/relationship-permalink.test.mjs",
-      "target": "skills/archify/test/relationship-permalink.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/relationship-pulse.test.mjs",
-      "target": "skills/archify/test/relationship-pulse.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/release-identity.test.mjs",
-      "target": "skills/archify/test/release-identity.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/release-package-gates.test.mjs",
-      "target": "skills/archify/test/release-package-gates.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/render-output-checks.test.mjs",
-      "target": "skills/archify/test/render-output-checks.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/repair-receipt.test.mjs",
-      "target": "skills/archify/test/repair-receipt.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/repository-evidence.test.mjs",
-      "target": "skills/archify/test/repository-evidence.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/repository-language-metadata.test.mjs",
-      "target": "skills/archify/test/repository-language-metadata.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/route-journey.test.mjs",
-      "target": "skills/archify/test/route-journey.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/route-probe-browser.test.mjs",
-      "target": "skills/archify/test/route-probe-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/route-probe.test.mjs",
-      "target": "skills/archify/test/route-probe.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/route-share-card.test.mjs",
-      "target": "skills/archify/test/route-share-card.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-camera.test.mjs",
-      "target": "skills/archify/test/semantic-camera.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-flow.test.mjs",
-      "target": "skills/archify/test/semantic-flow.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-legend-gateway.test.mjs",
-      "target": "skills/archify/test/semantic-legend-gateway.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-lens-browser.test.mjs",
-      "target": "skills/archify/test/semantic-lens-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-lens.test.mjs",
-      "target": "skills/archify/test/semantic-lens.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-passport.test.mjs",
-      "target": "skills/archify/test/semantic-passport.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-radar.test.mjs",
-      "target": "skills/archify/test/semantic-radar.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/semantic-zoom.test.mjs",
-      "target": "skills/archify/test/semantic-zoom.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/sequence-column-fit.test.mjs",
-      "target": "skills/archify/test/sequence-column-fit.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/settled-flow.test.mjs",
-      "target": "skills/archify/test/settled-flow.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/share-card-export.test.mjs",
-      "target": "skills/archify/test/share-card-export.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/site-language-continuity.test.mjs",
-      "target": "skills/archify/test/site-language-continuity.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/site-language-integration.mjs",
-      "target": "skills/archify/test/site-language-integration.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/skill-metadata.test.mjs",
-      "target": "skills/archify/test/skill-metadata.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/stable-update-manifest.test.mjs",
-      "target": "skills/archify/test/stable-update-manifest.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/start-page.test.mjs",
-      "target": "skills/archify/test/start-page.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-beat-navigator.test.mjs",
-      "target": "skills/archify/test/story-beat-navigator.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-carrier.test.mjs",
-      "target": "skills/archify/test/story-carrier.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-director-strip.test.mjs",
-      "target": "skills/archify/test/story-director-strip.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-follow-camera.test.mjs",
-      "target": "skills/archify/test/story-follow-camera.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-horizon.test.mjs",
-      "target": "skills/archify/test/story-horizon.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-moment-link.test.mjs",
-      "target": "skills/archify/test/story-moment-link.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-shelf.test.mjs",
-      "target": "skills/archify/test/story-shelf.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/story-trail.test.mjs",
-      "target": "skills/archify/test/story-trail.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/toolbar-polish.test.mjs",
-      "target": "skills/archify/test/toolbar-polish.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/update-contract.test.mjs",
-      "target": "skills/archify/test/update-contract.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/update-notifier.test.mjs",
-      "target": "skills/archify/test/update-notifier.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/v1-compatibility.test.mjs",
-      "target": "skills/archify/test/v1-compatibility.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/vertical-edge.test.mjs",
-      "target": "skills/archify/test/vertical-edge.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/viewer-camera-browser.test.mjs",
-      "target": "skills/archify/test/viewer-camera-browser.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/viewer-chrome-layout.test.mjs",
-      "target": "skills/archify/test/viewer-chrome-layout.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/visual-check.test.mjs",
-      "target": "skills/archify/test/visual-check.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/webm-artifact.smoke.mjs",
-      "target": "skills/archify/test/webm-artifact.smoke.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/workflow-compiler-hard-contract.test.mjs",
-      "target": "skills/archify/test/workflow-compiler-hard-contract.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/workflow-compiler.test.mjs",
-      "target": "skills/archify/test/workflow-compiler.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/workflow-migration.test.mjs",
-      "target": "skills/archify/test/workflow-migration.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/test/workflow-semantic-contract.test.mjs",
-      "target": "skills/archify/test/workflow-semantic-contract.test.mjs",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/archify/THIRD_PARTY_NOTICES.md",
-      "target": "skills/archify/THIRD_PARTY_NOTICES.md",
-      "kind": "upstream-skill"
-    },
-    {
-      "source": "vendor/ponytail/SKILL.md",
-      "target": "skills/ponytail/SKILL.md",
       "kind": "upstream-skill"
     }
   ],

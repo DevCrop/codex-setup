@@ -80,7 +80,7 @@ or upstream adoption before applying. No application-managed plugin cache is cop
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.1.3` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.1.4` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 
@@ -92,3 +92,7 @@ in the optional project reference. Only empty parents of removed files are prune
 One local restore point contains their prior bytes; credentials and raw backups
 must never be committed. `doctor` reports additional personal skills, which can
 make another computer's effective context differ. Whole-home cleanup remains separate.
+
+`doctor` and `verify.unmanaged_skill_findings` also report directories missing
+`SKILL.md`. These findings are review candidates, not permission to delete user files.
+A managed-file verification pass does not mean that the entire Codex home is clean.

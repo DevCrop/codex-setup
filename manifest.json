@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "version": "1.1.3",
+  "version": "1.1.4",
   "files": [
     {
       "source": "global/skill-policy/openai.yaml",
@@ -596,6 +596,18 @@
       "target": "config.toml.backup-20260830T124631Z",
       "sha256": "cf84df9ebde28a13ffd53854a97e882bab9fd0acd552c732ffc0e4c1f16372dc",
       "reason": "Old unmanaged config backup retired after reviewed fingerprint match; contents retained only in local restore point."
+    },
+    {
+      "root": "personal_skills",
+      "target": "encoding-safety/agents/openai.yaml",
+      "sha256": "129dfd2dd89947b94d339f715a2c41f5d47984cce0f01bc662da6f0275b6cb81",
+      "reason": "Reviewed orphan interface metadata for an already retired personal skill. Exact bytes only; modified copies conflict."
+    },
+    {
+      "root": "personal_skills",
+      "target": "official-source-workflow/agents/openai.yaml",
+      "sha256": "a66a30e45152ec2786fd776c4d74afee88a26cb039f2d449762584c93066535e",
+      "reason": "Reviewed orphan interface metadata for an already retired personal skill. Exact bytes only; modified copies conflict."
     }
   ]
 }

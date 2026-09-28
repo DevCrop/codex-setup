@@ -195,8 +195,11 @@ class Deployment:
                         continue
                     key = prefix + folder.name + '/SKILL.md'
                     try:
-                        if self.path(key).is_file() and key not in self.record['files']:
+                        skill = self.path(key)
+                        if skill.is_file() and key not in self.record['files']:
                             unmanaged.append(key)
+                        elif folder.is_dir() and not skill.is_file():
+                            unmanaged.append(prefix + folder.name + '/[missing SKILL.md]')
                     except ValueError:
                         unmanaged.append(prefix + folder.name + '/[linked; not scanned]')
         return sorted(unmanaged)
@@ -357,6 +360,7 @@ class Deployment:
             if self.path(key).exists():
                 errors.append("retired:" + key)
         return {"status": "pass" if not errors else "fail", "errors": errors,
+                "unmanaged_skill_findings": self.inventory(),
                 "limit": "Only manifest-owned files and retired targets are verified; app runtime exposure is separate."}
 
     def uninstall(self):

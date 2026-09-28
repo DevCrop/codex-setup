@@ -52,6 +52,24 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(old.read_bytes(), b'old skill')
         self.assertFalse((old.parent.parent / 'new/SKILL.md').exists())
 
+    def test_orphan_skill_metadata_diagnosed_and_fingerprint_retired(self):
+        orphan = self.root / 'personal skills/old/agents/openai.yaml'
+        orphan.parent.mkdir(parents=True)
+        orphan.write_bytes(b'interface: {}\n')
+        self.assertIn('@personal/old/[missing SKILL.md]', self.dep().inventory())
+        self.manifest['retired'] = [{'root': 'personal_skills',
+            'target': 'old/agents/openai.yaml', 'sha256': digest(b'interface: {}\n')}]
+        self.write_manifest()
+        orphan.write_bytes(b'user modified')
+        with self.assertRaises(ValueError):
+            self.dep().apply(True)
+        orphan.write_bytes(b'interface: {}\n')
+        self.dep().apply()
+        self.assertFalse(orphan.parent.parent.exists())
+        self.assertEqual(self.dep().verify()['unmanaged_skill_findings'], [])
+        self.dep().restore()
+        self.assertEqual(orphan.read_bytes(), b'interface: {}\n')
+
     def test_personal_retirement_conflict_and_wrong_root_restore(self):
         old = self.root / 'personal skills/old/SKILL.md'
         old.parent.mkdir(parents=True)

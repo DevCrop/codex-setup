@@ -2,6 +2,13 @@
 
 Date: 2026-09-21. This is configuration/lifecycle verification, not a model benchmark.
 
+## v1.1.4 retirement diagnostics — 2026-09-28
+
+- Corrected the earlier cleanup scope: retired personal skills still had `agents/openai.yaml` metadata because only their `SKILL.md` files were fingerprinted. Added the two reviewed metadata hashes to retirement; current-host apply removed both, pruned empty parents, verified 116 managed files and repeated unchanged.
+- `doctor` inventory and `verify.unmanaged_skill_findings` now report skill directories missing `SKILL.md`. Unmanaged findings are diagnostics, never deletion authorization or an automatic verification failure. System skill catalogs remain outside this inventory.
+- Local suite: 36 tests, 34 passed and two Windows symlink skips. New coverage proves orphan metadata detection, modified-copy refusal, exact-hash retirement and restoration. Repository integrity passed. No project rules, models or permissions are changed by this global release.
+- Rollback restores v1.1.3 ownership state and these two metadata files. Whole-home cleanup and application runtime loading remain outside the managed-file verification guarantee.
+
 ## v1.1.3 upstream maintenance — 2026-09-28
 
 - User approved CLI 0.157.1 and Archify 3.0.0 adoption. CLI version and ChatGPT login status passed. Interactive background-server startup was not exercised; CLI release notes describe changed startup behavior. Roll back the host CLI separately with `npm install -g @openai/codex@0.156.1`.

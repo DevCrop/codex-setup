@@ -2,6 +2,17 @@
 
 Date: 2026-09-21. This is configuration/lifecycle verification, not a model benchmark.
 
+## v1.1.3 upstream maintenance — 2026-09-28
+
+- User approved CLI 0.157.1 and Archify 3.0.0 adoption. CLI version and ChatGPT login status passed. Interactive background-server startup was not exercised; CLI release notes describe changed startup behavior. Roll back the host CLI separately with `npm install -g @openai/codex@0.156.1`.
+- Archify uses the canonical release ZIP, pinned to release commit `9286c3b9c2cef359e98586b420d769d87bcb163f`, with asset and individual-file hashes in `versions.lock.json`. The release payload has 104 upstream files; 134 previously owned paths are retired. This is upstream packaging, not a hand-edited skill. Explicit-only invocation policy and Ponytail remain unchanged.
+- Existing global flow semantics and topology are preserved. Added required portable `meta.output`, then finalized with Archify 3.0: 9/9 showcase checks and validate/deliver/check/browser-check passed. The receipt records current automated viewport evidence; no new perceptual screenshot review is claimed. Guided/story views were removed upstream; existing schema-v1 inputs remain supported.
+- Local lifecycle suite: 35 tests, two Windows symlink-permission skips. Repository integrity checks include 115 manifest assets plus managed config (116 deployed files). No model calls, benchmarks, project changes or cache cleanup.
+- Isolated v1.1.2 → v1.1.3 migration, unchanged repeat, rollback verification and reapply passed. Current-host apply changed 226 entries (including 134 removals); 116 managed files verified, repeat unchanged, no additional unmanaged personal skills found. Upstream/generated HTML whitespace is preserved rather than rewriting pinned bytes.
+- Managed rollback restores the prior v1.1.2 payload; use that checkout to verify after rollback. The installer does not roll back npm. Current CLI and package adoption does not approve optional MXC sandbox, managed policies or unrelated release-feed features.
+
+Sources: [official CLI changelog](https://learn.chatgpt.com/docs/changelog), [Archify 3.0 release and migration notes](https://github.com/tt-a1i/archify/releases/tag/v3.0.0). Historical evidence below describes its stated release, not the new artifact.
+
 ## v1.1.2 maintenance — 2026-09-24
 
 - Approved `sol` preset now selects `gpt-6-sol` with `medium`. Base user model and both Astra presets are unchanged.

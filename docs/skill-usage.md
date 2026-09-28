@@ -34,6 +34,12 @@ diagrams/global/codex-flow.json과 codex-flow.html에 반영해줘.
 프로젝트에 같은 역할의 문서나 도식이 있으면 그 경로를 지정한다.
 새 디렉터리 구조를 만들기 위해 중복 파일을 추가하지 않는다.
 
+Archify 3.0은 경로를 생략하면 요청별 날짜 폴더를 만드는 기본 절차가 있다.
+TRACE에서는 위 예시처럼 기존 정본 경로를 명시하고 `meta.output`에도 같은
+상대 HTML 경로를 기록한다. 검증은 `finalize`의 validate·deliver·check·browser-check
+통과로 확인한다. 자동 브라우저 검사와 사람이 화면을 보는 시각 검토는 구분한다.
+3.0에서 guided/story 뷰는 제거됐으며 기존 `meta.views`는 무시된다.
+
 ## 언제 선택하는가
 
 | 스킬 | 사용할 때 | 요청에 추가할 것 |

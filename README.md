@@ -80,7 +80,7 @@ or upstream adoption before applying. No application-managed plugin cache is cop
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.1.2` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.1.3` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 

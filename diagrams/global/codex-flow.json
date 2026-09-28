@@ -3,7 +3,8 @@
   "diagram_type": "workflow",
   "meta": {
     "title": "TRACE Setup v1.1 · 글로벌 운영 흐름",
-    "quality_profile": "showcase"
+    "quality_profile": "showcase",
+    "output": "diagrams/global/codex-flow.html"
   },
   "lanes": [
     {

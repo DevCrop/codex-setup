@@ -14,9 +14,9 @@ The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate
 
 Use one operating host and the existing TRACE heartbeat, weekly on Monday at
 10:00 in the configured host timezone. It covers source updates, global installation
-health and explicitly registered projects; do not create a second project monitor.
-Machine-specific checkout paths and project registrations belong in the host's
-automation settings or private local state, never in shared policy. A new computer
+health, RTK releases and explicitly registered projects; do not create a second project monitor.
+Machine-specific checkout paths and project registrations belong in private
+`cleanup-projects.json` beside deployment state, never in shared policy. A new computer
 does not inherit monitoring ownership merely by installing this repository.
 
 ### Working routine
@@ -42,8 +42,10 @@ does not inherit monitoring ownership merely by installing this repository.
 4. Only meaningful changes or failures trigger model review. Do not reread the
    entire reference inventory or project. Default to direct review; use bounded
    delegation only when independent work justifies it. Do not schedule model benchmarks.
-5. Do not execute arbitrary repository scripts, installs, builds, browser tests or
-   cleanup during the heartbeat. Recommend the smallest checks for a candidate;
+5. Run `python -B scripts/tools.py verify` and `python -B scripts/project_cleanup.py scan`.
+   Do not execute arbitrary repository scripts, installs, builds or browser tests
+   during the heartbeat. The sole deletion exception is the pre-authorized dependency
+   policy below, executed only by `project_cleanup.py prune`. Recommend the smallest checks for other candidates;
    execute them during approved implementation. Missing paths and failed collection
    stay unknown/failed, not healthy. An offline host cannot guarantee scheduled execution.
 
@@ -64,7 +66,8 @@ for review, not proof of a policy change or a fault.
 
 Prepare exact candidate edits, evidence and validation before requesting approval.
 The heartbeat never applies managed instructions, skills, configuration, project
-edits, upgrades, Git publication or deletions. Never overwrite project docs during
+source edits, upgrades or Git publication. Dependency removal is restricted to the
+pre-authorized policy below; all other deletions require approval. Never overwrite project docs during
 a global update. Update only affected Archify diagrams during approved work.
 
 Source reports retain `pending` candidates across unchanged fetches. The success
@@ -75,6 +78,66 @@ record a decision about that exact candidate; this never applies policy. Typogra
 GitHub statistics and example model names alone do not justify policy edits.
 Quote styles are normalized; other relevance decisions require review. Report
 known missed runs honestly; a timestamp alone cannot establish scheduler history.
+
+## Project dependency cleanup
+
+The user authorized idle dependency cleanup on 2026-10-01. This is TRACE operating
+policy, not an OpenAI recommendation or proof a person has stopped using a project.
+Only registered exact Git roots are examined; do not search every drive. Register
+an approved project with `project_cleanup.py register --id NAME --path PATH --auto`.
+Without `--auto`, it is held. Registrations and observations remain host-local.
+
+- Begin observation at registration/first successful collection, never backdate
+  inactivity from a last commit or old folder timestamp. Require 45 observed days
+  without Git/content, install-root or manifest/lock changes. Missed/inaccessible
+  intervals longer than 14 days, process-collection failure and possible runtime
+  activity reset the observation period. Command lines are inspected transiently,
+  never stored; a relative-path runtime can be ambiguous and blocks automatic deletion.
+- Inspect only direct-child `node_modules`, Composer `vendor`, or uv `.venv` with
+  an unambiguous manifest/lock pair, Git ignore coverage and no tracked contents.
+  Before proposing/deleting, check the complete tree's write times and refuse all
+  symlinks, junctions, special files and linked roots. Shared package stores,
+  authentication, global installs, source, backups and other build outputs are excluded.
+- Report an exact candidate, size and reinstall command. After actually notifying
+  the user, run `reported --id NAME --artifact node_modules` once. Wait at least
+  seven days from that notification before the fixed `prune` command can remove it.
+  Unreported candidates never become eligible. Recheck identity, locks, contents and
+  processes immediately before deletion. New activity cancels the grace period.
+- `hold --id NAME` prevents automatic cleanup; `touch --id NAME` records active
+  read-only/manual work and resets the idle clock. Users can resume work at any time.
+  File reads outside observed tools may be invisible; no perfect inactivity detector
+  is claimed. Linked installs are deliberately manual-only, including common
+  POSIX virtualenv/bin or pnpm layouts. The tool never follows links into shared stores.
+- Record verified removals and failures in one `cleanup-result.json`. Permission
+  failure can leave a partial dependency directory; report it and reinstall using
+  the pinned package manager/lock during authorized work. Source and lock files
+  remain. Dependencies have no byte-for-byte managed-policy rollback. Do not hide
+  unresolved errors or repeatedly force deletion. Logical size is not physical
+  space reclaimed, especially with hard links.
+
+The same registry supplies weekly project health scope; do not maintain a second
+path inventory in policy. `cleanup-observations.json` holds one current observation
+per project, separate from semantic-review evidence in `routine-review.json`.
+
+## RTK lifecycle
+
+`versions.lock.json` pins release assets for supported Windows, macOS and Linux
+architectures. `tools.py install-rtk` verifies the release SHA-256, extracts only the
+binary and checks its version before replacing an owned installation. One previous
+binary is retained outside active paths; user-modified copies conflict. `tools.py
+verify`, `tools.py rollback-rtk` and `tools.py uninstall-rtk` check ownership.
+Runtime tools are separately owned in `tools-installed.json`, not copied into
+Codex home, Git or a project. No PATH or shell profile is edited. Use `tools.py run`
+or the verified absolute binary path. A new computer explicitly installs its own
+platform asset; installing TRACE instructions alone does not install this binary.
+
+Release changes are candidates, not automatic binary updates. Standard RTK gain
+counts are estimates, not OpenAI usage. Run `verify_rtk.py --project PATH` during
+approved maintenance for Git, TypeScript when installed, Unicode/space paths,
+arguments, stderr and nonzero exit checks. It does not test every filter or imply
+transparent hook loading. RTK's native auto-rewrite is not installed because of
+its documented approval-classifier limitation; do not run `rtk init -g` as a
+shortcut. See [conditional RTK guidance](../global/guides/rtk.md).
 
 ## Manifest migration
 

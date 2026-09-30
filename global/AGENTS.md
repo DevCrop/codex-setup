@@ -8,4 +8,4 @@
 - Handle small or tightly coupled work directly. Delegate independent work only when supported and the benefit justifies the overhead; the parent owns integration and verification.
 - Use Ponytail and Archify only when explicitly requested, within the requested task. Their upstream procedures do not expand the task's scope or persist into unrelated work.
 
-Conditional guides in the Codex home (honor CODEX_HOME): read `guides/agent-orchestration.md` for substantial delegation, `guides/model-operations.md` for CLI profiles, `guides/github-workflow.md` for Git publishing, and `guides/official-source-workflow.md` when changing durable guidance. Do not load these guides for unrelated tasks.
+Conditional guides in the Codex home (honor CODEX_HOME): read `guides/agent-orchestration.md` for substantial delegation, `guides/model-operations.md` for CLI profiles, `guides/github-workflow.md` for Git publishing, `guides/official-source-workflow.md` when changing durable guidance, and `guides/rtk.md` when filtering noisy command output. Do not load these guides for unrelated tasks.

@@ -41,6 +41,11 @@ def main():
         actual = {p.relative_to(folder).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                   for p in folder.rglob("*") if p.is_file()}
         assert actual == skill["files"], f'Upstream integrity mismatch: {skill["name"]}'
+    rtk = read_json(ROOT / 'versions.lock.json')['tools']['rtk']
+    assert re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+', rtk['version'])
+    for name, asset in rtk['assets'].items():
+        assert re.fullmatch('[0-9a-f]{64}', asset['sha256'])
+        assert asset['url'] == f'https://github.com/rtk-ai/rtk/releases/download/v{rtk["version"]}/{name}'
     sources = read_json(ROOT / "references/registry.json")["sources"]
     assert len({s["id"] for s in sources}) == len(sources)
     for source in sources:

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "diagram_type": "workflow",
-  "specification_sha256": "e6dbd2d16acfe34cb256089d10909823d4c147ddd91426c408b366ba2339f1fd",
-  "artifact_sha256": "1fceef190315b4b89e548d55da257ac8d39f211feb656de1d05e670219069299",
+  "specification_sha256": "46de0e0dc36535d5678f22e8e21fe1fc8468205bb07d67d347e984b0b2987a9b",
+  "artifact_sha256": "efb2e2b3006183a9d4c9fee8720987ce6a68f274d35546ceec28dc7190c454ff",
   "validation": {
     "checks_passed": 9,
     "checks_total": 9,

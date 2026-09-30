@@ -1,6 +1,6 @@
 # Release verification
 
-Current release: [v1.1 verification](verification-v1.1.md). The following is historical v1.0.1 evidence.
+Current release: [v1.2 verification](verification-v1.2.md). Earlier [v1.1 evidence](verification-v1.1.md) remains historical. The following is historical v1.0.1 evidence.
 
 Date: 2026-09-14. This is configuration validation, not a model-efficiency benchmark.
 

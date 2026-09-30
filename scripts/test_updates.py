@@ -2,11 +2,20 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from check_updates import Body, check, resolve_candidate
+from check_updates import Body, check, github_body, resolve_candidate
 from setup import read_json, save_json
 
 
 class MonitorTests(unittest.TestCase):
+    def test_release_digest_and_notes_without_download_count_noise(self):
+        release = {'tag_name':'v1', 'published_at':'date', 'body':'notes',
+                   'assets':[{'name':'binary', 'digest':'sha256:a', 'browser_download_url':'url', 'download_count':1}]}
+        first = github_body(release)
+        release['assets'][0]['download_count'] = 99
+        self.assertEqual(github_body(release), first)
+        release['assets'][0]['digest'] = 'sha256:b'
+        self.assertNotEqual(github_body(release), first)
+
     def test_candidate_survives_unchanged_and_resolution_is_hash_bound(self):
         with tempfile.TemporaryDirectory() as d:
             state = Path(d)

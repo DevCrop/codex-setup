@@ -41,6 +41,16 @@ class Body(HTMLParser):
                 self.primary.append(text)
 
 
+def github_body(payload):
+    if isinstance(payload, list):
+        selected = {"sha": payload[0]["sha"], "message": payload[0]["commit"]["message"]}
+    else:
+        selected = {k: payload[k] for k in ('tag_name', 'published_at', 'body')}
+        selected['assets'] = [{k: a.get(k) for k in ('name', 'digest', 'browser_download_url')}
+                              for a in payload.get('assets', [])]
+    return json.dumps(selected, sort_keys=True)
+
+
 def fetch(item):
     url = item["url"]
     try:
@@ -51,8 +61,7 @@ def fetch(item):
                 raise ValueError("Response exceeds monitor limit")
             text = data.decode("utf-8")
             if url.startswith("https://api.github.com/"):
-                commits = json.loads(text)
-                text = json.dumps({"sha": commits[0]["sha"], "message": commits[0]["commit"]["message"]}, sort_keys=True)
+                text = github_body(json.loads(text))
             if "text/html" in response.headers.get("Content-Type", ""):
                 body = Body()
                 body.feed(text)

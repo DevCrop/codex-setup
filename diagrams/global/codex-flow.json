@@ -2,7 +2,7 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "TRACE Setup v1.1 · 글로벌 운영 흐름",
+    "title": "TRACE Setup v1.2 · 글로벌 운영 흐름",
     "quality_profile": "showcase",
     "output": "diagrams/global/codex-flow.html"
   },
@@ -18,6 +18,10 @@
     {
       "id": "maintain",
       "label": "설정 유지관리"
+    },
+    {
+      "id": "cleanup",
+      "label": "설치 산출물 정리"
     }
   ],
   "mainPath": [
@@ -34,7 +38,8 @@
       "col": 0,
       "type": "external",
       "label": "사용자 요청",
-      "sublabel": "모델·추론 강도 선택"
+      "sublabel": "모델·추론 강도 선택",
+      "width": 165
     },
     {
       "id": "context",
@@ -42,7 +47,8 @@
       "col": 1,
       "type": "database",
       "label": "관련 문서 확인",
-      "sublabel": "글로벌 + 프로젝트"
+      "sublabel": "글로벌 + 프로젝트",
+      "width": 165
     },
     {
       "id": "execute",
@@ -50,7 +56,8 @@
       "col": 2,
       "type": "backend",
       "label": "직접 처리 기본",
-      "sublabel": "스킬은 명시적 요청"
+      "sublabel": "스킬은 명시적 요청",
+      "width": 165
     },
     {
       "id": "verify",
@@ -58,7 +65,8 @@
       "col": 3,
       "type": "security",
       "label": "통합·검증",
-      "sublabel": "수행한 검사만 보고"
+      "sublabel": "수행한 검사만 보고",
+      "width": 165
     },
     {
       "id": "report",
@@ -66,7 +74,8 @@
       "col": 5,
       "type": "frontend",
       "label": "결과 전달",
-      "sublabel": "근거와 남은 제약"
+      "sublabel": "근거와 남은 제약",
+      "width": 165
     },
     {
       "id": "child",
@@ -74,7 +83,8 @@
       "col": 3,
       "type": "backend",
       "label": "독립 작업 위임",
-      "sublabel": "부모 상속 · 최대 2개"
+      "sublabel": "부모 상속 · 최대 2개",
+      "width": 165
     },
     {
       "id": "watch",
@@ -82,7 +92,8 @@
       "col": 0,
       "type": "cloud",
       "label": "주간 변경 감지",
-      "sublabel": "공식 문서·릴리스"
+      "sublabel": "공식·RTK·등록 프로젝트",
+      "width": 165
     },
     {
       "id": "candidate",
@@ -90,7 +101,8 @@
       "col": 1,
       "type": "database",
       "label": "변경 후보",
-      "sublabel": "미검토 후보 유지"
+      "sublabel": "미검토 후보 유지",
+      "width": 165
     },
     {
       "id": "approve",
@@ -98,7 +110,8 @@
       "col": 2,
       "type": "security",
       "label": "사용자 승인",
-      "sublabel": "적용 범위 확정"
+      "sublabel": "적용 범위 확정",
+      "width": 165
     },
     {
       "id": "apply",
@@ -106,7 +119,8 @@
       "col": 4,
       "type": "backend",
       "label": "버전 적용",
-      "sublabel": "설치·제거·검증"
+      "sublabel": "설치·제거·검증",
+      "width": 165
     },
     {
       "id": "flow",
@@ -115,7 +129,7 @@
       "type": "frontend",
       "label": "글로벌 flow 갱신",
       "sublabel": "요청된 Archify 작업",
-      "width": 150
+      "width": 165
     },
     {
       "id": "rollback",
@@ -123,7 +137,44 @@
       "col": 5,
       "type": "security",
       "label": "복원·충돌 보고",
-      "sublabel": "사용자 수정 보존"
+      "sublabel": "사용자 수정 보존",
+      "width": 165
+    },
+    {
+      "id": "idle",
+      "lane": "cleanup",
+      "col": 0,
+      "type": "database",
+      "label": "45일 관측",
+      "sublabel": "활동·프로세스·lock",
+      "width": 165
+    },
+    {
+      "id": "notice",
+      "lane": "cleanup",
+      "col": 1,
+      "type": "frontend",
+      "label": "후보 알림",
+      "sublabel": "7일 유예·활동 시 취소",
+      "width": 165
+    },
+    {
+      "id": "prune",
+      "lane": "cleanup",
+      "col": 4,
+      "type": "security",
+      "label": "정확한 경로 정리",
+      "sublabel": "등록·사전 승인 범위만",
+      "width": 165
+    },
+    {
+      "id": "cleanreport",
+      "lane": "cleanup",
+      "col": 5,
+      "type": "frontend",
+      "label": "삭제·제약 보고",
+      "sublabel": "source·공유 store 보존",
+      "width": 165
     }
   ],
   "edges": [
@@ -198,6 +249,33 @@
       "to": "rollback",
       "role": "branch",
       "label": "검증 실패"
+    },
+    {
+      "id": "watch-idle",
+      "from": "watch",
+      "to": "idle",
+      "role": "branch",
+      "label": "정리 정책"
+    },
+    {
+      "id": "idle-notice",
+      "from": "idle",
+      "to": "notice",
+      "role": "main",
+      "label": "정리 가능"
+    },
+    {
+      "id": "notice-prune",
+      "from": "notice",
+      "to": "prune",
+      "role": "main",
+      "label": "7일 후 재검증"
+    },
+    {
+      "id": "prune-cleanreport",
+      "from": "prune",
+      "to": "cleanreport",
+      "role": "main"
     }
   ],
   "cards": [
@@ -215,6 +293,14 @@
       "items": [
         "정확한 manifest 소유 파일만 설치·제거",
         "복원도 충돌 시 중단하고 사용자 수정 보존"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "RTK·정리 경계",
+      "items": [
+        "RTK는 명시 실행 · 실제 토큰 절감 보장 없음",
+        "미상·활동 중·링크·추적 파일은 정리 제외"
       ]
     }
   ]

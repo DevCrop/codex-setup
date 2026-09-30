@@ -1,4 +1,4 @@
-# TRACE Setup v1.1
+# TRACE Setup v1.2
 
 Portable Codex personal instructions, optional profiles, pinned Archify/Ponytail,
 and ownership-based deployment. Python 3.11+ and Git are required; Node.js is needed
@@ -55,12 +55,41 @@ instructions; filesystem verification is not proof of app UI or model behavior.
 Choose models in the app. Optional CLI commands: `codex --profile sol`,
 `codex --profile astra`, `codex --profile astra-deep`. Profiles do not change
 the persistent base model selection and do not implement automatic model switching.
+The sol preset selects GPT-6.1 Sol Medium; existing app/base effort choices are preserved.
+
+## Optional RTK and project maintenance
+
+```text
+python -B scripts/tools.py install-rtk
+python -B scripts/tools.py verify
+python -B scripts/tools.py run git status
+python -B scripts/project_cleanup.py register --id NAME --path PATH --auto
+python -B scripts/project_cleanup.py scan
+```
+
+RTK uses pinned, SHA-256-verified platform assets in private host state; no hook,
+PATH edit, model/API call or per-project installation is required. The managed
+`bin/trace_rtk.py` in Codex home can run from any project by absolute path, retaining
+that project's working directory and local TypeScript version. RTK is third-party;
+compressed output bytes do not prove OpenAI tokens or subscription savings.
+Use raw project-native commands for final acceptance. See [operations](docs/operations.md)
+and [official versus local policy](docs/decisions/002-maintenance-and-rtk.md).
+
+The existing weekly monitor checks registered projects and RTK releases. Cleanup
+requires 45 observed idle days plus seven days after an actual candidate notification,
+locked/ignored dependencies, certain process checks and no links or tracked content.
+Unknown/active projects are retained; first registration starts observation today.
+Use `project_cleanup.py hold --id NAME` or `touch --id NAME` to retain/mark active work.
+Only the exact allowlisted dependency directory is removable; source, credentials,
+global installs, stores and unregistered projects are excluded. Binary upgrades
+still require approval; do not register another monitoring host automatically.
 
 ## Project adoption
 
 Start with [the project authoring contract](templates/project/README.md). Reuse
 existing rule documents; do not blindly copy the template into an existing repo.
-No actual project has been selected for this release. The global diagram lives in
+This release does not install product-project rules. Registered project health and
+RTK checks are separate from project onboarding. The global diagram lives in
 [codex-flow.html](diagrams/global/codex-flow.html); each project's diagram must live
 in that project's own repository and describe inspected source.
 
@@ -73,14 +102,14 @@ python -B scripts/index_docs.py
 ```
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
-[release verification](docs/verification-v1.1.md). Update detection produces review
+[release verification](docs/verification-v1.2.md). Update detection produces review
 candidates only. One designated desktop host runs weekly checks; inactive hosts
 cannot guarantee scheduled execution. Review source changes and approve any policy
 or upstream adoption before applying. No application-managed plugin cache is copied.
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.1.4` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.2.0` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 

@@ -919,6 +919,82 @@
       "body_fetched": false,
       "snapshot": null,
       "monitor": true
+    },
+    {
+      "id": "R39",
+      "url": "https://learn.chatgpt.com/docs/models",
+      "canonical_url": "https://learn.chatgpt.com/docs/models",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "GPT-6.1 Sol availability and task-dependent effort; client default is starting point.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R39.md",
+        "sha256": "24661e0879ecb769e25a47f360c997434d24be9747169824b094f3da2ccea907",
+        "bytes": 17297,
+        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true
+    },
+    {
+      "id": "R40",
+      "url": "https://learn.chatgpt.com/docs/whats-new/devday-2026",
+      "canonical_url": "https://learn.chatgpt.com/docs/whats-new/devday-2026",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "monitor-only",
+      "reason": "DevDay changes reviewed; API-only, cloud and Pro 500 features do not become local requirements.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R40.md",
+        "sha256": "8f64b801620af6f2e368b1993b148caf22f23b5890bf6ee23c593d1f578535a9",
+        "bytes": 7297,
+        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true
+    },
+    {
+      "id": "R41",
+      "url": "https://api.github.com/repos/rtk-ai/rtk/releases/latest",
+      "canonical_url": "https://api.github.com/repos/rtk-ai/rtk/releases/latest",
+      "origin": "implementation",
+      "authority": "upstream-maintainer",
+      "disposition": "adopted",
+      "reason": "RTK 0.50.0 reviewed; release notes/digests monitored, explicit filtering only.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R41.json",
+        "sha256": "fca19004d5297df4febf41a9cd61628f37663dbe1a2088bdf7b9d2bd01484d3a",
+        "bytes": 25906,
+        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "content_type": "application/json; charset=utf-8"
+      },
+      "monitor": true
+    },
+    {
+      "id": "R42",
+      "url": "https://learn.chatgpt.com/docs/hooks",
+      "canonical_url": "https://learn.chatgpt.com/docs/hooks",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "reference-only",
+      "reason": "Hook rewriting and exact-definition trust reviewed; no automatic hook installation.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R42.md",
+        "sha256": "724881d81f1a9fdb35ea42d4851a11b1f6606bbc6e9d2d05c1e8c466fc25c630",
+        "bytes": 46965,
+        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true
     }
   ]
 }

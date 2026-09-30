@@ -64,7 +64,7 @@ class ToolTests(unittest.TestCase):
             (project/'.git').mkdir()
             bins = project/'node_modules/.bin'
             bins.mkdir(parents=True)
-            self.assertEqual(runtime_env(project)['PATH'].split(os.pathsep)[0], str(bins))
+            self.assertEqual(runtime_env(project)['PATH'].split(os.pathsep)[0], str(bins.resolve()))
             with self.assertRaises(ValueError):
                 validate_command(['tsc'], project)
             compiler = project/'node_modules/typescript/bin/tsc'

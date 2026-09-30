@@ -88,6 +88,11 @@ is deliberately manual-only for linked installs (common pnpm and POSIX layouts).
 Human file reads may be invisible; `hold` and `touch` preserve active projects.
 Unknown processes, missed observations and safety conflicts block automatic deletion.
 
+The first macOS CI attempt exposed a test comparing `/var` with its canonical
+`/private/var` spelling. The runner already canonicalizes the project path; the
+test now requires that same canonical project-bin path. No path or ownership
+protection was relaxed.
+
 Policy rollback restores the previous managed payload; verify using that release
 checkout. RTK has its own hash-checked rollback/uninstall. Dependency deletion
 has no byte-for-byte rollback: retain source/locks and restore with the recorded

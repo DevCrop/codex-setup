@@ -82,7 +82,12 @@ is made that every filter preserves every diagnostic or reduces output.
 
 ## Limits and restoration
 
-CI results are recorded below only after execution. CI validates portable lifecycle
+Native [CI run 36742103889](https://github.com/DevCrop/codex-setup/actions/runs/36742103889)
+at code commit `c2413a9` passed all six Windows/macOS/Linux × Python 3.11/3.14
+jobs, each running the 51-case suite with platform-specific skips and repository
+integrity checks. The following commit records this evidence only.
+
+CI validates portable lifecycle
 logic, not native RTK execution, account access or every product project. Cleanup
 is deliberately manual-only for linked installs (common pnpm and POSIX layouts).
 Human file reads may be invisible; `hold` and `touch` preserve active projects.

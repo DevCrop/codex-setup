@@ -919,6 +919,73 @@
       "body_fetched": false,
       "snapshot": null,
       "monitor": true
+    },
+    {
+      "id": "R39",
+      "url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
+      "canonical_url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
+      "origin": "user",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "RTK v0.50.0 native Codex hook integration and limitations; executable release verified separately.",
+      "review_status": "relevant-sections-reviewed-2026-09-30",
+      "body_fetched": true,
+      "snapshot": null,
+      "applicable_files": [
+        "global/AGENTS.md",
+        "global/guides/rtk.md"
+      ],
+      "monitor": false
+    },
+    {
+      "id": "R40",
+      "url": "https://learn.chatgpt.com/docs/hooks",
+      "canonical_url": "https://learn.chatgpt.com/docs/hooks",
+      "origin": "user",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Current Codex hook discovery, Bash exec coverage and user review/trust requirements.",
+      "review_status": "relevant-sections-reviewed-2026-09-30",
+      "body_fetched": true,
+      "snapshot": null,
+      "applicable_files": [
+        "global/AGENTS.md",
+        "global/guides/rtk.md"
+      ],
+      "monitor": false
+    },
+    {
+      "id": "R41",
+      "url": "https://learn.chatgpt.com/docs/models",
+      "canonical_url": "https://learn.chatgpt.com/docs/models",
+      "origin": "user",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "GPT-6.1 Sol recommendation and explicit host model selection; preserve user-selected effort.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "applicable_files": [
+        "global/profiles/sol.config.toml",
+        "global/guides/model-operations.md"
+      ],
+      "monitor": false
+    },
+    {
+      "id": "R42",
+      "url": "https://learn.chatgpt.com/docs/config-file/config-reference",
+      "canonical_url": "https://learn.chatgpt.com/docs/config-file/config-reference",
+      "origin": "user",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Explicit shell_environment_policy.set values for host-local RTK sandbox recovery.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "applicable_files": [
+        "global/guides/rtk.md"
+      ],
+      "monitor": false
     }
   ]
 }

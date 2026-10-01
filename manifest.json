@@ -568,6 +568,10 @@
       "source": "vendor/archify/skill-release.json",
       "target": "skills/archify/skill-release.json",
       "kind": "upstream-skill"
+    },
+    {
+      "source": "global/guides/rtk.md",
+      "target": "guides/rtk.md"
     }
   ],
   "agent_settings": {

@@ -36,6 +36,13 @@ See [Ponytail·Archify usage examples](docs/skill-usage.md) for explicit selecti
 task scope, intensity and completion criteria. The English personalization source
 is [global/AGENTS.md](global/AGENTS.md); do not maintain a second edited copy.
 
+The RTK integration prefers compressed output for supported shell commands
+across projects, with raw-output fallback for exact evidence. See
+[RTK host setup and limits](global/guides/rtk.md). `setup.py` deploys the policy,
+not the RTK executable or machine-local hook; each host installs the reviewed
+binary and reviews its Codex hook separately. The pinned upstream skills remain
+unchanged. These repository updates are newer than the v1.1.4 release tag.
+
 ## Lifecycle
 
 ```text
@@ -55,6 +62,8 @@ instructions; filesystem verification is not proof of app UI or model behavior.
 Choose models in the app. Optional CLI commands: `codex --profile sol`,
 `codex --profile astra`, `codex --profile astra-deep`. Profiles do not change
 the persistent base model selection and do not implement automatic model switching.
+The `sol` preset now selects GPT-6.1 Sol with medium reasoning. See
+[model selection and host defaults](global/guides/model-operations.md).
 
 ## Project adoption
 

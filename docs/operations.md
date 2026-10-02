@@ -10,11 +10,15 @@ Run plan before apply. Inspect additions, changes, removals and conflicts. Apply
 
 The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate `.config.toml` files selected with `--profile`. Check host model support; the app composer remains user-controlled. A parsed configuration is not proof of a fresh session's effective instruction or model behavior. Inspect new-session loading separately. Legacy overrides and project trust can affect effective configuration.
 
-## Weekly maintenance
+## Daily global maintenance
 
-Use one operating host and the existing TRACE heartbeat, weekly on Monday at
-10:00 in the configured host timezone. It covers source updates, global installation
-health and explicitly registered projects; do not create a second project monitor.
+Use one operating host and its existing global setup heartbeat, daily at 10:00
+in the configured host timezone. On the designated host, the user has approved
+daily checks and stable Codex CLI/RTK updates. This is local operating policy,
+not an OpenAI default or authorization for every computer. It covers official
+release comparison, global installation health and repository deployment status.
+Keep separately authorized project cleanup schedules separate; do not create a
+duplicate monitor or expand cleanup scope through this global routine.
 Machine-specific checkout paths and project registrations belong in the host's
 automation settings or private local state, never in shared policy. A new computer
 does not inherit monitoring ownership merely by installing this repository.
@@ -25,26 +29,33 @@ does not inherit monitoring ownership merely by installing this repository.
 |---|---|---|
 | First project registration | Inspect applicable instructions, runtime, existing checks and project flow if present | Record findings and unknowns; do not invent missing configuration or diagrams |
 | Normal implementation | Relevant project rules and affected code | Run task-appropriate acceptance checks; preserve unrelated edits |
-| Weekly heartbeat | Source changes, managed installation and registered project deltas | Report only new actionable findings or material changes to unresolved findings |
+| Daily global heartbeat | Official releases, managed installation and repository deployment | Apply already authorized stable CLI/RTK updates; report only meaningful changes, failures or required user action |
+| Registered project review | Relevant project deltas when project review is authorized | Inspect changed content and preserve project-specific rules |
 | Architecture/dependency/rule change | Affected contracts, documentation and verification commands | Review semantic consistency and run relevant checks after an authorized change |
 | Approved maintenance | Exact reviewed files and versions | Apply, verify, account for removals and preserve rollback |
 
-### Weekly sequence and cost controls
+### Daily sequence and cost controls
 
 1. Run `python -B scripts/check_updates.py`; inspect new and retained candidates.
 2. Run `python -B scripts/setup.py verify`. Treat unmanaged skill findings separately
    from managed-file integrity; neither proves whole-home cleanliness or runtime loading.
-3. For each registered project, check path availability, Git HEAD and working-tree
+3. Compare installed Codex CLI and RTK versions with their official stable releases.
+   Update only tools covered by the host's existing authorization, using official
+   installation procedures and available integrity checks. Preserve hooks, selected
+   model/reasoning effort, authentication and user changes. Use the desktop app's
+   update check to report restart/Store actions; a CLI update is separate.
+   Verify resulting versions and a relevant RTK invocation.
+4. When project review is separately authorized, check path availability, Git HEAD and working-tree
    changes, including relevant untracked instructions. Inspect only changed rules,
    configuration, package/runtime pins, scripts and affected source. Check the selected
    runtime against a project pin when present. An unchanged dirty filename list is
    not evidence of unchanged content: compare content/diff fingerprints too.
-4. Only meaningful changes or failures trigger model review. Do not reread the
+5. Only meaningful changes or failures trigger deeper review. Do not reread the
    entire reference inventory or project. Default to direct review; use bounded
    delegation only when independent work justifies it. Do not schedule model benchmarks.
-5. Do not execute arbitrary repository scripts, installs, builds, browser tests or
-   cleanup during the heartbeat. Recommend the smallest checks for a candidate;
-   execute them during approved implementation. Missing paths and failed collection
+6. Do not execute arbitrary project scripts, installs, builds, browser tests or
+   cleanup during the global heartbeat. Run task-appropriate checks for authorized
+   maintenance; recommend the smallest checks for other candidates. Missing paths and failed collection
    stay unknown/failed, not healthy. An offline host cannot guarantee scheduled execution.
 
 Keep one current local routine record beside source-monitor state (not in project
@@ -63,9 +74,13 @@ infer missed executions from timestamp gaps alone. A file hash change is a trigg
 for review, not proof of a policy change or a fault.
 
 Prepare exact candidate edits, evidence and validation before requesting approval.
-The heartbeat never applies managed instructions, skills, configuration, project
-edits, upgrades, Git publication or deletions. Never overwrite project docs during
-a global update. Update only affected Archify diagrams during approved work.
+The existing authorization covers stable CLI/RTK upgrades and narrowly scoped
+compatibility repairs, with backup, minimal changes and verification. Publish a
+verified repository PR only when Git publication is also authorized on that host.
+New optional features, skills, plugins, permission expansion and major structural
+changes require separate approval. Never overwrite project docs or perform project
+cleanup during a global update. Update only affected Archify diagrams during
+explicitly approved work. Execution-policy restrictions and user edits remain binding.
 
 Source reports retain `pending` candidates across unchanged fetches. The success
 marker records collection time; installed state `applied_at` records deployment,

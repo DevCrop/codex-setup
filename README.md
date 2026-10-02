@@ -83,9 +83,12 @@ python -B scripts/index_docs.py
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
 [release verification](docs/verification-v1.1.md). Update detection produces review
-candidates only. One designated desktop host runs weekly checks; inactive hosts
-cannot guarantee scheduled execution. Review source changes and approve any policy
-or upstream adoption before applying. No application-managed plugin cache is copied.
+candidates only. One designated desktop host runs daily global setup checks under
+its user-approved automation; inactive hosts cannot guarantee scheduled execution.
+That host may update Codex CLI and RTK stable releases within the approved scope,
+with integrity checks and post-update verification. Policy, skill, plugin and
+permission changes require separate review and approval. Installing this repository
+does not create an automation. No application-managed plugin cache is copied.
 
 ## Migrating v1.0.1 and other computers
 

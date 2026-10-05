@@ -10,11 +10,20 @@ Run plan before apply. Inspect additions, changes, removals and conflicts. Apply
 
 The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate `.config.toml` files selected with `--profile`. Check host model support; the app composer remains user-controlled. A parsed configuration is not proof of a fresh session's effective instruction or model behavior. Inspect new-session loading separately. Legacy overrides and project trust can affect effective configuration.
 
-## Weekly maintenance
+## Designated-host maintenance
 
-Use one operating host and the existing TRACE heartbeat, weekly on Monday at
-10:00 in the configured host timezone. It covers source updates, global installation
-health, RTK releases and explicitly registered projects; do not create a second project monitor.
+Preserve the operating host's existing automation, cadence and authorization. The
+current TRACE host has a Monday 10:00 weekly heartbeat covering source updates,
+global installation health, RTK releases and explicitly registered projects.
+The daily global-maintenance authorization documented in merged PR #9 remains
+host-specific: where that existing routine is registered and authorized, stable
+CLI/RTK upgrades and narrow compatibility repairs may run with integrity checks,
+rollback and verification. Do not infer that authority from this repository on
+another host, create a duplicate monitor, change cadence, or transfer ownership.
+Keep separately authorized cleanup scope separate from a daily global update.
+Actual automation state controls cadence; an old document does not establish a
+registered scheduler. The current weekly TRACE monitor remains review-only except
+for its exact pre-authorized dependency cleanup policy.
 Machine-specific checkout paths and project registrations belong in private
 `cleanup-projects.json` beside deployment state, never in shared policy. A new computer
 does not inherit monitoring ownership merely by installing this repository.
@@ -29,7 +38,7 @@ does not inherit monitoring ownership merely by installing this repository.
 | Architecture/dependency/rule change | Affected contracts, documentation and verification commands | Review semantic consistency and run relevant checks after an authorized change |
 | Approved maintenance | Exact reviewed files and versions | Apply, verify, account for removals and preserve rollback |
 
-### Weekly sequence and cost controls
+### Collection, review and cost controls
 
 1. Run `python -B scripts/check_updates.py`; inspect new and retained candidates.
 2. Run `python -B scripts/setup.py verify`. Treat unmanaged skill findings separately
@@ -101,8 +110,12 @@ infer missed executions from timestamp gaps alone. A file hash change is a trigg
 for review, not proof of a policy change or a fault.
 
 Prepare exact candidate edits, evidence and validation before requesting approval.
-The heartbeat never applies managed instructions, skills, configuration, project
-source edits, upgrades or Git publication. Dependency removal is restricted to the
+The current weekly TRACE heartbeat never applies managed instructions, skills,
+configuration, project source edits, upgrades or Git publication. An existing
+daily global routine may perform only its separately authorized stable tool
+updates and compatibility repairs, preserving authentication, hooks, chosen
+model/effort and user edits; Git publication requires its own authorization.
+New optional features, plugins and permission expansion remain approval-gated. Dependency removal is restricted to the
 pre-authorized policy below; all other deletions require approval. Never overwrite project docs during
 a global update. Update only affected Archify diagrams during approved work.
 

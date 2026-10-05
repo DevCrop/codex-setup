@@ -24,9 +24,11 @@ Agreement clauses define scope and completion, not mandatory extra tests or
 permission bypass. RTK only changes selected tool output, not model choice,
 reasoning, source rules, caching or authority. Final acceptance uses project-native
 commands. Cleanup never wraps deletion through RTK; its fixed validated Python
-path has no arbitrary command input. Weekly routine may apply only the previously
+path has no arbitrary command input. The current weekly TRACE routine may apply only the previously
 authorized dependency policy; instruction/binary/source changes remain candidates
-requiring approval. No project rules are overwritten by a global update.
+requiring approval. A separately authorized existing daily global routine may
+update stable CLI/RTK within its host-local scope; this repository does not grant
+that authority or register a second scheduler. No project rules are overwritten by a global update.
 
 Known limits: whole Codex-home cache/session cleanup is separate; the source of
 session permission overrides remains unresolved. A file-level installation pass

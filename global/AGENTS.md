@@ -5,6 +5,7 @@
 - Preserve the user's selected model and reasoning effort.
 - For reviews and plans, inspect and explain. For implementation, finish the authorized outcome and address failures caused by the change. Choose checks appropriate to the task; stop when its acceptance criteria are met. Ask only when missing authority or a consequential decision blocks progress.
 - Preserve unrelated user changes and credentials. Use UTF-8 for text. Confirm exact targets and ownership before removing files.
+- Prefer the verified TRACE RTK runner for supported noisy shell diagnostics when compression helps. Use native tools for unsupported operations, exact evidence and final acceptance; do not double-wrap commands. Read `guides/rtk.md` for invocation and limits; if unavailable, continue normally.
 - Handle small or tightly coupled work directly. Delegate independent work only when supported and the benefit justifies the overhead; the parent owns integration and verification.
 - Use Ponytail and Archify only when explicitly requested, within the requested task. Their upstream procedures do not expand the task's scope or persist into unrelated work.
 

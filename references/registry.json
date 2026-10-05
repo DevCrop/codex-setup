@@ -332,7 +332,9 @@
         "error": null
       },
       "snapshot": null,
-      "applicable_files": [],
+      "applicable_files": [
+        "global/guides/rtk.md"
+      ],
       "monitor": true
     },
     {
@@ -937,7 +939,11 @@
         "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
         "content_type": "text/markdown; charset=utf-8"
       },
-      "monitor": true
+      "monitor": true,
+      "applicable_files": [
+        "global/guides/model-operations.md",
+        "global/profiles/sol.config.toml"
+      ]
     },
     {
       "id": "R40",
@@ -994,7 +1000,11 @@
         "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
         "content_type": "text/markdown; charset=utf-8"
       },
-      "monitor": true
+      "monitor": true,
+      "applicable_files": [
+        "global/AGENTS.md",
+        "global/guides/rtk.md"
+      ]
     },
     {
       "id": "R43",
@@ -1039,6 +1049,23 @@
         "docs/operations.md"
       ],
       "monitor": true
+    },
+    {
+      "id": "R45",
+      "url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
+      "canonical_url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
+      "origin": "user",
+      "authority": "upstream-maintainer",
+      "disposition": "reference-only",
+      "reason": "Historical host-local RTK 0.50.0 hook guidance from merged PR #8; preserve provenance, use the current pinned explicit runner and do not automatically install hooks.",
+      "review_status": "relevant-sections-reviewed-2026-09-30",
+      "body_fetched": true,
+      "snapshot": null,
+      "applicable_files": [
+        "global/AGENTS.md",
+        "global/guides/rtk.md"
+      ],
+      "monitor": false
     }
   ]
 }

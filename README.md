@@ -76,19 +76,19 @@ compressed output bytes do not prove OpenAI tokens or subscription savings.
 Use raw project-native commands for final acceptance. See [operations](docs/operations.md)
 and [official versus local policy](docs/decisions/002-maintenance-and-rtk.md).
 
-The existing weekly monitor checks registered projects and RTK releases. Cleanup
+The existing TRACE monitor checks registered projects and RTK releases at the
+host-configured cadence. Cleanup
 requires 45 observed idle days plus seven days after an actual candidate notification,
 locked/ignored dependencies, certain process checks and no links or tracked content.
 Unknown/active projects are retained; first registration starts observation today.
 Use `project_cleanup.py hold --id NAME` or `touch --id NAME` to retain/mark active work.
 Only the exact allowlisted dependency directory is removable; source, credentials,
 global installs, stores and unregistered projects are excluded. Binary upgrades
-still require approval; do not register another monitoring host automatically.
+require existing host authorization; do not register another monitoring host automatically.
 The completion audit also catches unpublished release versions, deployment/tool
 drift and registered projects awaiting their first scoped review. The existing
-weekly routine reports new actionable gaps proactively and retains previously
-reported findings without repeating unchanged notices. It does not publish or
-upgrade on its own.
+TRACE routine reports new actionable gaps proactively and retains previously
+reported findings without repeating unchanged notices. The current weekly TRACE monitor does not publish or upgrade on its own.
 
 ## Project adoption
 
@@ -109,9 +109,14 @@ python -B scripts/index_docs.py
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
 [release verification](docs/verification-v1.2.md). Update detection produces review
-candidates only. One designated desktop host runs weekly checks; inactive hosts
-cannot guarantee scheduled execution. Review source changes and approve any policy
-or upstream adoption before applying. No application-managed plugin cache is copied.
+candidates only. Preserve the designated host's existing schedule and authorization;
+installing this repository does not create or transfer an automation. The current
+TRACE host uses Monday 10:00 weekly review. A separately authorized daily global
+maintenance routine may update stable CLI/RTK releases within its approved scope,
+with integrity checks and verification; that authorization is not portable policy.
+Policy, skills, hooks and permission changes need their own review and approval.
+Inactive hosts cannot guarantee scheduled execution. No application-managed plugin
+cache is copied.
 
 ## Migrating v1.0.1 and other computers
 

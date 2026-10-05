@@ -7,3 +7,12 @@ Official guidance recommends GPT-6.1 Sol for complex coding when available, keep
 Check host model availability before using a preset; report unsupported choices rather than silently substituting. Subagents inherit resolved parent settings unless an explicit spawn value, agents default, or custom-agent configuration overrides them. Inspect existing overrides during migration.
 
 Sources: [Models](https://learn.chatgpt.com/docs/models), [Pricing](https://learn.chatgpt.com/docs/pricing), [Profiles](https://learn.chatgpt.com/docs/config-file/config-advanced), [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents). Preset choices are user convenience policy, not official optimal-effort recommendations.
+
+## Host defaults
+
+For new work, prefer GPT-6.1 Sol when available to the account and client. Keep
+Astra for user-selected tasks. To choose a host default, explicitly review that
+host's base model setting; an existing base choice takes precedence. TRACE does
+not force this preference onto another host or change an existing conversation.
+Source: [Current model recommendations](https://learn.chatgpt.com/docs/models),
+reviewed 2026-10-01.

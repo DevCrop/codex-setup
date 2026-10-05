@@ -11,3 +11,16 @@ For JavaScript/TypeScript tools, use the TRACE runner from the project working d
 Do not transparently wrap deletes, installs, migrations, publishing, authentication or security decisions. Upstream's Codex hook rewrites commands before native approval checks, whose safety classifier does not unwrap RTK; this may obscure mutating-command signals. Hook setup is a separate opt-in review, with official /hooks trust, and is not included in this release. Do not bypass hook trust or add sandbox writable roots to make analytics work. Keep local analytics outside Git; analytics write failure does not establish filtering failure.
 
 Sources: [RTK 0.51.0 release](https://github.com/rtk-ai/rtk/releases/tag/v0.51.0), [pinned Codex integration](https://github.com/rtk-ai/rtk/blob/v0.51.0/hooks/codex/README.md), [OpenAI hooks](https://learn.chatgpt.com/docs/hooks).
+
+## Existing host integrations
+
+Earlier host guidance used a user-local PATH binary and an opt-in native hook.
+The v1.2 installer neither removes nor upgrades that separately owned integration.
+Prefer the verified TRACE runner to avoid silently selecting a second binary.
+Inspect any existing hook with the supported Codex `/hooks` review and trust flow;
+do not alter trust records or assume a processor smoke test proves desktop
+interception. A CLI upgrade and a desktop app update are separate operations.
+Do not copy host-local sandbox recovery paths or older 0.50.0 asset hashes into a
+new computer. Preserve unrelated hooks, credentials, environment and permissions.
+Sources: [Codex configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference),
+[Hooks and trust](https://learn.chatgpt.com/docs/hooks).

@@ -20,10 +20,14 @@ observations below remain historical evidence, not checks repeated today.
   through `tools.py rollback-rtk`; it is outside active setup paths.
 - Isolated actual v1.2.0 to v1.2.1 migration: one guide changed, verify/repeat/rollback
   using previous source and reapply passed in disposable Unicode/space roots.
-- Current managed installation: one guide changed, 118 owned entries verified.
-  The English agreement, profiles, skill originals and explicit invocation policies
-  were not changed. The agreement remains 1,560 LF bytes / 210 whitespace words;
-  these numbers are not a token-savings measurement.
+- The completion patch originally changed one guide. Merging previously approved
+  main changes also reconciles RTK agreement and host-default guidance. Final
+  deployment changed three owned files and verified 118 entries; repeat apply was
+  unchanged, config bytes were preserved and the prior 1.2.0 restore point retained.
+  The agreement is 1,855 LF bytes / 250 whitespace words
+  (before this merge: 1,560 bytes / 210 words).
+  Skill originals and explicit invocation policies remain unchanged. These text
+  sizes are not a token-savings measurement.
 - `check_closure.py` adds read-only release/deployment/tool alignment and first
   registered-project review checks. The existing Monday 10:00 designated-host
   heartbeat is extended in place. Candidate approvals and cleanup safeguards stay
@@ -46,6 +50,17 @@ observations below remain historical evidence, not checks repeated today.
   verification does not establish an actual composer-selected skill invocation.
 - Global flow topology is unchanged and its existing JSON/HTML receipt is validated.
   No new visual/perceptual or browser gate execution is claimed for this patch.
+
+## Main reconciliation (October 5)
+
+Merged PR #8's GPT-6.1 Sol preset and cross-project RTK preference are preserved
+with a portable verified runner, replacing its unmanaged PATH fallback. Existing
+host-local hooks are preserved, not installed or trusted by TRACE. PR #9's daily
+authorization is retained as host-specific; only one weekly TRACE automation is
+actually registered on this host. No cadence change or duplicate monitor occurred.
+Registry IDs that collided across branches are deduplicated by canonical source;
+R45 retains the historical 0.50.0 hook provenance. Current deployment uses the
+reviewed 0.51.0 explicit runner, not older host-local install instructions.
 
 ## Prior v1.2 implementation evidence (October 1)
 

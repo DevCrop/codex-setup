@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "diagram_type": "workflow",
-  "specification_sha256": "1a1137c80edd71378bccdff2fcb38f9844752f84bf61c145838a64d399aaa2fe",
-  "artifact_sha256": "c5ec347c01237c6e59177c264318da75ad61838fa99c3485af04d3bf920accc4",
-  "specification_bytes": 18590,
-  "artifact_bytes": 802358,
+  "specification_sha256": "74d49ae5205acf5c91a378f5b179759acbdc35a3429fdba0a2b1172c8cf8117e",
+  "artifact_sha256": "6ce69f8ee24515e33827b66f9b84b6fc7bfda2190425b80e4be1a9d63797c1c6",
+  "specification_bytes": 18949,
+  "artifact_bytes": 802896,
   "validation": {
     "checks_passed": 9,
     "checks_total": 9,
@@ -21,7 +21,7 @@
   "repository_evidence": {
     "verified": true,
     "repository": "https://github.com/DevCrop/codex-setup",
-    "revision": "9d7f8db8faff22d79d9ee1d4cc8a9a8464d4ed46",
+    "revision": "0e072ed624d0a3a0e26b6d8c13fb946ba2ccdd7f",
     "references": 43
   },
   "browser_evidence": "pass",
@@ -35,7 +35,7 @@
       "verticalScrollAccepted": true,
       "overflowDisposition": "readable-vertical-scroll",
       "readerFit": "intrinsic-height",
-      "minimumProjectedNodeTextPx": 6.005037783375315,
+      "minimumProjectedNodeTextPx": 6.004938271604939,
       "ok": true
     },
     {
@@ -47,7 +47,7 @@
       "verticalScrollAccepted": false,
       "overflowDisposition": "contained",
       "readerFit": "intrinsic-height",
-      "minimumProjectedNodeTextPx": 6.152812762384551,
+      "minimumProjectedNodeTextPx": 6.156378600823046,
       "ok": true
     },
     {
@@ -59,7 +59,7 @@
       "verticalScrollAccepted": false,
       "overflowDisposition": "contained",
       "readerFit": "intrinsic-height",
-      "minimumProjectedNodeTextPx": 6.784214945424013,
+      "minimumProjectedNodeTextPx": 6.7818930041152266,
       "ok": true
     },
     {
@@ -86,13 +86,13 @@
     "minLabelRouteClearance": 48,
     "desktopReadabilityIssues": 0,
     "viewportHeightIssues": 0,
-    "minProjectedNodeTextPx": 6.246851385390428,
-    "maxBends": 2,
-    "routesOverSuggestedBends": 0,
-    "maxStretch": 1.254,
-    "routesOverSuggestedStretch": 0,
+    "minProjectedNodeTextPx": 6.1234567901234565,
+    "maxBends": 4,
+    "routesOverSuggestedBends": 2,
+    "maxStretch": 8.165,
+    "routesOverSuggestedStretch": 1,
     "minSegmentPx": 16,
-    "minInteriorSegmentPx": 126,
+    "minInteriorSegmentPx": 84,
     "shortSegmentCount": 0,
     "shortEndpointSegmentCount": 0,
     "shortInteriorSegmentCount": 0,
@@ -112,10 +112,10 @@
     }
   ],
   "visual_review_notes": [
-    "Reviewed exact artifact captures: all workflow lanes and nodes visible; no overlapping labels or arrows.",
-    "Overview captions require zoom for detailed reading; viewer controls use upstream English labels.",
-    "Codex right-pane rendering and mobile view were not visually confirmed."
+    "Inspected current light/dark captures: criteria and diff review appear on the main path; repeated failures return through reassessment.",
+    "No overlapping node labels; optional delegation uses the outer return corridor. Zoom is useful for overview captions.",
+    "Codex pane rendering, mobile view and runtime model behavior are not established by these captures."
   ],
-  "diagram_scope": "Global operating policy at TRACE v1.2.2, not a runtime trace or project architecture map.",
+  "diagram_scope": "Global operating policy at TRACE v1.2.3, not a runtime trace or project architecture map.",
   "renderer_version": "3.0.0"
 }

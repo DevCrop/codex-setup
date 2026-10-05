@@ -10,6 +10,6 @@ Replace the placeholders from repository evidence before adoption.
 ## Commands and completion
 - Setup prerequisites: <verified repository prerequisites>
 - Relevant check commands: <commands from actual manifests/CI>
-- Acceptance criteria: <project-specific behavior and rule checks>
+- Acceptance criteria: <required behavior, applicable rule checks and affected-diff review>
 
 Read only relevant linked sections. Do not duplicate global policy here. Preserve and reuse the project's existing canonical documents.

@@ -1,4 +1,4 @@
-# TRACE Setup v1.2.2
+# TRACE Setup v1.2.3
 
 Portable Codex personal instructions, optional profiles, pinned Archify/Ponytail,
 and ownership-based deployment. Python 3.11+ and Git are required; Node.js is needed
@@ -124,7 +124,7 @@ cache is copied.
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.2.2` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.2.3` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 
@@ -145,6 +145,9 @@ A managed-file verification pass does not mean that the entire Codex home is cle
 
 The existing TRACE routine follows detection → original-source review → applicability/
 authorization decision → compatible application → affected checks → closure audit.
+Implementation establishes the outcome/scope/checks first, then reviews the affected
+diff before completion. Repeated failures trigger diagnosis rather than an unchanged
+retry. Project-specific rules and commands stay in the project's canonical guidance.
 Official article discovery covers OpenAI news, developer posts and product updates.
 A version match alone cannot clear changed managed files or a stale published-asset
 receipt. Pending/unknown work is retained and reported proactively when actionable.

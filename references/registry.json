@@ -32,7 +32,19 @@
       "applicable_files": [
         "global/AGENTS.md"
       ],
-      "monitor": true
+      "monitor": true,
+      "latest_relevant_review": {
+        "date": "2026-10-05",
+        "retrieval": "official-web-page",
+        "scope": "Named relevant sections only; no new exact-byte snapshot or full-page review claimed.",
+        "sections": [
+          "Up-to-date AGENTS.md",
+          "Persistence"
+        ]
+      },
+      "adopted_claims": [
+        "Define completion before implementation; read task-relevant guidance and avoid unnecessary verification."
+      ]
     },
     {
       "id": "R02",
@@ -86,9 +98,9 @@
       "canonical_url": "https://learn.chatgpt.com/guides/best-practices",
       "origin": "user",
       "authority": "official-vendor",
-      "disposition": "retained-reference",
-      "reason": "Retained for optional context; no active rule depends on unreviewed claims.",
-      "review_status": "fetched-not-semantically-reviewed",
+      "disposition": "adopted",
+      "reason": "Reviewed goal/context/constraints/done-when, concise project guidance and relevant testing/diff-review sections; diagnostic classification remains local policy.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
       "body_fetched": true,
       "historical_provenance": {
         "inventory": "inventory/s2-20260912T150322Z/sources.json",
@@ -100,8 +112,27 @@
         "error": null
       },
       "snapshot": null,
-      "applicable_files": [],
-      "monitor": false
+      "applicable_files": [
+        "global/AGENTS.md",
+        "docs/operations.md",
+        "templates/project/AGENTS.md"
+      ],
+      "monitor": true,
+      "latest_relevant_review": {
+        "date": "2026-10-05",
+        "retrieval": "official-web-page",
+        "scope": "Named relevant sections only; no new exact-byte snapshot or full-page review claimed.",
+        "sections": [
+          "Strong first use: Context and prompts",
+          "Make guidance reusable with AGENTS.md",
+          "Improve reliability with testing and review"
+        ]
+      },
+      "adopted_claims": [
+        "Define the requested outcome and acceptance criteria.",
+        "Use concise project guidance and relevant checks; review the affected diff.",
+        "Add durable guidance for confirmed recurring mistakes rather than every attempt."
+      ]
     },
     {
       "id": "R05",

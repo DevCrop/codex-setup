@@ -39,8 +39,12 @@ Fresh CLI rendering proves instruction inclusion, not model obedience or a separ
 desktop session's skill behavior. SCSS/TS cases are disposable scope probes, not
 changes or end-to-end validation of a product project. Registered dependency scan
 retained tracked/unknown-process targets; no project dependencies were deleted.
-Final diagram, native CI and published artifact results are recorded only after
-their gates run, in the matching diagram receipt and private release evidence.
+The updated global diagram passed showcase 9/9, all four finalize gates and four
+desktop viewport checks. Current 1440 light and 2048 dark captures were inspected.
+It includes criteria/diff review and a repeated-failure reassessment return path;
+its exact source/artifact hashes and 43 references are in the diagram receipt.
+Native CI and published artifact results are recorded only after their gates run
+in private release evidence and the matching GitHub release.
 
 ## v1.2.2 final routine acceptance
 

@@ -2,11 +2,20 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from check_updates import Body, check, resolve_candidate
+from check_updates import Body, check, github_body, resolve_candidate
 from setup import read_json, save_json
 
 
 class MonitorTests(unittest.TestCase):
+    def test_release_digest_and_notes_without_download_count_noise(self):
+        release = {'tag_name':'v1', 'published_at':'date', 'body':'notes',
+                   'assets':[{'name':'binary', 'digest':'sha256:a', 'browser_download_url':'url', 'download_count':1}]}
+        first = github_body(release)
+        release['assets'][0]['download_count'] = 99
+        self.assertEqual(github_body(release), first)
+        release['assets'][0]['digest'] = 'sha256:b'
+        self.assertNotEqual(github_body(release), first)
+
     def test_candidate_survives_unchanged_and_resolution_is_hash_bound(self):
         with tempfile.TemporaryDirectory() as d:
             state = Path(d)
@@ -64,6 +73,17 @@ class MonitorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             with self.assertRaises(ValueError):
                 check(Path(d), [])
+
+    def test_retired_watch_preserves_unresolved_candidate_and_resolution_updates_report(self):
+        with tempfile.TemporaryDirectory() as d:
+            state = Path(d)
+            save_json(state / 'source-pending.json', {'retired': {'id': 'retired', 'sha256': 'hash'}})
+            report = check(state, [{'id': 'A', 'url': 'https://example.org'}],
+                           lambda item: {**item, 'status': 'fetched', 'sha256': 'new', 'body': 'current'})
+            self.assertEqual(report['pending'][0]['id'], 'retired')
+            self.assertTrue(report['pending'][0]['monitor_retired'])
+            resolve_candidate(state, 'retired', 'hash', 'exact content reviewed; no active use')
+            self.assertEqual(read_json(state / 'source-report.json')['pending'], [])
 
 
 if __name__ == '__main__':

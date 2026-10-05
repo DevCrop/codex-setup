@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "version": "1.1.4",
+  "version": "1.2.1",
   "files": [
     {
       "source": "global/skill-policy/openai.yaml",
@@ -31,6 +31,14 @@
     {
       "source": "global/guides/official-source-workflow.md",
       "target": "guides/official-source-workflow.md"
+    },
+    {
+      "source": "global/guides/rtk.md",
+      "target": "guides/rtk.md"
+    },
+    {
+      "source": "global/runtime/rtk_runner.py",
+      "target": "bin/trace_rtk.py"
     },
     {
       "source": "global/profiles/astra-deep.config.toml",
@@ -568,10 +576,6 @@
       "source": "vendor/archify/skill-release.json",
       "target": "skills/archify/skill-release.json",
       "kind": "upstream-skill"
-    },
-    {
-      "source": "global/guides/rtk.md",
-      "target": "guides/rtk.md"
     }
   ],
   "agent_settings": {

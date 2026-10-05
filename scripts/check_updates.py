@@ -41,6 +41,16 @@ class Body(HTMLParser):
                 self.primary.append(text)
 
 
+def github_body(payload):
+    if isinstance(payload, list):
+        selected = {"sha": payload[0]["sha"], "message": payload[0]["commit"]["message"]}
+    else:
+        selected = {k: payload[k] for k in ('tag_name', 'published_at', 'body')}
+        selected['assets'] = [{k: a.get(k) for k in ('name', 'digest', 'browser_download_url')}
+                              for a in payload.get('assets', [])]
+    return json.dumps(selected, sort_keys=True)
+
+
 def fetch(item):
     url = item["url"]
     try:
@@ -51,8 +61,7 @@ def fetch(item):
                 raise ValueError("Response exceeds monitor limit")
             text = data.decode("utf-8")
             if url.startswith("https://api.github.com/"):
-                commits = json.loads(text)
-                text = json.dumps({"sha": commits[0]["sha"], "message": commits[0]["commit"]["message"]}, sort_keys=True)
+                text = github_body(json.loads(text))
             if "text/html" in response.headers.get("Content-Type", ""):
                 body = Body()
                 body.feed(text)
@@ -85,6 +94,11 @@ def resolve_candidate(state, source_id, expected_sha, reason):
     reviews[source_id] = {'sha256': expected_sha, 'reason': reason,
                           'reviewed_at': datetime.now(timezone.utc).isoformat()}
     save_json(state / 'source-reviews.json', reviews)
+    report = read_json(state / 'source-report.json', {})
+    if report:
+        report['pending'] = list(pending.values())
+        report['review_decisions'] = reviews
+        save_json(state / 'source-report.json', report)
 
 
 def check(state, items, fetcher=fetch):
@@ -98,7 +112,11 @@ def check(state, items, fetcher=fetch):
     if not pending_path.exists():
         pending = {r['id']: r for r in read_json(state / 'source-report.json', {}).get('results', [])
                    if r.get('change') == 'candidate'}
-    pending = {k: v for k, v in pending.items() if k in {item['id'] for item in items}}
+    # A watch-list change is not a semantic resolution of an old candidate.
+    active_ids = {item['id'] for item in items}
+    for key, value in pending.items():
+        if key not in active_ids:
+            value['monitor_retired'] = True
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         for row in pool.map(fetcher, items):

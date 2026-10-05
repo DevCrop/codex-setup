@@ -332,7 +332,9 @@
         "error": null
       },
       "snapshot": null,
-      "applicable_files": [],
+      "applicable_files": [
+        "global/guides/rtk.md"
+      ],
       "monitor": true
     },
     {
@@ -671,9 +673,9 @@
       "applicable_files": [],
       "monitor": true,
       "last_review": {
-        "date": "2026-09-28",
-        "version": "0.157.1",
-        "claim": "Approved host CLI adoption; version and subscription login verified. Interactive daemon startup and unrelated release features not validated."
+        "date": "2026-10-05",
+        "version": "0.160.0",
+        "claim": "Relevant Windows startup/sandbox, SQLite and plugin loading fixes reviewed. Adopt exact stable CLI under user authorization; interactive behavior has separate evidence limits."
       }
     },
     {
@@ -751,9 +753,9 @@
       "canonical_url": "https://github.com/openai/skills",
       "origin": "additional",
       "authority": "project-primary",
-      "disposition": "conditional",
-      "reason": "Relevant authoritative reference; review changed relevant sections before codifying new behavior.",
-      "review_status": "fetched-not-semantically-reviewed",
+      "disposition": "archived",
+      "reason": "Deprecated upstream examples; historical provenance retained. Current examples are R43/R44; no active global rule depends on this repository.",
+      "review_status": "deprecation-and-current-routing-reviewed-2026-10-05",
       "body_fetched": true,
       "historical_provenance": {
         "inventory": "inventory/s2-20260912T150322Z/sources.json",
@@ -766,7 +768,7 @@
       },
       "snapshot": null,
       "applicable_files": [],
-      "monitor": true
+      "monitor": false
     },
     {
       "id": "R32",
@@ -922,67 +924,145 @@
     },
     {
       "id": "R39",
-      "url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
-      "canonical_url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
-      "origin": "user",
+      "url": "https://learn.chatgpt.com/docs/models",
+      "canonical_url": "https://learn.chatgpt.com/docs/models",
+      "origin": "implementation",
       "authority": "official-vendor",
       "disposition": "adopted",
-      "reason": "RTK v0.50.0 native Codex hook integration and limitations; executable release verified separately.",
-      "review_status": "relevant-sections-reviewed-2026-09-30",
+      "reason": "GPT-6.1 Sol availability and task-dependent effort; client default is starting point.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
       "body_fetched": true,
-      "snapshot": null,
+      "snapshot": {
+        "path": "snapshots/R39.md",
+        "sha256": "24661e0879ecb769e25a47f360c997434d24be9747169824b094f3da2ccea907",
+        "bytes": 17297,
+        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true,
       "applicable_files": [
-        "global/AGENTS.md",
-        "global/guides/rtk.md"
-      ],
-      "monitor": false
+        "global/guides/model-operations.md",
+        "global/profiles/sol.config.toml"
+      ]
     },
     {
       "id": "R40",
+      "url": "https://learn.chatgpt.com/docs/whats-new/devday-2026",
+      "canonical_url": "https://learn.chatgpt.com/docs/whats-new/devday-2026",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "monitor-only",
+      "reason": "DevDay changes reviewed; API-only, cloud and Pro 500 features do not become local requirements.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R40.md",
+        "sha256": "8f64b801620af6f2e368b1993b148caf22f23b5890bf6ee23c593d1f578535a9",
+        "bytes": 7297,
+        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true
+    },
+    {
+      "id": "R41",
+      "url": "https://api.github.com/repos/rtk-ai/rtk/releases/latest",
+      "canonical_url": "https://api.github.com/repos/rtk-ai/rtk/releases/latest",
+      "origin": "implementation",
+      "authority": "upstream-maintainer",
+      "disposition": "adopted",
+      "reason": "RTK 0.51.0 argv handling and release digests reviewed; explicit filtering only.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R41.json",
+        "sha256": "587fb8e4f17cb9aaaf13e66962c46a0603f0adf0387ac4f40ae5900e8720ec4c",
+        "bytes": 24658,
+        "retrieved_at_utc": "2026-10-05T03:53:01.067710+00:00",
+        "content_type": "application/json; charset=utf-8"
+      },
+      "monitor": true
+    },
+    {
+      "id": "R42",
       "url": "https://learn.chatgpt.com/docs/hooks",
       "canonical_url": "https://learn.chatgpt.com/docs/hooks",
-      "origin": "user",
+      "origin": "implementation",
       "authority": "official-vendor",
-      "disposition": "adopted",
-      "reason": "Current Codex hook discovery, Bash exec coverage and user review/trust requirements.",
+      "disposition": "reference-only",
+      "reason": "Hook rewriting and exact-definition trust reviewed; no automatic hook installation.",
+      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R42.md",
+        "sha256": "724881d81f1a9fdb35ea42d4851a11b1f6606bbc6e9d2d05c1e8c466fc25c630",
+        "bytes": 46965,
+        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true,
+      "applicable_files": [
+        "global/AGENTS.md",
+        "global/guides/rtk.md"
+      ]
+    },
+    {
+      "id": "R43",
+      "url": "https://raw.githubusercontent.com/openai/plugins/main/README.md",
+      "canonical_url": "https://github.com/openai/plugins",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "conditional",
+      "reason": "Current official Codex plugin examples; no automatic plugin installation.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R43.md",
+        "sha256": "b3681ebd15797bdee1d638c6520c7ba10a36e676760ea5c251530f53f843c852",
+        "bytes": 1283,
+        "retrieved_at_utc": "2026-10-05T03:53:01.335620+00:00",
+        "content_type": "text/plain; charset=utf-8"
+      },
+      "applicable_files": [
+        "docs/operations.md"
+      ],
+      "monitor": true
+    },
+    {
+      "id": "R44",
+      "url": "https://developers.openai.com/plugins/build/plugins.md",
+      "canonical_url": "https://developers.openai.com/plugins/build/plugins",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "conditional",
+      "reason": "Current official plugin packaging and skill-only plugin guidance; TRACE remains skill-only.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R44.md",
+        "sha256": "cc5b62094f9c8fcd910c6ae72fa58c63a13191abdc29fb45b19500e241f71460",
+        "bytes": 27956,
+        "retrieved_at_utc": "2026-10-05T03:53:01.384232+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "applicable_files": [
+        "docs/operations.md"
+      ],
+      "monitor": true
+    },
+    {
+      "id": "R45",
+      "url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
+      "canonical_url": "https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md",
+      "origin": "user",
+      "authority": "upstream-maintainer",
+      "disposition": "reference-only",
+      "reason": "Historical host-local RTK 0.50.0 hook guidance from merged PR #8; preserve provenance, use the current pinned explicit runner and do not automatically install hooks.",
       "review_status": "relevant-sections-reviewed-2026-09-30",
       "body_fetched": true,
       "snapshot": null,
       "applicable_files": [
         "global/AGENTS.md",
-        "global/guides/rtk.md"
-      ],
-      "monitor": false
-    },
-    {
-      "id": "R41",
-      "url": "https://learn.chatgpt.com/docs/models",
-      "canonical_url": "https://learn.chatgpt.com/docs/models",
-      "origin": "user",
-      "authority": "official-vendor",
-      "disposition": "adopted",
-      "reason": "GPT-6.1 Sol recommendation and explicit host model selection; preserve user-selected effort.",
-      "review_status": "relevant-sections-reviewed-2026-10-01",
-      "body_fetched": true,
-      "snapshot": null,
-      "applicable_files": [
-        "global/profiles/sol.config.toml",
-        "global/guides/model-operations.md"
-      ],
-      "monitor": false
-    },
-    {
-      "id": "R42",
-      "url": "https://learn.chatgpt.com/docs/config-file/config-reference",
-      "canonical_url": "https://learn.chatgpt.com/docs/config-file/config-reference",
-      "origin": "user",
-      "authority": "official-vendor",
-      "disposition": "adopted",
-      "reason": "Explicit shell_environment_policy.set values for host-local RTK sandbox recovery.",
-      "review_status": "relevant-sections-reviewed-2026-10-01",
-      "body_fetched": true,
-      "snapshot": null,
-      "applicable_files": [
         "global/guides/rtk.md"
       ],
       "monitor": false

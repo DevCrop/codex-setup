@@ -41,6 +41,31 @@ does not inherit monitoring ownership merely by installing this repository.
 | Architecture/dependency/rule change | Affected contracts, documentation and verification commands | Review semantic consistency and run relevant checks after an authorized change |
 | Approved maintenance | Exact reviewed files and versions | Apply, verify, account for removals and preserve rollback |
 
+### Normal implementation contract
+
+The global agreement owns the general decision rules; projects own their concrete
+commands and conventions. Before implementing, derive the intended outcome, allowed
+scope and smallest acceptance checks from the request and relevant project guidance.
+Straightforward work does not need a separate plan file or routine approval pause.
+Ask only when an unresolved decision materially affects the authorized outcome.
+
+After relevant checks, review the affected diff for requested behavior, applicable
+project rules and unrelated edits. Passing tests alone does not establish style,
+helper or architecture compliance. Reuse existing lint/type/contract checks where
+they cover a rule; inspect the changed code where no executable check exists.
+Stop once the stated acceptance criteria are met; do not broaden verification
+without a changed scope, new failure or unresolved concern.
+
+When a failure repeats, identify whether code, tooling/environment, permissions or
+requirements caused it. Retry with new evidence or a changed hypothesis; preserve
+acceptance checks and report a genuine blocker. Promote a recurring, confirmed
+lesson into its narrowest existing project/global document only when warranted,
+rather than adding a rule after every attempt. This diagnostic routing is TRACE
+operating policy. Official guidance supports explicit completion criteria, relevant
+checks, diff review and concise guidance refined from recurring mistakes:
+[Astra guidance](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)
+and [Codex best practices](https://learn.chatgpt.com/guides/best-practices).
+
 ### Collection, review and cost controls
 
 1. Run `python -B scripts/check_updates.py`; inspect new and retained candidates.
@@ -159,6 +184,8 @@ For each eligible batch:
    Preserve user edits; a conflict blocks automatic replacement. Record the
    exact official article/version/hash, relevant claim, applicability and intended
    diff before applying; a first successful collection does not establish a review.
+   Establish the batch's intended result, owned scope and affected acceptance
+   checks before applying, without expanding project or publishing authority.
 2. Use existing installer plan/apply/verify and one prior restore point. Stable
    CLI comes from the official npm package after release review; stable RTK uses
    published asset digests through the existing owned tool installer. Review
@@ -171,6 +198,8 @@ For each eligible batch:
    After CLI updates verify version, existing ChatGPT login and rendering; after
    RTK updates verify ownership, arguments/exits and relevant raw/filtered evidence
    using `verify_rtk.py`. Do not run unrelated product builds/browser suites.
+   Review the affected diff against the reviewed claim, authorization and project
+   boundary; check results do not replace this semantic review.
 4. On failures restore the previous owned policy/tool state, verify the restored
    state against its matching source revision, preserve evidence and report the
    exact blocker. Do not repeatedly retry an unchanged failed candidate; retry

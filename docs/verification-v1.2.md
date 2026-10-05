@@ -1,7 +1,46 @@
-# TRACE v1.2.2 release verification
+# TRACE v1.2.3 release verification
 
 Reviewed 2026-10-05. Prior dated observations below remain historical evidence,
 not checks repeated for every routine invocation.
+
+## v1.2.3 task-flow acceptance
+
+The working agreement now establishes outcome, scope and acceptance checks before
+implementation, reviews the affected diff against requirements/project rules, and
+reassesses repeated failures before retrying. Completion/context/review guidance
+comes from R01 Astra guidance and the named reviewed R04 best-practice sections;
+the code/environment/permission/requirement diagnostic routing is TRACE policy.
+R04 is now monitored. First collection is a baseline, not full-page acceptance.
+
+- Native Windows suite: 65 cases, 61 passed and four platform/permission skips.
+- Thirteen disposable acceptance cases passed: actual v1.2.2 payload migration,
+  repeat application, user-edit conflict preservation, prior-source rollback,
+  removal/restoration, config/auth preservation and no pending transaction, plus
+  SCSS/TS/documentation CLI rendering with applicable nested rules and peer-rule
+  exclusion. These probes used zero model calls and retained only hashes/presence.
+- Real installation changed only `AGENTS.md`; all 118 ownership entries verified
+  and repeat application was unchanged. Config, auth, optional profiles and both
+  original skill entry points were preserved. One v1.2.2 restore point remains.
+  Actual-home CLI rendering includes all three new principles and repository
+  instructions. The current conversation also received the refreshed agreement.
+- Always-loaded agreement: 1,855 to 2,113 LF bytes; 250 to 284 whitespace words.
+  This is text size, not actual token usage or a measured saving.
+- Existing `trace` automation was updated in place and its saved prompt matches
+  the portable source. Its thread, Monday 10:00 cadence, active state, notification
+  intent, project scope and host authorization were preserved. New hosts still
+  render review-only; no duplicate monitor or model switcher was added.
+- Collection succeeded for 22/22 current sources, including R04's new baseline.
+  The new Ponytail candidate was reviewed against its exact commit patch and
+  managed skill hash: Qoder uninstall changes do not affect the deployed standalone
+  asset. Existing unrelated/unknown candidates and permission-origin uncertainty
+  remain unresolved; collection does not clear them.
+
+Fresh CLI rendering proves instruction inclusion, not model obedience or a separate
+desktop session's skill behavior. SCSS/TS cases are disposable scope probes, not
+changes or end-to-end validation of a product project. Registered dependency scan
+retained tracked/unknown-process targets; no project dependencies were deleted.
+Final diagram, native CI and published artifact results are recorded only after
+their gates run, in the matching diagram receipt and private release evidence.
 
 ## v1.2.2 final routine acceptance
 

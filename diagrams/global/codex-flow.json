@@ -2,34 +2,48 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "TRACE Setup v1.2 · 글로벌 운영 흐름",
+    "title": "TRACE v1.2.2 · 글로벌 셋업 전체 흐름",
     "quality_profile": "showcase",
-    "output": "diagrams/global/codex-flow.html"
+    "output": "diagrams/global/codex-flow.html",
+    "repository": {
+      "url": "https://github.com/DevCrop/codex-setup.git",
+      "revision": "9d7f8db8faff22d79d9ee1d4cc8a9a8464d4ed46",
+      "provider": "github",
+      "link_mode": "web"
+    }
   },
   "lanes": [
     {
       "id": "work",
-      "label": "작업 실행"
+      "label": "일반 작업"
     },
     {
-      "id": "delegate",
-      "label": "위임·예외 처리"
+      "id": "delegation",
+      "label": "선택 위임"
     },
     {
-      "id": "maintain",
-      "label": "설정 유지관리"
+      "id": "deploy",
+      "label": "설정 배포"
+    },
+    {
+      "id": "monitor",
+      "label": "주간 유지관리"
+    },
+    {
+      "id": "closure",
+      "label": "검증·복원"
     },
     {
       "id": "cleanup",
-      "label": "설치 산출물 정리"
+      "label": "등록 의존성 정리"
     }
   ],
   "mainPath": [
     "request",
     "context",
     "execute",
-    "verify",
-    "report"
+    "accept",
+    "finish"
   ],
   "nodes": [
     {
@@ -38,269 +52,765 @@
       "col": 0,
       "type": "external",
       "label": "사용자 요청",
-      "sublabel": "모델·추론 강도 선택",
-      "width": 165
+      "sublabel": "모델·추론 선택",
+      "width": 145,
+      "sources": [
+        {
+          "path": "global/AGENTS.md",
+          "line": 5,
+          "end_line": 6
+        }
+      ],
+      "yOffset": 60
     },
     {
       "id": "context",
       "lane": "work",
       "col": 1,
       "type": "database",
-      "label": "관련 문서 확인",
-      "sublabel": "글로벌 + 프로젝트",
-      "width": 165
+      "label": "필요한 지침 로드",
+      "sublabel": "공통 + 프로젝트",
+      "width": 145,
+      "sources": [
+        {
+          "path": "global/AGENTS.md",
+          "line": 4,
+          "end_line": 4
+        },
+        {
+          "path": "global/AGENTS.md",
+          "line": 12,
+          "end_line": 12
+        },
+        {
+          "path": "README.md",
+          "line": 95,
+          "end_line": 112
+        }
+      ],
+      "yOffset": 60
     },
     {
       "id": "execute",
       "lane": "work",
       "col": 2,
       "type": "backend",
-      "label": "직접 처리 기본",
-      "sublabel": "스킬은 명시적 요청",
-      "width": 165
+      "label": "요청 범위 수행",
+      "sublabel": "직접 실행 · RTK 선택",
+      "width": 145,
+      "sources": [
+        {
+          "path": "global/AGENTS.md",
+          "line": 6,
+          "end_line": 10
+        },
+        {
+          "path": "global/guides/rtk.md",
+          "line": 3,
+          "end_line": 11
+        }
+      ],
+      "yOffset": 60
     },
     {
-      "id": "verify",
+      "id": "accept",
       "lane": "work",
       "col": 3,
       "type": "security",
-      "label": "통합·검증",
-      "sublabel": "수행한 검사만 보고",
-      "width": 165
+      "label": "통합·완료 검사",
+      "sublabel": "프로젝트 실제 기준",
+      "width": 145,
+      "sources": [
+        {
+          "path": "global/AGENTS.md",
+          "line": 6,
+          "end_line": 9
+        },
+        {
+          "path": "global/guides/agent-orchestration.md",
+          "line": 17,
+          "end_line": 17
+        }
+      ],
+      "yOffset": 60
     },
     {
-      "id": "report",
+      "id": "finish",
       "lane": "work",
-      "col": 5,
+      "col": 4,
       "type": "frontend",
       "label": "결과 전달",
-      "sublabel": "근거와 남은 제약",
-      "width": 165
+      "sublabel": "실행한 검사·제약 보고",
+      "width": 145,
+      "sources": [
+        {
+          "path": "global/AGENTS.md",
+          "line": 3,
+          "end_line": 3
+        }
+      ],
+      "yOffset": 60
     },
     {
-      "id": "child",
-      "lane": "delegate",
-      "col": 3,
+      "id": "skills",
+      "lane": "work",
+      "col": 1,
+      "type": "backend",
+      "label": "명시적 스킬 요청",
+      "sublabel": "Ponytail / Archify",
+      "width": 145,
+      "sources": [
+        {
+          "path": "global/AGENTS.md",
+          "line": 10,
+          "end_line": 10
+        },
+        {
+          "path": "README.md",
+          "line": 27,
+          "end_line": 35
+        }
+      ],
+      "yOffset": -60
+    },
+    {
+      "id": "children",
+      "lane": "delegation",
+      "col": 2,
       "type": "backend",
       "label": "독립 작업 위임",
       "sublabel": "부모 상속 · 최대 2개",
-      "width": 165
+      "width": 145,
+      "sources": [
+        {
+          "path": "global/guides/agent-orchestration.md",
+          "line": 13,
+          "end_line": 17
+        },
+        {
+          "path": "global/config.base.toml",
+          "line": 3,
+          "end_line": 5
+        }
+      ],
+      "tag": "호스트 허용 시"
     },
     {
-      "id": "watch",
-      "lane": "maintain",
+      "id": "policy",
+      "lane": "deploy",
+      "col": 0,
+      "type": "database",
+      "label": "Git 정책 원본",
+      "sublabel": "AGENTS · manifest · lock",
+      "width": 145,
+      "sources": [
+        {
+          "path": "README.md",
+          "line": 1,
+          "end_line": 6
+        },
+        {
+          "path": "README.md",
+          "line": 27,
+          "end_line": 37
+        },
+        {
+          "path": "docs/operations.md",
+          "line": 255,
+          "end_line": 265
+        }
+      ]
+    },
+    {
+      "id": "plan",
+      "lane": "deploy",
+      "col": 1,
+      "type": "security",
+      "label": "소유권·충돌 확인",
+      "sublabel": "추가 · 변경 · 제거 계획",
+      "width": 145,
+      "sources": [
+        {
+          "path": "scripts/setup.py",
+          "line": 227,
+          "end_line": 253
+        }
+      ]
+    },
+    {
+      "id": "install",
+      "lane": "deploy",
+      "col": 2,
+      "type": "backend",
+      "label": "소유 파일 적용",
+      "sublabel": "사용자 수정은 보존",
+      "width": 145,
+      "sources": [
+        {
+          "path": "scripts/setup.py",
+          "line": 274,
+          "end_line": 301
+        }
+      ]
+    },
+    {
+      "id": "integrity",
+      "lane": "deploy",
+      "col": 3,
+      "type": "security",
+      "label": "파일 일치 검사",
+      "sublabel": "일치 · 반복 · 잔여 검사",
+      "width": 145,
+      "sources": [
+        {
+          "path": "scripts/setup.py",
+          "line": 308,
+          "end_line": 318
+        },
+        {
+          "path": "scripts/setup.py",
+          "line": 339,
+          "end_line": 364
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "lane": "deploy",
+      "col": 4,
+      "type": "database",
+      "label": "Codex 홈에 활성화",
+      "sublabel": "Codex 홈 · 개인 스킬",
+      "width": 145,
+      "sources": [
+        {
+          "path": "README.md",
+          "line": 19,
+          "end_line": 33
+        },
+        {
+          "path": "docs/operations.md",
+          "line": 276,
+          "end_line": 280
+        }
+      ]
+    },
+    {
+      "id": "weekly",
+      "lane": "monitor",
       "col": 0,
       "type": "cloud",
-      "label": "주간 변경 감지",
-      "sublabel": "공식·RTK·등록 프로젝트",
-      "width": 165
+      "label": "주간 TRACE 루틴",
+      "sublabel": "월 10시 · 단일 호스트",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 13,
+          "end_line": 32
+        }
+      ]
     },
     {
-      "id": "candidate",
-      "lane": "maintain",
+      "id": "collect",
+      "lane": "monitor",
       "col": 1,
       "type": "database",
-      "label": "변경 후보",
-      "sublabel": "미검토 후보 유지",
-      "width": 165
+      "label": "공식 변경 수집",
+      "sublabel": "Astra · 문서 · 도구",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 46,
+          "end_line": 59
+        },
+        {
+          "path": "references/registry.json",
+          "line": 1
+        }
+      ]
     },
     {
-      "id": "approve",
-      "lane": "maintain",
+      "id": "review",
+      "lane": "monitor",
       "col": 2,
-      "type": "security",
-      "label": "사용자 승인",
-      "sublabel": "적용 범위 확정",
-      "width": 165
+      "type": "backend",
+      "label": "원문·관련성 검토",
+      "sublabel": "해시 ≠ 정책 변경",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 46,
+          "end_line": 61
+        },
+        {
+          "path": "docs/operations.md",
+          "line": 187,
+          "end_line": 192
+        }
+      ]
     },
     {
-      "id": "apply",
-      "lane": "maintain",
+      "id": "authority",
+      "lane": "monitor",
+      "col": 3,
+      "type": "security",
+      "label": "자동 범위·승인 판단",
+      "sublabel": "범위 밖 · 충돌은 대기",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 133,
+          "end_line": 153
+        },
+        {
+          "path": "scripts/render_heartbeat.py",
+          "line": 9,
+          "end_line": 21
+        }
+      ]
+    },
+    {
+      "id": "update",
+      "lane": "monitor",
       "col": 4,
       "type": "backend",
-      "label": "버전 적용",
-      "sublabel": "설치·제거·검증",
-      "width": 165
+      "label": "허용된 변경 적용",
+      "sublabel": "지침 · CLI · RTK",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 155,
+          "end_line": 166
+        }
+      ],
+      "tag": "권한·호환성 필요"
     },
     {
-      "id": "flow",
-      "lane": "maintain",
-      "col": 5,
-      "type": "frontend",
-      "label": "글로벌 flow 갱신",
-      "sublabel": "요청된 Archify 작업",
-      "width": 165
-    },
-    {
-      "id": "rollback",
-      "lane": "delegate",
-      "col": 5,
+      "id": "restore",
+      "lane": "closure",
+      "col": 1,
       "type": "security",
       "label": "복원·충돌 보고",
-      "sublabel": "사용자 수정 보존",
-      "width": 165
+      "sublabel": "이전 1세트 · 실패 기록",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 174,
+          "end_line": 177
+        },
+        {
+          "path": "scripts/setup.py",
+          "line": 320,
+          "end_line": 337
+        }
+      ]
+    },
+    {
+      "id": "notify",
+      "lane": "closure",
+      "col": 2,
+      "type": "frontend",
+      "label": "마감·필요 조치 보고",
+      "sublabel": "변경 없음은 조용히",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 196,
+          "end_line": 201
+        },
+        {
+          "path": "docs/operations.md",
+          "line": 182,
+          "end_line": 185
+        }
+      ]
+    },
+    {
+      "id": "closure",
+      "lane": "closure",
+      "col": 3,
+      "type": "security",
+      "label": "배포 정합성 확인",
+      "sublabel": "설치 · 태그 · ZIP",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 74,
+          "end_line": 86
+        },
+        {
+          "path": "scripts/check_closure.py",
+          "line": 74,
+          "end_line": 94
+        }
+      ],
+      "tag": "게시 승인 별도"
+    },
+    {
+      "id": "postcheck",
+      "lane": "closure",
+      "col": 4,
+      "type": "security",
+      "label": "적용 후 재검증",
+      "sublabel": "검사 · 로딩 확인",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 167,
+          "end_line": 185
+        }
+      ]
+    },
+    {
+      "id": "registered",
+      "lane": "cleanup",
+      "col": 0,
+      "type": "database",
+      "label": "등록 프로젝트만",
+      "sublabel": "미등록 경로 제외",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 217,
+          "end_line": 221
+        },
+        {
+          "path": "docs/operations.md",
+          "line": 251,
+          "end_line": 253
+        }
+      ]
     },
     {
       "id": "idle",
       "lane": "cleanup",
-      "col": 0,
-      "type": "database",
-      "label": "45일 관측",
-      "sublabel": "활동·프로세스·lock",
-      "width": 165
+      "col": 1,
+      "type": "security",
+      "label": "45일 유휴 관측",
+      "sublabel": "활동·프로세스 확인",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 223,
+          "end_line": 228
+        }
+      ]
     },
     {
       "id": "notice",
       "lane": "cleanup",
-      "col": 1,
+      "col": 2,
       "type": "frontend",
-      "label": "후보 알림",
-      "sublabel": "7일 유예·활동 시 취소",
-      "width": 165
+      "label": "정리 후보 실제 알림",
+      "sublabel": "경로·복구 명령",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 234,
+          "end_line": 238
+        }
+      ]
     },
     {
       "id": "prune",
       "lane": "cleanup",
-      "col": 4,
+      "col": 3,
       "type": "security",
-      "label": "정확한 경로 정리",
-      "sublabel": "등록·사전 승인 범위만",
-      "width": 165
+      "label": "재검증 후 정리",
+      "sublabel": "lock · 무링크·ignored",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 229,
+          "end_line": 243
+        }
+      ],
+      "tag": "알림 후 7일"
     },
     {
-      "id": "cleanreport",
+      "id": "cleanresult",
       "lane": "cleanup",
-      "col": 5,
+      "col": 4,
       "type": "frontend",
-      "label": "삭제·제약 보고",
-      "sublabel": "source·공유 store 보존",
-      "width": 165
+      "label": "정리 결과 기록",
+      "sublabel": "실패·제약도 보존",
+      "width": 145,
+      "sources": [
+        {
+          "path": "docs/operations.md",
+          "line": 244,
+          "end_line": 253
+        }
+      ]
     }
   ],
   "edges": [
     {
       "id": "request-context",
+      "from": "request",
       "to": "context",
       "role": "main",
-      "from": "request"
+      "variant": "default"
     },
     {
       "id": "context-execute",
+      "from": "context",
       "to": "execute",
       "role": "main",
-      "from": "context"
+      "variant": "default"
     },
     {
-      "id": "execute-verify",
-      "to": "verify",
-      "role": "main",
-      "from": "execute"
-    },
-    {
-      "id": "verify-report",
-      "to": "report",
-      "role": "main",
-      "from": "verify"
-    },
-    {
-      "id": "execute-child",
-      "to": "child",
-      "role": "branch",
+      "id": "execute-accept",
       "from": "execute",
-      "label": "위임 가치 있음"
-    },
-    {
-      "id": "watch-candidate",
-      "to": "candidate",
+      "to": "accept",
       "role": "main",
-      "from": "watch",
-      "label": "관련 변경"
+      "variant": "default"
     },
     {
-      "id": "candidate-approve",
-      "to": "approve",
+      "id": "accept-finish",
+      "from": "accept",
+      "to": "finish",
       "role": "main",
-      "from": "candidate"
+      "variant": "default"
     },
     {
-      "id": "approve-apply",
-      "to": "apply",
-      "role": "main",
-      "from": "approve",
-      "label": "승인됨"
+      "id": "context-skills",
+      "from": "context",
+      "to": "skills",
+      "role": "branch",
+      "variant": "dashed",
+      "label": "명시 요청",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "route": "straight"
     },
     {
-      "id": "apply-flow",
-      "to": "flow",
-      "role": "main",
-      "from": "apply",
-      "label": "구조 변경"
-    },
-    {
-      "id": "child-verify",
-      "from": "child",
-      "to": "verify",
+      "id": "skills-execute",
+      "from": "skills",
+      "to": "execute",
       "role": "return",
+      "variant": "dashed",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "execute-children",
+      "from": "execute",
+      "to": "children",
+      "role": "branch",
+      "variant": "dashed",
+      "label": "독립·허용"
+    },
+    {
+      "id": "children-accept",
+      "from": "children",
+      "to": "accept",
+      "role": "return",
+      "variant": "dashed",
       "label": "근거 반환"
     },
     {
-      "id": "apply-rollback",
-      "from": "apply",
-      "to": "rollback",
-      "role": "branch",
-      "label": "검증 실패"
+      "id": "policy-plan",
+      "from": "policy",
+      "to": "plan",
+      "role": "main",
+      "variant": "default"
     },
     {
-      "id": "watch-idle",
-      "from": "watch",
-      "to": "idle",
+      "id": "plan-install",
+      "from": "plan",
+      "to": "install",
+      "role": "main",
+      "variant": "default",
+      "label": "충돌 없음"
+    },
+    {
+      "id": "install-integrity",
+      "from": "install",
+      "to": "integrity",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "integrity-home",
+      "from": "integrity",
+      "to": "home",
+      "role": "main",
+      "variant": "default",
+      "label": "검증 통과"
+    },
+    {
+      "id": "weekly-collect",
+      "from": "weekly",
+      "to": "collect",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "collect-review",
+      "from": "collect",
+      "to": "review",
+      "role": "main",
+      "variant": "default",
+      "label": "관련 변경"
+    },
+    {
+      "id": "review-authority",
+      "from": "review",
+      "to": "authority",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "authority-update",
+      "from": "authority",
+      "to": "update",
+      "role": "main",
+      "variant": "security",
+      "label": "권한 있음"
+    },
+    {
+      "id": "update-postcheck",
+      "from": "update",
+      "to": "postcheck",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "postcheck-closure",
+      "from": "postcheck",
+      "to": "closure",
+      "role": "main",
+      "variant": "emphasis",
+      "label": "통과"
+    },
+    {
+      "id": "closure-notify",
+      "from": "closure",
+      "to": "notify",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "postcheck-restore",
+      "from": "postcheck",
+      "to": "restore",
+      "role": "error",
+      "variant": "security",
+      "label": "실패·복원 가능"
+    },
+    {
+      "id": "restore-notify",
+      "from": "restore",
+      "to": "notify",
+      "role": "main",
+      "variant": "default"
+    },
+    {
+      "id": "weekly-registered",
+      "from": "weekly",
+      "to": "registered",
       "role": "branch",
-      "label": "정리 정책"
+      "variant": "dashed",
+      "label": "등록 범위",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "route": "straight"
+    },
+    {
+      "id": "registered-idle",
+      "from": "registered",
+      "to": "idle",
+      "role": "main",
+      "variant": "default"
     },
     {
       "id": "idle-notice",
       "from": "idle",
       "to": "notice",
       "role": "main",
-      "label": "정리 가능"
+      "variant": "default",
+      "label": "정리 후보"
     },
     {
       "id": "notice-prune",
       "from": "notice",
       "to": "prune",
       "role": "main",
-      "label": "7일 후 재검증"
+      "variant": "security",
+      "label": "7일·조건 충족"
     },
     {
-      "id": "prune-cleanreport",
+      "id": "prune-cleanresult",
       "from": "prune",
-      "to": "cleanreport",
-      "role": "main"
+      "to": "cleanresult",
+      "role": "main",
+      "variant": "default"
     }
   ],
   "cards": [
     {
       "dot": "cyan",
-      "title": "프로젝트와 독립",
+      "title": "공통과 프로젝트는 독립",
       "items": [
-        "글로벌: 공통 지침과 운영 정책",
-        "프로젝트: 실제 코드·규칙·별도 flow"
+        "공통 원본: global/AGENTS.md · 필요할 때만 guides/",
+        "프로젝트: 자체 AGENTS.md · 규칙 · 코드 · 별도 flow",
+        "프로젝트 규칙·flow는 글로벌 업데이트로 덮어쓰지 않음"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "모델·도구·위임",
+      "items": [
+        "모델과 추론 강도는 사용자 선택 · 자동 모델 전환 없음",
+        "스킬은 명시 요청만 · 서브에이전트는 호스트 허용 시",
+        "자식 최대 2개·재위임 기본 금지 · 부모가 통합·검증",
+        "RTK는 선택한 명령 출력만 압축 · 전체 토큰 절감 측정 아님"
       ]
     },
     {
       "dot": "emerald",
-      "title": "적용과 복원",
+      "title": "기기별 상태·수명주기",
       "items": [
-        "정확한 manifest 소유 파일만 설치·제거",
-        "복원도 충돌 시 중단하고 사용자 수정 보존"
+        "공유: 정책·manifest·검토 버전은 Git에 보관",
+        "로컬: 경로·로그인·MCP·권한·운영 기록은 각 기기에 유지",
+        "설치본과 소유권 대조 · 변경된 사용자 파일은 충돌로 보존",
+        "활성 경로에 사본 누적 없음 · 이전 관리 상태는 1세트"
       ]
     },
     {
-      "dot": "emerald",
-      "title": "RTK·정리 경계",
+      "dot": "amber",
+      "title": "현재 호스트의 자동 적용 범위",
       "items": [
-        "RTK는 명시 실행 · 실제 토큰 절감 보장 없음",
-        "미상·활동 중·링크·추적 파일은 정리 제외"
+        "호환되는 기존 글로벌 Markdown 최대 3파일·120줄",
+        "상시 지침 2,400바이트 이내 · TRACE 자체 범위 기준",
+        "안정 CLI·RTK도 원문·호환성·해시·적용 후 검사 필요",
+        "모델·권한·MCP·프로젝트 변경·새 기능·원격 게시는 별도 승인",
+        "다른 PC는 검토 전용 · 운영 호스트와 예약은 자동 이전 안 됨"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "정리·완료의 한계",
+      "items": [
+        "정리는 등록된 auto_cleanup 프로젝트의 잠긴 직접 자식 의존성만",
+        "45일 관측 + 실제 후보 알림 후 7일 · 즉시 재검증",
+        "미상 프로세스·새 활동·링크·추적 파일이면 삭제하지 않음",
+        "원문 미확인·미검증 동작·보류 후보는 남겨서 보고",
+        "예약은 PC·앱 실행 필요 · 도식은 실제 실행 추적이 아님"
       ]
     }
   ]

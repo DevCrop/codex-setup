@@ -1,8 +1,10 @@
 {
   "schema_version": 1,
   "diagram_type": "workflow",
-  "specification_sha256": "46de0e0dc36535d5678f22e8e21fe1fc8468205bb07d67d347e984b0b2987a9b",
-  "artifact_sha256": "efb2e2b3006183a9d4c9fee8720987ce6a68f274d35546ceec28dc7190c454ff",
+  "specification_sha256": "1a1137c80edd71378bccdff2fcb38f9844752f84bf61c145838a64d399aaa2fe",
+  "artifact_sha256": "c5ec347c01237c6e59177c264318da75ad61838fa99c3485af04d3bf920accc4",
+  "specification_bytes": 18590,
+  "artifact_bytes": 802358,
   "validation": {
     "checks_passed": 9,
     "checks_total": 9,
@@ -16,6 +18,12 @@
     "check": "pass",
     "browser-check": "pass"
   },
+  "repository_evidence": {
+    "verified": true,
+    "repository": "https://github.com/DevCrop/codex-setup",
+    "revision": "9d7f8db8faff22d79d9ee1d4cc8a9a8464d4ed46",
+    "references": 43
+  },
   "browser_evidence": "pass",
   "viewport_containment": [
     {
@@ -23,7 +31,11 @@
       "height": 900,
       "theme": "light",
       "overflowX": false,
-      "overflowY": false,
+      "overflowY": true,
+      "verticalScrollAccepted": true,
+      "overflowDisposition": "readable-vertical-scroll",
+      "readerFit": "intrinsic-height",
+      "minimumProjectedNodeTextPx": 6.005037783375315,
       "ok": true
     },
     {
@@ -32,6 +44,10 @@
       "theme": "light",
       "overflowX": false,
       "overflowY": false,
+      "verticalScrollAccepted": false,
+      "overflowDisposition": "contained",
+      "readerFit": "intrinsic-height",
+      "minimumProjectedNodeTextPx": 6.152812762384551,
       "ok": true
     },
     {
@@ -40,6 +56,10 @@
       "theme": "light",
       "overflowX": false,
       "overflowY": false,
+      "verticalScrollAccepted": false,
+      "overflowDisposition": "contained",
+      "readerFit": "intrinsic-height",
+      "minimumProjectedNodeTextPx": 6.784214945424013,
       "ok": true
     },
     {
@@ -48,10 +68,54 @@
       "theme": "light",
       "overflowX": false,
       "overflowY": false,
+      "verticalScrollAccepted": false,
+      "overflowDisposition": "contained",
+      "readerFit": "intrinsic-height",
+      "minimumProjectedNodeTextPx": 8,
       "ok": true
     }
   ],
-  "visual_review": "not-performed",
-  "diagram_scope": "Approved global operating policy, not a runtime trace or project architecture map.",
+  "composition_metrics": {
+    "properCrossings": 0,
+    "resolvedCrossovers": 0,
+    "ambiguousCorridors": 0,
+    "arrowheadCollisions": 0,
+    "containerBorderRuns": 0,
+    "labelRouteClearanceIssues": 0,
+    "labelCanvasOverflowIssues": 0,
+    "minLabelRouteClearance": 48,
+    "desktopReadabilityIssues": 0,
+    "viewportHeightIssues": 0,
+    "minProjectedNodeTextPx": 6.246851385390428,
+    "maxBends": 2,
+    "routesOverSuggestedBends": 0,
+    "maxStretch": 1.254,
+    "routesOverSuggestedStretch": 0,
+    "minSegmentPx": 16,
+    "minInteriorSegmentPx": 126,
+    "shortSegmentCount": 0,
+    "shortEndpointSegmentCount": 0,
+    "shortInteriorSegmentCount": 0,
+    "microSegmentCount": 0
+  },
+  "visual_review": "passed",
+  "visual_review_scope": [
+    {
+      "width": 1440,
+      "height": 900,
+      "theme": "light"
+    },
+    {
+      "width": 2048,
+      "height": 1320,
+      "theme": "dark"
+    }
+  ],
+  "visual_review_notes": [
+    "Reviewed exact artifact captures: all workflow lanes and nodes visible; no overlapping labels or arrows.",
+    "Overview captions require zoom for detailed reading; viewer controls use upstream English labels.",
+    "Codex right-pane rendering and mobile view were not visually confirmed."
+  ],
+  "diagram_scope": "Global operating policy at TRACE v1.2.2, not a runtime trace or project architecture map.",
   "renderer_version": "3.0.0"
 }

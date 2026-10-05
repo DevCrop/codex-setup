@@ -1,4 +1,4 @@
-# TRACE Setup v1.2.1
+# TRACE Setup v1.2.2
 
 Portable Codex personal instructions, optional profiles, pinned Archify/Ponytail,
 and ownership-based deployment. Python 3.11+ and Git are required; Node.js is needed
@@ -88,7 +88,9 @@ require existing host authorization; do not register another monitoring host aut
 The completion audit also catches unpublished release versions, deployment/tool
 drift and registered projects awaiting their first scoped review. The existing
 TRACE routine reports new actionable gaps proactively and retains previously
-reported findings without repeating unchanged notices. The current weekly TRACE monitor does not publish or upgrade on its own.
+reported findings without repeating unchanged notices. The current host pre-authorizes compatible small guidance and stable CLI/RTK
+updates after review and verification. Future remote publication requires separate
+authorization; local applied and publicly released states remain distinct.
 
 ## Project adoption
 
@@ -114,13 +116,15 @@ installing this repository does not create or transfer an automation. The curren
 TRACE host uses Monday 10:00 weekly review. A separately authorized daily global
 maintenance routine may update stable CLI/RTK releases within its approved scope,
 with integrity checks and verification; that authorization is not portable policy.
-Policy, skills, hooks and permission changes need their own review and approval.
+Broader policy, skills, hooks and permission changes need separate approval.
+The October 5 host authorization permits only the bounded compatible updates
+defined in operations; new computers remain review-only.
 Inactive hosts cannot guarantee scheduled execution. No application-managed plugin
 cache is copied.
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.2.1` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.2.2` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 
@@ -136,3 +140,15 @@ make another computer's effective context differ. Whole-home cleanup remains sep
 `doctor` and `verify.unmanaged_skill_findings` also report directories missing
 `SKILL.md`. These findings are review candidates, not permission to delete user files.
 A managed-file verification pass does not mean that the entire Codex home is clean.
+
+## Routine completion contract
+
+The existing TRACE routine follows detection → original-source review → applicability/
+authorization decision → compatible application → affected checks → closure audit.
+Official article discovery covers OpenAI news, developer posts and product updates.
+A version match alone cannot clear changed managed files or a stale published-asset
+receipt. Pending/unknown work is retained and reported proactively when actionable.
+The portable prompt source is [templates/maintenance-prompt.md](templates/maintenance-prompt.md);
+render it with `python -B scripts/render_heartbeat.py` on the designated host.
+Rendering does not create a monitor, grant host authority or update the scheduler.
+Do not install a second monitor on a new computer.

@@ -9,6 +9,8 @@ from pathlib import Path
 import re
 import sys
 import urllib.request
+from urllib.parse import urljoin, urlsplit, urlunsplit
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
 from setup import ROOT, Deployment, read_json, save_json
@@ -41,6 +43,73 @@ class Body(HTMLParser):
                 self.primary.append(text)
 
 
+def official_url(value, base):
+    """Only published first-party article/doc links; no credentials or query state."""
+    parsed = urlsplit(urljoin(base, value))
+    hosts = {'openai.com': '/index/', 'developers.openai.com': '/blog/',
+             'learn.chatgpt.com': '/docs/'}
+    if (parsed.scheme != 'https' or parsed.hostname not in hosts or
+            parsed.username or parsed.password or parsed.port not in (None, 443) or
+            not parsed.path.startswith(hosts[parsed.hostname])):
+        return None
+    return urlunsplit(('https', parsed.hostname, parsed.path.rstrip('/'), '', ''))
+
+
+class ArticleLinks(Body):
+    def __init__(self, base):
+        super().__init__()
+        self.base, self.links, self.active = base, {}, None
+
+    def handle_starttag(self, tag, attrs):
+        super().handle_starttag(tag, attrs)
+        if tag == 'a' and self.primary_depth and not self.ignore:
+            url = official_url(dict(attrs).get('href', ''), self.base)
+            if url:
+                self.active = [url, []]
+
+    def handle_data(self, text):
+        super().handle_data(text)
+        if self.active and not self.ignore:
+            self.active[1].append(text)
+
+    def handle_endtag(self, tag):
+        if tag == 'a' and self.active:
+            url, parts = self.active
+            title = normalize(' '.join(parts))
+            if title:
+                self.links[url] = {'url': url, 'title': title}
+            self.active = None
+        super().handle_endtag(tag)
+
+
+def article_index(text, item):
+    """Return a stable discovery index, never classify headlines as policy evidence."""
+    entries = {}
+    if item['discovery'] == 'rss':
+        if '<!DOCTYPE' in text.upper() or '<!ENTITY' in text.upper():
+            raise ValueError('Unsupported feed declarations')
+        for entry in ET.fromstring(text).findall('./channel/item')[:60]:
+            url = official_url(entry.findtext('link', ''), item['url'])
+            if url:
+                entries[url] = {'url': url, 'title': normalize(entry.findtext('title', '')),
+                                'published': entry.findtext('pubDate', ''),
+                                'summary': normalize(entry.findtext('description', ''))}
+    elif item['discovery'] == 'html':
+        parser = ArticleLinks(item['url'])
+        parser.feed(text)
+        entries = parser.links
+    elif item['discovery'] == 'markdown':
+        for title, link in re.findall(r'\[([^\]]+)\]\((https://[^\s)]+)\)', text):
+            url = official_url(link, item['url'])
+            if url:
+                entries[url] = {'url': url, 'title': normalize(title)}
+    else:
+        raise ValueError('Unknown article index format')
+    if not entries:
+        raise ValueError('No official article links; discovery is unknown')
+    return sorted(entries.values(), key=lambda entry: entry['url'])
+
+
 def github_body(payload):
     if isinstance(payload, list):
         selected = {"sha": payload[0]["sha"], "message": payload[0]["commit"]["message"]}
@@ -60,9 +129,12 @@ def fetch(item):
             if len(data) > 4_000_000:
                 raise ValueError("Response exceeds monitor limit")
             text = data.decode("utf-8")
+            articles = article_index(text, item) if item.get('discovery') else None
             if url.startswith("https://api.github.com/"):
                 text = github_body(json.loads(text))
-            if "text/html" in response.headers.get("Content-Type", ""):
+            if articles is not None:
+                text = json.dumps(articles, ensure_ascii=False, sort_keys=True)
+            elif "text/html" in response.headers.get("Content-Type", ""):
                 body = Body()
                 body.feed(text)
                 text = " ".join(body.primary or body.parts)
@@ -71,9 +143,12 @@ def fetch(item):
                 raise ValueError("Empty or unexpectedly short body")
             if any(marker in normalized.lower() for marker in ("verify you are human", "just a moment...", "access denied")):
                 raise ValueError("Access challenge instead of document")
-            return {"id": item["id"], "url": url, "status": "fetched",
+            result = {"id": item["id"], "url": url, "status": "fetched",
                     "sha256": hashlib.sha256(normalized.encode()).hexdigest(),
                     "body": normalized}
+            if articles is not None:
+                result['articles'] = articles
+            return result
     except Exception as exc:
         return {"id": item["id"], "url": url, "status": "error", "error": type(exc).__name__}
 
@@ -122,6 +197,13 @@ def check(state, items, fetcher=fetch):
         for row in pool.map(fetcher, items):
             if row["status"] == "fetched":
                 old = previous.get(row["id"])
+                if 'articles' in row:
+                    known = (old or {}).get('articles')
+                    by_url = {entry['url']: entry for entry in known or []}
+                    row['article_baseline'] = known is None
+                    row['new_articles'] = [entry for entry in row['articles'] if entry['url'] not in by_url]
+                    row['changed_articles'] = [entry for entry in row['articles']
+                                               if entry['url'] in by_url and entry != by_url[entry['url']]]
                 row["change"] = "baseline" if not old else "unchanged" if old["sha256"] == row["sha256"] else "candidate"
                 if old and normalize(old['body']) == normalize(row['body']):
                     row['change'] = 'unchanged'
@@ -134,9 +216,11 @@ def check(state, items, fetcher=fetch):
                     pending[row['id']]['first_detected_at'] = (prior or {}).get('first_detected_at', datetime.now(timezone.utc).isoformat())
                     if prior and prior.get('sha256') != row['sha256']:
                         pending[row['id']]['earlier_unreviewed_diff'] = prior.get('earlier_unreviewed_diff', prior.get('diff_excerpt', ''))[:12000]
-                # State keeps one body per source, not a growing history. Actual
-                # policy updates and upstream version adoption require approval.
+                # Collection is not semantic acceptance. Runtime application is
+                # separate and must stay inside the host's recorded authorization.
                 previous[row["id"]] = {"sha256": row["sha256"], "body": row.pop("body")}
+                if 'articles' in row:
+                    previous[row['id']]['articles'] = row['articles']
             results.append(row)
     now = datetime.now(timezone.utc).isoformat()
     report = {"checked_at": now, "results": results, 'pending': list(pending.values()),

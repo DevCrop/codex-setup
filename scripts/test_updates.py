@@ -2,11 +2,68 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from check_updates import Body, check, github_body, resolve_candidate
+from check_updates import Body, article_index, check, github_body, official_url, resolve_candidate
 from setup import read_json, save_json
 
 
 class MonitorTests(unittest.TestCase):
+    def test_discovery_links_are_first_party_and_drop_query_state(self):
+        base = 'https://openai.com/news/rss.xml'
+        self.assertEqual(official_url('/index/guide/?utm_source=x#part', base),
+                         'https://openai.com/index/guide')
+        for value in ('http://openai.com/index/a', 'https://openai.com.evil.test/index/a',
+                      'https://user:pass@openai.com/index/a', 'https://openai.com:8443/index/a',
+                      'https://openai.com/account/login', 'https://example.org/index/a'):
+            self.assertIsNone(official_url(value, base))
+
+    def test_feed_metadata_and_order_do_not_hide_article_changes(self):
+        item = {'url': 'https://openai.com/news/rss.xml', 'discovery': 'rss'}
+        a = '<item><title>A</title><link>https://openai.com/index/a</link><description>original</description></item>'
+        b = '<item><title>B</title><link>https://openai.com/index/b</link></item>'
+        first = article_index('<rss><channel><lastBuildDate>one</lastBuildDate>'+a+b+'</channel></rss>', item)
+        second = article_index('<rss><channel><lastBuildDate>two</lastBuildDate>'+b+a+'</channel></rss>', item)
+        self.assertEqual(first, second)
+        changed = article_index('<rss><channel>'+a.replace('original','updated')+b+'</channel></rss>', item)
+        self.assertNotEqual(first, changed)
+
+    def test_html_discovery_excludes_navigation_and_external_links(self):
+        item = {'url': 'https://developers.openai.com/blog', 'discovery': 'html'}
+        text = ('<nav><a href="/blog/old">navigation</a></nav><main>'
+                '<a href="/blog/new?tracking=1"><span>New article</span></a>'
+                '<a href="https://evil.test/blog/untrusted">external</a></main>')
+        self.assertEqual(article_index(text, item),
+                         [{'url':'https://developers.openai.com/blog/new','title':'New article'}])
+        with self.assertRaises(ValueError):
+            article_index('<nav><a href="/blog/old">navigation only</a></nav>', item)
+
+    def test_markdown_discovery_retains_official_product_detail_urls(self):
+        item = {'url': 'https://learn.chatgpt.com/docs/whats-new.md', 'discovery': 'markdown'}
+        text = '[Update](https://learn.chatgpt.com/docs/whats-new/week) [Outside](https://x.com/post)'
+        self.assertEqual(article_index(text,item),
+                         [{'url':'https://learn.chatgpt.com/docs/whats-new/week','title':'Update'}])
+
+    def test_article_baseline_additions_edits_and_retained_review_are_distinct(self):
+        with tempfile.TemporaryDirectory() as d:
+            state=Path(d); item={'id':'index','url':'https://openai.com/news/rss.xml'}
+            entries=[{'url':'https://openai.com/index/a','title':'A'}]
+            def feed(source):
+                import hashlib,json
+                body=json.dumps(entries,sort_keys=True)
+                return {**source,'status':'fetched','sha256':hashlib.sha256(body.encode()).hexdigest(),
+                        'body':body,'articles':list(entries)}
+            first=check(state,[item],feed)
+            self.assertTrue(first['results'][0]['article_baseline'])
+            self.assertEqual(len(first['results'][0]['new_articles']),1)
+            entries[0]={'url':'https://openai.com/index/a','title':'Edited A'}
+            entries.append({'url':'https://openai.com/index/b','title':'B'})
+            changed=check(state,[item],feed)['results'][0]
+            self.assertFalse(changed['article_baseline'])
+            self.assertEqual(changed['new_articles'],[entries[1]])
+            self.assertEqual(changed['changed_articles'],[entries[0]])
+            unchanged=check(state,[item],feed)
+            self.assertEqual(unchanged['results'][0]['new_articles'],[])
+            self.assertEqual(len(unchanged['pending']),1)
+
     def test_release_digest_and_notes_without_download_count_noise(self):
         release = {'tag_name':'v1', 'published_at':'date', 'body':'notes',
                    'assets':[{'name':'binary', 'digest':'sha256:a', 'browser_download_url':'url', 'download_count':1}]}

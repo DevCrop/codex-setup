@@ -24,9 +24,9 @@ Agreement clauses define scope and completion, not mandatory extra tests or
 permission bypass. RTK only changes selected tool output, not model choice,
 reasoning, source rules, caching or authority. Final acceptance uses project-native
 commands. Cleanup never wraps deletion through RTK; its fixed validated Python
-path has no arbitrary command input. The current weekly TRACE routine may apply only the previously
-authorized dependency policy; instruction/binary/source changes remain candidates
-requiring approval. A separately authorized existing daily global routine may
+path has no arbitrary command input. The October 5 host authorization also permits compatible small guidance changes
+and stable CLI/RTK adoption after review and checks. Broader changes remain approval
+candidates. Exact scope and post-update evidence live in operations, not this table. A separately authorized existing daily global routine may
 update stable CLI/RTK within its host-local scope; this repository does not grant
 that authority or register a second scheduler. No project rules are overwritten by a global update.
 
@@ -38,7 +38,7 @@ project. User-local `features.js_repl = false` is preserved because its original
 reason was not established. Do not label it obsolete based on model release alone.
 
 The October 5 completion audit adds read-only release/install alignment and missing
-initial-project-review detection. It does not authorize autonomous upgrades or
-publication. Archify 3.0.1 reminder adoption is deliberately deferred; the existing
+initial-project-review detection. The read-only audit itself does not apply upgrades or publish;
+the later October 5 host authorization controls bounded application separately. Archify 3.0.1 reminder adoption is deliberately deferred; the existing
 central monitor avoids duplicating unchanged notices. Reconsider a later meaningful
 functional/security release. Ponytail stable 4.11.0 changes no deployed SKILL bytes.

@@ -48,6 +48,42 @@ does not inherit monitoring ownership merely by installing this repository.
    policy below, executed only by `project_cleanup.py prune`. Recommend the smallest checks for other candidates;
    execute them during approved implementation. Missing paths and failed collection
    stay unknown/failed, not healthy. An offline host cannot guarantee scheduled execution.
+6. Run `python -B scripts/check_closure.py`. Compare checkout, installed policy,
+   reviewed CLI/RTK and latest GitHub release versions. Inspect the existing PR's
+   final-head checks and immutable tag/artifact identity when publication differs.
+   A merged PR, prepared package and installed policy are separate from a published
+   release. Missing GitHub access is unknown, never successful publication.
+   For a registered project with no recorded substantive review, perform one scoped
+   initial instruction/configuration/acceptance-contract review even when its
+   content fingerprint is unchanged. Do not equate collection or a dirty file list
+   with completed onboarding. Do not edit its source or manufacture a project flow.
+
+### Completion audit and notification
+
+At the end of each routine, reconcile unresolved stable findings with the collected
+evidence. Each actionable candidate should name exact target files/versions, impact,
+the smallest relevant checks and whether approval or session evidence is required.
+Report new unfinished release/install/migration work proactively, without waiting
+for the user to ask what remains. Keep previously reported pending work quiet unless
+its evidence, impact, severity or resolution materially changes. Do not repeat a
+notice merely because time passed. Collection never clears a finding automatically.
+
+Before a managed update is approved, compare the assets TRACE actually installs,
+not just an upstream tag or commit message. An identical managed skill hash can
+justify keeping its pin despite unrelated plugin/hooks releases. A deliberate
+deferral has a version/hash, reason and reconsideration trigger; it is not a claim
+of runtime validation. Preserve unresolved candidates removed from the watch list
+until an exact-content review resolves them. Use current [OpenAI plugin examples](https://github.com/openai/plugins)
+and [plugin packaging guidance](https://developers.openai.com/plugins/build/plugins)
+for future examples; the deprecated skills catalog remains historical evidence.
+
+CLI `debug prompt-input` can confirm rendered global/project instructions without
+a model call. Keep only hashes and presence checks in private evidence, never raw
+prompt contents. It does not prove model obedience or desktop UI loading. Compare
+the actual session permission context with defaults using the documented
+[configuration precedence](https://learn.chatgpt.com/docs/config-file/config-basic)
+and [developer settings](https://learn.chatgpt.com/docs/developer-settings).
+Do not change permissions to make a check pass or label an override an installer fault.
 
 Keep one current local routine record beside source-monitor state (not in project
 files). Track last attempt, last successful collection, last substantive review,

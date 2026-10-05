@@ -1,6 +1,6 @@
 # Maintenance and RTK evidence boundaries
 
-Reviewed 2026-10-01. TRACE is a user-designed configuration assembled from official
+Reviewed 2026-10-05.  TRACE is a user-designed configuration assembled from official
 capabilities; OpenAI does not publish or endorse this complete setup.
 
 | Rule/capability | Authority | Integration decision |
@@ -12,10 +12,10 @@ capabilities; OpenAI does not publish or endorse this complete setup.
 | Agent controls and inheritance | [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) | Supported delegation only; explicit higher-priority host requirements win |
 | Implicit skill invocation policy | [Build skills](https://learn.chatgpt.com/docs/build-skills) | Ponytail/Archify retain upstream bytes and explicit-only invocation policy |
 | Hook rewrite/trust and scope | [Hooks](https://learn.chatgpt.com/docs/hooks) | No RTK transparent hook; never bypass exact-definition trust; cloud and local runtime differ |
-| Runtime version | [Changelog](https://learn.chatgpt.com/docs/changelog) | CLI 0.159.2 reviewed and independently installed; not an app version |
+| Runtime version | [Changelog](https://learn.chatgpt.com/docs/changelog) | CLI 0.160.0 reviewed and independently installed; not an app version |
 | Subscription usage | [Pricing](https://learn.chatgpt.com/docs/pricing) | No API key, token savings guarantee or API-price-to-Pro-quota conversion |
 | DevDay features | [DevDay](https://learn.chatgpt.com/docs/whats-new/devday-2026) | API beta, cloud orchestration and Pro 500 Ultrafast are not local Pro 200 requirements |
-| RTK filters, assets and compiler selection | [RTK release/source](https://github.com/rtk-ai/rtk/releases/tag/v0.50.0) | Third-party tool; explicit wrapper prioritizes project binaries; verify raw acceptance output |
+| RTK filters, assets and compiler selection | [RTK release/source](https://github.com/rtk-ai/rtk/releases/tag/v0.51.0) | Third-party tool; explicit wrapper prioritizes project binaries; verify raw acceptance output |
 | Korean, model choice, two children, no recursion | User preference | Not official optimal values; installed capability is not a promise of proactive delegation |
 | 45 idle days, 7-day warning, registered scope | TRACE local policy authorized by user | Conservative observed-idle heuristic; unknown activity, links, tracked or unlocked content block deletion |
 | Git ownership, one restore point, stable monitor state | TRACE implementation | Preserve modified files; test deletion only in fixtures; dependency reinstall is distinct from policy rollback |
@@ -34,3 +34,9 @@ does not prove new-session model/skill exposure. RTK checks cover explicit Windo
 commands in two repositories and disposable fixtures, not every filter or future
 project. User-local `features.js_repl = false` is preserved because its original
 reason was not established. Do not label it obsolete based on model release alone.
+
+The October 5 completion audit adds read-only release/install alignment and missing
+initial-project-review detection. It does not authorize autonomous upgrades or
+publication. Archify 3.0.1 reminder adoption is deliberately deferred; the existing
+central monitor avoids duplicating unchanged notices. Reconsider a later meaningful
+functional/security release. Ponytail stable 4.11.0 changes no deployed SKILL bytes.

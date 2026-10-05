@@ -1,4 +1,4 @@
-# TRACE Setup v1.2
+# TRACE Setup v1.2.1
 
 Portable Codex personal instructions, optional profiles, pinned Archify/Ponytail,
 and ownership-based deployment. Python 3.11+ and Git are required; Node.js is needed
@@ -65,6 +65,7 @@ python -B scripts/tools.py verify
 python -B scripts/tools.py run git status
 python -B scripts/project_cleanup.py register --id NAME --path PATH --auto
 python -B scripts/project_cleanup.py scan
+python -B scripts/check_closure.py
 ```
 
 RTK uses pinned, SHA-256-verified platform assets in private host state; no hook,
@@ -83,6 +84,11 @@ Use `project_cleanup.py hold --id NAME` or `touch --id NAME` to retain/mark acti
 Only the exact allowlisted dependency directory is removable; source, credentials,
 global installs, stores and unregistered projects are excluded. Binary upgrades
 still require approval; do not register another monitoring host automatically.
+The completion audit also catches unpublished release versions, deployment/tool
+drift and registered projects awaiting their first scoped review. The existing
+weekly routine reports new actionable gaps proactively and retains previously
+reported findings without repeating unchanged notices. It does not publish or
+upgrade on its own.
 
 ## Project adoption
 
@@ -109,7 +115,7 @@ or upstream adoption before applying. No application-managed plugin cache is cop
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.2.0` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.2.1` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 

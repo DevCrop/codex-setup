@@ -10,4 +10,4 @@ For JavaScript/TypeScript tools, use the TRACE runner from the project working d
 
 Do not transparently wrap deletes, installs, migrations, publishing, authentication or security decisions. Upstream's Codex hook rewrites commands before native approval checks, whose safety classifier does not unwrap RTK; this may obscure mutating-command signals. Hook setup is a separate opt-in review, with official /hooks trust, and is not included in this release. Do not bypass hook trust or add sandbox writable roots to make analytics work. Keep local analytics outside Git; analytics write failure does not establish filtering failure.
 
-Sources: [RTK 0.50.0 release](https://github.com/rtk-ai/rtk/releases/tag/v0.50.0), [pinned Codex integration](https://github.com/rtk-ai/rtk/blob/v0.50.0/hooks/codex/README.md), [OpenAI hooks](https://learn.chatgpt.com/docs/hooks).
+Sources: [RTK 0.51.0 release](https://github.com/rtk-ai/rtk/releases/tag/v0.51.0), [pinned Codex integration](https://github.com/rtk-ai/rtk/blob/v0.51.0/hooks/codex/README.md), [OpenAI hooks](https://learn.chatgpt.com/docs/hooks).

@@ -1,4 +1,53 @@
-# TRACE v1.2 release verification
+# TRACE v1.2.1 release verification
+
+Reviewed 2026-10-05 for the completion maintenance patch. The dated October 1
+observations below remain historical evidence, not checks repeated today.
+
+## October 5 maintenance acceptance
+
+- Windows local suite: 56 cases, 52 passed and four platform/permission skips.
+  New checks cover unpublished-version detection, unavailable GitHub/install state,
+  initial-review gaps for registered projects, and preservation of retired-watch
+  pending candidates. Resolving a hash-bound source also updates its report.
+- CLI 0.160.0 installed from the exact official npm version; ChatGPT login status
+  passed. Existing model, effort, MCP and permission defaults were preserved.
+  No model calls, quota benchmark or permission changes were made.
+- RTK 0.51.0 release digests pinned for the five supported platform assets;
+  owned Windows binary installed and verified. Twelve native Windows checks passed:
+  same-workdir Git, local TypeScript success/real errors, Unicode/space paths,
+  nonzero exits/stderr and direct `test` argv containing literal shell characters.
+  Other native RTK platforms are unverified. A single prior binary remains available
+  through `tools.py rollback-rtk`; it is outside active setup paths.
+- Isolated actual v1.2.0 to v1.2.1 migration: one guide changed, verify/repeat/rollback
+  using previous source and reapply passed in disposable Unicode/space roots.
+- Current managed installation: one guide changed, 118 owned entries verified.
+  The English agreement, profiles, skill originals and explicit invocation policies
+  were not changed. The agreement remains 1,560 LF bytes / 210 whitespace words;
+  these numbers are not a token-savings measurement.
+- `check_closure.py` adds read-only release/deployment/tool alignment and first
+  registered-project review checks. The existing Monday 10:00 designated-host
+  heartbeat is extended in place. Candidate approvals and cleanup safeguards stay
+  in effect; no new monitor or automatic publisher/upgrader is introduced.
+- R31's deprecated examples catalog is historical; current official plugin examples
+  and packaging are R43/R44. Ponytail's single deployed upstream asset matches
+  v4.11.0 and current exact upstream HEAD, so no replacement is needed. Archify
+  remains 3.0.0: the 3.0.1 stable reminder change is deliberately deferred for this
+  quiet, centrally monitored setup. Reconsider on meaningful functional/security
+  changes or an explicit request; unrelated main changes are not adopted.
+- DevCrop initial review now records root/scripts/style instructions, relevant
+  skill contracts, runtime pins and the existing executable contract source.
+  Product source and its nine existing dirty status entries were preserved.
+  No global template or flow was copied into the project. Its contract forbids
+  Host `docs/`, so no project document tree was manufactured.
+- Zero-model-call CLI `debug prompt-input` probes from the project and styles
+  directories include the global agreement, project root and nested style rules.
+  This does not prove model obedience or desktop session UI behavior. The explicit
+  skill text is not expanded by the inspected debug renderer; filesystem policy
+  verification does not establish an actual composer-selected skill invocation.
+- Global flow topology is unchanged and its existing JSON/HTML receipt is validated.
+  No new visual/perceptual or browser gate execution is claimed for this patch.
+
+## Prior v1.2 implementation evidence (October 1)
 
 Reviewed 2026-10-01. Configuration and command checks only; no model benchmark or
 API model calls. See [evidence boundaries](decisions/002-maintenance-and-rtk.md).

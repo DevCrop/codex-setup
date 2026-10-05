@@ -671,9 +671,9 @@
       "applicable_files": [],
       "monitor": true,
       "last_review": {
-        "date": "2026-09-28",
-        "version": "0.157.1",
-        "claim": "Approved host CLI adoption; version and subscription login verified. Interactive daemon startup and unrelated release features not validated."
+        "date": "2026-10-05",
+        "version": "0.160.0",
+        "claim": "Relevant Windows startup/sandbox, SQLite and plugin loading fixes reviewed. Adopt exact stable CLI under user authorization; interactive behavior has separate evidence limits."
       }
     },
     {
@@ -751,9 +751,9 @@
       "canonical_url": "https://github.com/openai/skills",
       "origin": "additional",
       "authority": "project-primary",
-      "disposition": "conditional",
-      "reason": "Relevant authoritative reference; review changed relevant sections before codifying new behavior.",
-      "review_status": "fetched-not-semantically-reviewed",
+      "disposition": "archived",
+      "reason": "Deprecated upstream examples; historical provenance retained. Current examples are R43/R44; no active global rule depends on this repository.",
+      "review_status": "deprecation-and-current-routing-reviewed-2026-10-05",
       "body_fetched": true,
       "historical_provenance": {
         "inventory": "inventory/s2-20260912T150322Z/sources.json",
@@ -766,7 +766,7 @@
       },
       "snapshot": null,
       "applicable_files": [],
-      "monitor": true
+      "monitor": false
     },
     {
       "id": "R32",
@@ -965,14 +965,14 @@
       "origin": "implementation",
       "authority": "upstream-maintainer",
       "disposition": "adopted",
-      "reason": "RTK 0.50.0 reviewed; release notes/digests monitored, explicit filtering only.",
-      "review_status": "relevant-sections-reviewed-2026-10-01",
+      "reason": "RTK 0.51.0 argv handling and release digests reviewed; explicit filtering only.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
       "body_fetched": true,
       "snapshot": {
         "path": "snapshots/R41.json",
-        "sha256": "fca19004d5297df4febf41a9cd61628f37663dbe1a2088bdf7b9d2bd01484d3a",
-        "bytes": 25906,
-        "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
+        "sha256": "587fb8e4f17cb9aaaf13e66962c46a0603f0adf0387ac4f40ae5900e8720ec4c",
+        "bytes": 24658,
+        "retrieved_at_utc": "2026-10-05T03:53:01.067710+00:00",
         "content_type": "application/json; charset=utf-8"
       },
       "monitor": true
@@ -994,6 +994,50 @@
         "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
         "content_type": "text/markdown; charset=utf-8"
       },
+      "monitor": true
+    },
+    {
+      "id": "R43",
+      "url": "https://raw.githubusercontent.com/openai/plugins/main/README.md",
+      "canonical_url": "https://github.com/openai/plugins",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "conditional",
+      "reason": "Current official Codex plugin examples; no automatic plugin installation.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R43.md",
+        "sha256": "b3681ebd15797bdee1d638c6520c7ba10a36e676760ea5c251530f53f843c852",
+        "bytes": 1283,
+        "retrieved_at_utc": "2026-10-05T03:53:01.335620+00:00",
+        "content_type": "text/plain; charset=utf-8"
+      },
+      "applicable_files": [
+        "docs/operations.md"
+      ],
+      "monitor": true
+    },
+    {
+      "id": "R44",
+      "url": "https://developers.openai.com/plugins/build/plugins.md",
+      "canonical_url": "https://developers.openai.com/plugins/build/plugins",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "conditional",
+      "reason": "Current official plugin packaging and skill-only plugin guidance; TRACE remains skill-only.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R44.md",
+        "sha256": "cc5b62094f9c8fcd910c6ae72fa58c63a13191abdc29fb45b19500e241f71460",
+        "bytes": 27956,
+        "retrieved_at_utc": "2026-10-05T03:53:01.384232+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "applicable_files": [
+        "docs/operations.md"
+      ],
       "monitor": true
     }
   ]

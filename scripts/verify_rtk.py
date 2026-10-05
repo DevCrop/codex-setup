@@ -66,6 +66,10 @@ def main():
                 ['proxy',sys.executable,'-c','import sys; sys.stderr.write("fixture-stderr"); sys.exit(3)'], path, 'fixture-stderr', 3)
         compare('space-argument-preserved', [sys.executable,'-c','import sys; print(sys.argv[1])','a b'],
                 ['proxy',sys.executable,'-c','import sys; print(sys.argv[1])','a b'], path, 'a b')
+        literals = ['a b', '$(echo trace)', '&', ';', '$HOME', '`literal`']
+        probe = 'import sys; assert sys.argv[1:] == ' + repr(literals)
+        compare('test-direct-argv-no-shell-expansion', [sys.executable, '-c', probe, *literals],
+                ['test', sys.executable, '-c', probe, *literals], path)
         for project in args.project:
             tsc = project.resolve()/'node_modules/typescript/bin/tsc'
             if tsc.is_file():

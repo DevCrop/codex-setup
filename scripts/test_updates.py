@@ -74,6 +74,17 @@ class MonitorTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 check(Path(d), [])
 
+    def test_retired_watch_preserves_unresolved_candidate_and_resolution_updates_report(self):
+        with tempfile.TemporaryDirectory() as d:
+            state = Path(d)
+            save_json(state / 'source-pending.json', {'retired': {'id': 'retired', 'sha256': 'hash'}})
+            report = check(state, [{'id': 'A', 'url': 'https://example.org'}],
+                           lambda item: {**item, 'status': 'fetched', 'sha256': 'new', 'body': 'current'})
+            self.assertEqual(report['pending'][0]['id'], 'retired')
+            self.assertTrue(report['pending'][0]['monitor_retired'])
+            resolve_candidate(state, 'retired', 'hash', 'exact content reviewed; no active use')
+            self.assertEqual(read_json(state / 'source-report.json')['pending'], [])
+
 
 if __name__ == '__main__':
     unittest.main()

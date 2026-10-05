@@ -94,6 +94,11 @@ def resolve_candidate(state, source_id, expected_sha, reason):
     reviews[source_id] = {'sha256': expected_sha, 'reason': reason,
                           'reviewed_at': datetime.now(timezone.utc).isoformat()}
     save_json(state / 'source-reviews.json', reviews)
+    report = read_json(state / 'source-report.json', {})
+    if report:
+        report['pending'] = list(pending.values())
+        report['review_decisions'] = reviews
+        save_json(state / 'source-report.json', report)
 
 
 def check(state, items, fetcher=fetch):
@@ -107,7 +112,11 @@ def check(state, items, fetcher=fetch):
     if not pending_path.exists():
         pending = {r['id']: r for r in read_json(state / 'source-report.json', {}).get('results', [])
                    if r.get('change') == 'candidate'}
-    pending = {k: v for k, v in pending.items() if k in {item['id'] for item in items}}
+    # A watch-list change is not a semantic resolution of an old candidate.
+    active_ids = {item['id'] for item in items}
+    for key, value in pending.items():
+        if key not in active_ids:
+            value['monitor_retired'] = True
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
         for row in pool.map(fetcher, items):

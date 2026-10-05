@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_on": "2026-09-14",
+  "reviewed_on": "2026-10-05",
   "scope": "36 previously registered references, plus implementation sources. Fetched is not equivalent to reviewed. Historical inventory identifiers are archival provenance, not runtime dependencies.",
   "sources": [
     {
@@ -916,11 +916,12 @@
       "origin": "implementation",
       "authority": "official-vendor",
       "disposition": "monitor-only",
-      "reason": "Discover new official posts; index changes require relevance review before policy adoption.",
+      "reason": "Official developer article index; preserve first-party URLs, compare additions/edits and read relevant articles before policy adoption.",
       "review_status": "index-only",
       "body_fetched": false,
       "snapshot": null,
-      "monitor": true
+      "monitor": true,
+      "discovery": "html"
     },
     {
       "id": "R39",
@@ -1066,6 +1067,77 @@
         "global/guides/rtk.md"
       ],
       "monitor": false
+    },
+    {
+      "id": "R46",
+      "url": "https://learn.chatgpt.com/docs/automations.md",
+      "canonical_url": "https://learn.chatgpt.com/docs/automations",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Official local scheduling constraints; existing monitor only, keep host/app available and distinguish testable configuration from actual future runs.",
+      "review_status": "relevant-current-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R46.md",
+        "sha256": "1c64c21ee76020153dc2ec69aaab1f8fda39d2426e9f63732b8e9577d691f968",
+        "bytes": 18633,
+        "retrieved_at_utc": "2026-10-05T12:04:44.382806+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true
+    },
+    {
+      "id": "R47",
+      "url": "https://openai.com/news/rss.xml",
+      "canonical_url": "https://openai.com/news",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "monitor-only",
+      "reason": "Official published-news discovery feed; indexes are collection evidence, never proof of article semantics.",
+      "review_status": "collection-only",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": true,
+      "discovery": "rss"
+    },
+    {
+      "id": "R48",
+      "url": "https://learn.chatgpt.com/docs/whats-new.md",
+      "canonical_url": "https://learn.chatgpt.com/docs/whats-new",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "monitor-only",
+      "reason": "Official product-update index; check plan/client/host applicability before adoption, preserve selected model and no-API policy.",
+      "review_status": "relevant-current-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "snapshot": {
+        "path": "snapshots/R48.md",
+        "sha256": "ec27190487b37575192a4281d580ae66a2bce614a324865d976ecab692bcbe63",
+        "bytes": 60751,
+        "retrieved_at_utc": "2026-10-05T12:04:44.382806+00:00",
+        "content_type": "text/markdown; charset=utf-8"
+      },
+      "monitor": true,
+      "discovery": "markdown"
+    },
+    {
+      "id": "R49",
+      "url": "https://openai.com/index/practical-guide-building-gpt-6/",
+      "canonical_url": "https://openai.com/index/practical-guide-building-gpt-6/",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "October 2 guide: short relevant context, consistent task/skill boundaries, explicit completion and Codex effort selection. API price/caching controls are not translated into subscription savings or forced host settings.",
+      "review_status": "relevant-sections-reviewed-2026-10-05",
+      "body_fetched": true,
+      "retrieval": "Official page retrieved through web tool; direct urllib returned an access error. No exact raw-byte snapshot claimed. Rediscover through official news and retrieve readable original before future adoption.",
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "global/guides/official-source-workflow.md",
+        "docs/operations.md"
+      ]
     }
   ]
 }

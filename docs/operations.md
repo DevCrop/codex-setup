@@ -22,8 +22,11 @@ rollback and verification. Do not infer that authority from this repository on
 another host, create a duplicate monitor, change cadence, or transfer ownership.
 Keep separately authorized cleanup scope separate from a daily global update.
 Actual automation state controls cadence; an old document does not establish a
-registered scheduler. The current weekly TRACE monitor remains review-only except
-for its exact pre-authorized dependency cleanup policy.
+registered scheduler. On 2026-10-05 the user explicitly extended this host's
+weekly TRACE authority to compatible small global guidance changes and stable
+Codex CLI/RTK updates, after analysis and verification. Preserve the existing
+Monday 10:00 schedule; this does not authorize other computers. Its existing
+exact dependency-cleanup exception remains separate and unchanged.
 Machine-specific checkout paths and project registrations belong in private
 `cleanup-projects.json` beside deployment state, never in shared policy. A new computer
 does not inherit monitoring ownership merely by installing this repository.
@@ -34,13 +37,25 @@ does not inherit monitoring ownership merely by installing this repository.
 |---|---|---|
 | First project registration | Inspect applicable instructions, runtime, existing checks and project flow if present | Record findings and unknowns; do not invent missing configuration or diagrams |
 | Normal implementation | Relevant project rules and affected code | Run task-appropriate acceptance checks; preserve unrelated edits |
-| Weekly heartbeat | Source changes, managed installation and registered project deltas | Report only new actionable findings or material changes to unresolved findings |
+| Weekly heartbeat | Official guidance/articles/products, managed installation and registered project deltas | Apply pre-authorized compatible updates, verify actual results and report only meaningful changes or required decisions |
 | Architecture/dependency/rule change | Affected contracts, documentation and verification commands | Review semantic consistency and run relevant checks after an authorized change |
 | Approved maintenance | Exact reviewed files and versions | Apply, verify, account for removals and preserve rollback |
 
 ### Collection, review and cost controls
 
 1. Run `python -B scripts/check_updates.py`; inspect new and retained candidates.
+   R01 Astra guidance remains the primary instruction-design source. Discover
+   published articles through the official developer blog (R38), OpenAI news RSS
+   (R47, latest 60 entries) and product-update index (R48); scheduling guidance is
+   R46. New/edited first-party URLs are preserved rather than stripped with HTML.
+   An initial index is a collection baseline, not semantic acceptance of its links.
+   Review relevant current entries once; later review only new/edited entries and
+   unresolved relevant articles. Open the original article and applicable current
+   Codex docs before changing policy. Titles, feed summaries and hashes alone are
+   not adoption evidence. Direct access failure can use an available official web
+   retrieval tool; if the original cannot be read, keep it unknown and do not apply.
+   Prioritize Codex subscription/MCP/full-stack guidance. API-only prices, cloud,
+   Pro 500, advertisements and unsupported client features are not local requirements.
 2. Run `python -B scripts/setup.py verify`. Treat unmanaged skill findings separately
    from managed-file integrity; neither proves whole-home cleanliness or runtime loading.
 3. For each registered project, check path availability, Git HEAD and working-tree
@@ -52,16 +67,21 @@ does not inherit monitoring ownership merely by installing this repository.
    entire reference inventory or project. Default to direct review; use bounded
    delegation only when independent work justifies it. Do not schedule model benchmarks.
 5. Run `python -B scripts/tools.py verify` and `python -B scripts/project_cleanup.py scan`.
-   Do not execute arbitrary repository scripts, installs, builds or browser tests
-   during the heartbeat. The sole deletion exception is the pre-authorized dependency
+   Do not execute arbitrary project scripts, dependency installs, builds or browser
+   tests during the heartbeat. Approved CLI/RTK installation and affected existing
+   setup verification are covered by the bounded update section below. The sole deletion exception is the pre-authorized dependency
    policy below, executed only by `project_cleanup.py prune`. Recommend the smallest checks for other candidates;
    execute them during approved implementation. Missing paths and failed collection
    stay unknown/failed, not healthy. An offline host cannot guarantee scheduled execution.
-6. Run `python -B scripts/check_closure.py`. Compare checkout, installed policy,
+6. Run `python -B scripts/check_closure.py`. Verify actual owned file/config
+   integrity, then compare checkout, installed policy,
    reviewed CLI/RTK and latest GitHub release versions. Inspect the existing PR's
    final-head checks and immutable tag/artifact identity when publication differs.
    A merged PR, prepared package and installed policy are separate from a published
-   release. Missing GitHub access is unknown, never successful publication.
+   release. The current published tag/commit and GitHub ZIP digest must match
+   private `release-verification.json`; a stale/missing receipt requires a fresh
+   download and disposable-root install/repeat/removal/restore validation. Missing
+   GitHub access is unknown, never successful publication.
    For a registered project with no recorded substantive review, perform one scoped
    initial instruction/configuration/acceptance-contract review even when its
    content fingerprint is unchanged. Do not equate collection or a dirty file list
@@ -109,15 +129,79 @@ resolution or a failure requiring action. Record known missed runs honestly; do 
 infer missed executions from timestamp gaps alone. A file hash change is a trigger
 for review, not proof of a policy change or a fault.
 
-Prepare exact candidate edits, evidence and validation before requesting approval.
-The current weekly TRACE heartbeat never applies managed instructions, skills,
-configuration, project source edits, upgrades or Git publication. An existing
-daily global routine may perform only its separately authorized stable tool
-updates and compatibility repairs, preserving authentication, hooks, chosen
-model/effort and user edits; Git publication requires its own authorization.
-New optional features, plugins and permission expansion remain approval-gated. Dependency removal is restricted to the
-pre-authorized policy below; all other deletions require approval. Never overwrite project docs during
-a global update. Update only affected Archify diagrams during approved work.
+### Pre-authorized automatic changes and post-update checks
+
+The 2026-10-05 approval is host-local. Record it in private `routine-review.json`
+and the existing automation prompt; the portable prompt template defaults to
+review-only on a new computer. It authorizes analysis, relevant verification,
+compatible small global Markdown changes, stable CLI/RTK upgrades and local Git
+history. It does not authorize arbitrary new features or future remote publication.
+The user's current request authorizes publishing this final routine release;
+future GitHub writes need standing or case-specific publishing authorization.
+Report any unpublished local update proactively rather than calling it distributed.
+
+A compatible small batch changes at most three existing manifest-owned Markdown
+files under `global/AGENTS.md` or `global/guides/`, with at most 120 nonblank added/
+removed lines in total. Keep the agreement at most 2,400 UTF-8 bytes. These are
+TRACE scope bounds, not official optimal numbers. Registry/snapshots, reviewed
+version pins and release bookkeeping are allowed only to support that same batch.
+Do not add executable setup logic, dependencies, skills/plugins, new managed paths,
+project files or a new architecture under this exception. Do not remove durable
+user preferences, change model/effort/tier, agent limits, MCP/auth, hooks/trust,
+permissions, scheduler identity/cadence or broaden this authorization.
+Semantic compatibility is required as well as size: conflicted/uncertain guidance
+or a consequential behavior change remains an exact sourced approval candidate.
+
+For each eligible batch:
+
+1. Confirm a clean source checkout, exact owned targets, current instruction and
+   tool hashes, no pending install transaction and no concurrent maintenance.
+   Preserve user edits; a conflict blocks automatic replacement. Record the
+   exact official article/version/hash, relevant claim, applicability and intended
+   diff before applying; a first successful collection does not establish a review.
+2. Use existing installer plan/apply/verify and one prior restore point. Stable
+   CLI comes from the official npm package after release review; stable RTK uses
+   published asset digests through the existing owned tool installer. Review
+   breaking/permission changes instead of adopting a stable label blindly.
+   Do not modify app binaries, credentials, PATH, hooks or sandbox settings.
+3. Run smallest relevant checks: repository integrity/index/hash/link validation,
+   repeated unchanged install, and global/project CLI rendering after instruction
+   changes (only presence/hashes; no model call). Use local disposable lifecycle
+   cases for installer changes, never destructive checks on the real home.
+   After CLI updates verify version, existing ChatGPT login and rendering; after
+   RTK updates verify ownership, arguments/exits and relevant raw/filtered evidence
+   using `verify_rtk.py`. Do not run unrelated product builds/browser suites.
+4. On failures restore the previous owned policy/tool state, verify the restored
+   state against its matching source revision, preserve evidence and report the
+   exact blocker. Do not repeatedly retry an unchanged failed candidate; retry
+   only with new evidence, a changed version or an explicit retry request.
+5. Record local Git history for owned source changes and distinguish applied,
+   verified, committed and published states. Do not automatically push/merge/tag
+   without publishing authorization. If publication is authorized, check final
+   commit CI, immutable tag, downloaded ZIP digest and disposable installation.
+6. Rerun affected deployment/tool/closure checks and reconcile stable findings.
+   Inspect new or retained actionable gaps before stopping; continue authorized
+   fixes until acceptance is met. Changed session/skill behavior that was not
+   executed remains unverified. No measured token/performance gain is inferred.
+
+Keep one current private record: collection, substantive review, policy application
+and verification timestamps are distinct. Maintain per-article canonical URL,
+normalized/exact available hash, decision, target/impact/validation and retained
+review backlog; do not silently accept older links or discard an unresolved article
+when it leaves an index. Store evidence hashes/presence, not prompts, raw diffs,
+secrets or command lines. A deferred update needs a reason and reconsideration trigger.
+
+Stay quiet on unchanged or irrelevant updates and previously reported pending
+findings. Notify meaningful successful changes, confirmed resolutions, failed
+checks/rollback, a new actionable gap or the smallest required user decision.
+Do not wait for the user to ask what remains. Without a material change do not
+repeat that same question/notice. Local execution needs the host powered on and
+app running; track known failed/missed attempts, never invent scheduler history.
+
+New skills/plugins, permissions, model changes, structural changes and project
+edits require separate scope approval. Preserve the exact dependency cleanup
+policy below; it is not expanded by automatic global maintenance. Never overwrite
+project docs or infer deletion permission from an official article.
 
 Source reports retain `pending` candidates across unchanged fetches. The success
 marker records collection time; installed state `applied_at` records deployment,
@@ -180,7 +264,8 @@ Codex home, Git or a project. No PATH or shell profile is edited. Use `tools.py 
 or the verified absolute binary path. A new computer explicitly installs its own
 platform asset; installing TRACE instructions alone does not install this binary.
 
-Release changes are candidates, not automatic binary updates. Standard RTK gain
+Release collection produces candidates. Automatically adopt a stable binary only
+within the recorded compatible-tool authorization and its post-update checks. Standard RTK gain
 counts are estimates, not OpenAI usage. Run `verify_rtk.py --project PATH` during
 approved maintenance for Git, TypeScript when installed, Unicode/space paths,
 arguments, stderr and nonzero exit checks. It does not test every filter or imply

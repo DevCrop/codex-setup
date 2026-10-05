@@ -1,9 +1,61 @@
-# TRACE v1.2.1 release verification
+# TRACE v1.2.2 release verification
 
-Reviewed 2026-10-05 for the completion maintenance patch. The dated October 1
-observations below remain historical evidence, not checks repeated today.
+Reviewed 2026-10-05. Prior dated observations below remain historical evidence,
+not checks repeated for every routine invocation.
 
-## October 5 maintenance acceptance
+## v1.2.2 final routine acceptance
+
+The user explicitly approved automatic compatible small global changes and stable
+CLI/RTK updates on this existing designated host. Operations defines scope and
+post-update checks; portable prompt rendering defaults to review-only elsewhere.
+Official discovery now retains first-party article URLs, with distinct initial
+baselines, new entries and edited entries. RSS build metadata/order and navigation
+noise do not establish policy changes. Relevant original content is still required.
+
+Closure now verifies actual owned-file integrity in addition to version numbers,
+and binds the current published tag/commit/ZIP digest to the private downloaded-
+artifact validation receipt. Missing/stale evidence remains an actionable gap.
+Existing model/effort, auth, MCP, permissions, skill bytes and cleanup scope remain
+unchanged. Only the conditional official-source guide changes in managed policy.
+The global diagram topology remains valid: its approval node includes recorded
+pre-authorization; no new rendering or browser/perceptual check is claimed.
+
+The new October 2 official GPT-6 practical guide was read through the official web
+page. Direct urllib access failed; no exact raw-byte snapshot is claimed. Its
+Codex completion/context guidance fits this setup. API caching prices and controls
+were not translated into subscription savings or new runtime settings.
+
+- Native Windows suite: 65 cases, 61 passed and four platform/permission skips.
+  Article discovery, pending retention, file integrity, release receipt identity
+  and host-bound automatic authorization are covered alongside existing lifecycle
+  checks. The final closure message adjustment passed its six focused cases.
+- Actual v1.2.1 payload to v1.2.2 migration, repeat, rollback against prior source,
+  reapply, removal and restore passed in disposable Unicode/space roots. User
+  config and fixture auth remained intact; no pending transaction remained.
+- Real-home application changed only `guides/official-source-workflow.md` and
+  verified all 118 ownership entries without unmanaged skill findings. Repeat
+  application was unchanged; one v1.2.1 restore point replaced the previous one.
+  Config and agreement bytes were preserved: 1,855 LF bytes / 250 words.
+- Existing active `trace` prompt matches the portable source apart from the
+  scheduler's terminal-newline normalization. Its thread and Monday 10:00 cadence
+  are unchanged. New hosts, including copied state with another host identity,
+  render review-only. No duplicate automation was created.
+- Post-update CLI prompt rendering includes global/project instructions at the
+  project root and includes nested style rules only from the styles scope.
+  Rendering uses zero model calls and does not establish desktop skill invocation
+  or model obedience. CLI/RTK binaries and pinned skill bytes are unchanged.
+- Official collection succeeded for 21/21 watched sources. The 156 discovered
+  first-party URL records are metadata baselines, not 156 reviewed articles.
+  Only relevant originals actually inspected are marked reviewed. Existing
+  unresolved source candidates and permission-origin uncertainty are retained.
+
+Final-head cross-platform CI and the actual downloaded release artifact are
+separate release gates. Their tag, commit, digest and execution receipts are
+recorded at publication in private host state and the GitHub release, rather than
+claiming future checks as completed in this source document.
+
+## Prior v1.2.1 completion acceptance (October 5)
+
 
 - Windows local suite: 56 cases, 52 passed and four platform/permission skips.
   New checks cover unpublished-version detection, unavailable GitHub/install state,

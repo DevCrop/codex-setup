@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
   "diagram_type": "workflow",
-  "specification_sha256": "16e1566469f5d7395607d6eab33661ec9584e8acc9e89e7c926c474ea1dd39a2",
-  "artifact_sha256": "55bbf8693b9fec26fa48e8cd2debb4e21ebe8b0b8c691171660e36649d226cce",
-  "specification_bytes": 26104,
-  "artifact_bytes": 3587886,
+  "specification_sha256": "6a84c04c34159ce680ec378f0ece812e4032469d9250b658f46a65fca62ddbc2",
+  "artifact_sha256": "b79cea2b60cdf2c46561e0c6ca97e2e04dd940718aa63df98fbeec6d8f1898c5",
+  "specification_bytes": 25022,
+  "artifact_bytes": 3574269,
   "gates": {
     "validate": "pass",
     "deliver": "pass",
@@ -14,7 +14,7 @@
   "repository_evidence": {
     "verified": true,
     "url": "https://github.com/DevCrop/codex-setup.git",
-    "revision": "3c2245c9c70ae4f15fc527b167c8daab0aad6a8d",
+    "revision": "933d4d9df535421f9427de63e0156c32c44e7cfe",
     "provider": "github",
     "link_mode": "web"
   },

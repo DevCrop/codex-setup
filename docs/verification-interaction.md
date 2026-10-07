@@ -17,11 +17,16 @@ Windows / Python 3.13. The existing v1.2.4 evidence remains historical.
 | Existing routine | Saved prompt matches its rendered source; weekly Monday 10:00 Asia/Seoul cadence, host, ID and chat retained |
 | Flow and report | Tracked generators embed pinned Pretendard with its OFL license; upstream Archify is adapted in a temporary copy only |
 | Archify static delivery | Validate, deliver and provenance check passed; nine static checks, no composition errors or warnings |
+| Clean Git checkout | Independent local clone in a Unicode/space path passed repository validation; canonical JSON/HTML bytes match the working checkout exactly |
 
 The five local skips are four unavailable symlink-creation cases and one
 POSIX-only special-file case. Windows junction checks are covered separately.
 Final-head Windows/macOS/Linux CI must be inspected independently; a prior
 release's checks do not validate this branch.
+
+The generator normalizes generated HTML to LF and requires LF source JSON,
+matching the repository's Git attributes. Receipts bind exact bytes rather than
+ignoring line-ending differences during verification.
 
 ## Independent runtime findings
 

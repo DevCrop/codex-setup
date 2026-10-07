@@ -13,7 +13,7 @@ The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate
 ## Designated-host maintenance
 
 Preserve the operating host's existing automation, cadence and authorization. The
-current TRACE host has a Monday 10:00 weekly heartbeat covering source updates,
+current designated host has an existing daily 10:00 Asia/Seoul heartbeat covering source updates,
 global installation health, RTK releases and explicitly registered projects.
 The daily global-maintenance authorization documented in merged PR #9 remains
 host-specific: where that existing routine is registered and authorized, stable
@@ -23,9 +23,9 @@ another host, create a duplicate monitor, change cadence, or transfer ownership.
 Keep separately authorized cleanup scope separate from a daily global update.
 Actual automation state controls cadence; an old document does not establish a
 registered scheduler. On 2026-10-05 the user explicitly extended this host's
-weekly TRACE authority to compatible small global guidance changes and stable
-Codex CLI/RTK updates, after analysis and verification. Preserve the existing
-Monday 10:00 schedule; this does not authorize other computers. Its existing
+TRACE authority to compatible small global guidance changes and stable
+Codex CLI/RTK updates, after analysis and verification. Preserve the registered host's existing
+daily 10:00 schedule; this does not authorize other computers. Its existing
 exact dependency-cleanup exception remains separate and unchanged.
 Machine-specific checkout paths and project registrations belong in private
 `cleanup-projects.json` beside deployment state, never in shared policy. A new computer
@@ -37,9 +37,37 @@ does not inherit monitoring ownership merely by installing this repository.
 |---|---|---|
 | First project registration | Inspect applicable instructions, runtime, existing checks and project flow if present | Record findings and unknowns; do not invent missing configuration or diagrams |
 | Normal implementation | Relevant project rules and affected code | Run task-appropriate acceptance checks; preserve unrelated edits |
-| Weekly heartbeat | Official guidance/articles/products, managed installation and registered project deltas | Apply pre-authorized compatible updates, verify actual results and report only meaningful changes or required decisions |
+| Existing scheduled heartbeat | Official guidance/articles/products, managed installation and registered project deltas | Apply pre-authorized compatible updates, verify actual results and report only meaningful changes or required decisions |
 | Architecture/dependency/rule change | Affected contracts, documentation and verification commands | Review semantic consistency and run relevant checks after an authorized change |
 | Approved maintenance | Exact reviewed files and versions | Apply, verify, account for removals and preserve rollback |
+
+### User feedback and daily improvement
+
+The designated host's 2026-10-07 request adds an evidence-based feedback review to
+its existing daily routine. Follow global/guides/official-source-workflow.md for
+capture, diagnosis, promotion and retirement. Maintain preferences and lessons in
+the single private routine-review.json; its public/local report is a sanitized
+projection, not a second authority store. Review available authorized feedback,
+not all conversations or raw session files. Preserve the separate weekly
+dependency cleanup, permissions, model/effort and quiet notification behavior.
+Only new actionable findings, verified improvements or needed decisions notify.
+Do not report a saved schedule as proof that a future run already occurred.
+
+### Maintenance and observation cadence
+
+This is local operating policy, not a vendor-prescribed release frequency.
+Use the existing schedule plus observations made during active authorized work;
+no additional scheduler, hook or background event service is installed.
+
+| Activity | Trigger | Action |
+|---|---|---|
+| Stable CLI/RTK release discovery | Existing daily host routine | Review relevant changes; install only an eligible changed release |
+| RTK ownership/hash | Each explicit owned-runner invocation | Existing local checks; no network lookup |
+| Output compression | Needed supported noisy diagnostic | Preserve exits/evidence; prefer native concise or final acceptance output |
+| Compression path health | One daily read-only probe | Record bytes, exits and probe count |
+| Affected runtime revalidation | Tool/filter change or new relevant failure | Smallest affected existing checks; reuse unchanged evidence |
+| Feedback and failure handling | Observation in active authorized task | Diagnose and finish authorized fix now; retain summary for daily review |
+| Aggregate/UI refresh | Existing daily successful collection | Replace same-date snapshot; preserve unknown/missing days |
 
 ### Normal implementation contract
 
@@ -161,8 +189,8 @@ and the existing automation prompt; the portable prompt template defaults to
 review-only on a new computer. It authorizes analysis, relevant verification,
 compatible small global Markdown changes, stable CLI/RTK upgrades and local Git
 history. It does not authorize arbitrary new features or future remote publication.
-The user's current request authorizes publishing this final routine release;
-future GitHub writes need standing or case-specific publishing authorization.
+Prior task-specific release approval does not authorize future remote publication;
+GitHub writes require current standing or case-specific publishing authorization.
 Report any unpublished local update proactively rather than calling it distributed.
 
 A compatible small batch changes at most three existing manifest-owned Markdown

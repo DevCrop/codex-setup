@@ -97,8 +97,10 @@ authorization; local applied and publicly released states remain distinct.
 Start with [the project authoring contract](templates/project/README.md). Reuse
 existing rule documents; do not blindly copy the template into an existing repo.
 This release does not install product-project rules. Registered project health and
-RTK checks are separate from project onboarding. The global diagram lives in
-[codex-flow.html](diagrams/global/codex-flow.html); each project's diagram must live
+RTK checks are separate from project onboarding. The v1.2 release installation/
+optional-maintenance diagram lives in [codex-flow.html](diagrams/global/codex-flow.html);
+the current adaptive daily routine is documented in [the portable guide](docs/portable-routine.md).
+Each project's diagram must live
 in that project's own repository and describe inspected source.
 
 ## Checks and maintenance
@@ -113,7 +115,7 @@ See [documentation index](docs/index.md), [operations](docs/operations.md), and
 [release verification](docs/verification-v1.2.md). Update detection produces review
 candidates only. Preserve the designated host's existing schedule and authorization;
 installing this repository does not create or transfer an automation. The current
-TRACE host uses Monday 10:00 weekly review. A separately authorized daily global
+designated host uses daily 10:00 Asia/Seoul global review. Its separately authorized
 maintenance routine may update stable CLI/RTK releases within its approved scope,
 with integrity checks and verification; that authorization is not portable policy.
 Broader policy, skills, hooks and permission changes need separate approval.
@@ -152,6 +154,14 @@ Official article discovery covers OpenAI news, developer posts and product updat
 A version match alone cannot clear changed managed files or a stale published-asset
 receipt. Pending/unknown work is retained and reported proactively when actionable.
 The portable prompt source is [templates/maintenance-prompt.md](templates/maintenance-prompt.md);
-render it with `python -B scripts/render_heartbeat.py` on the designated host.
+render it with `python -B scripts/render_heartbeat.py --automation-id EXISTING_ID`
+on the designated host. The ID must match that host's private authorization record;
+the backward-compatible default is `trace`.
 Rendering does not create a monitor, grant host authority or update the scheduler.
 Do not install a second monitor on a new computer.
+
+For the current adaptive routine, exact boundaries and another computer's install/
+acceptance checklist, see [the portable setup guide](docs/portable-routine.md) and
+[branch verification evidence](docs/verification-adaptive-routine.md). Daily collection,
+per-invocation local RTK checks and responses to observed failures are separate;
+this repository does not install an event daemon or perform model training.

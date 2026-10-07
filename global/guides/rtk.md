@@ -12,6 +12,22 @@ Do not transparently wrap deletes, installs, migrations, publishing, authenticat
 
 Sources: [RTK 0.51.0 release](https://github.com/rtk-ai/rtk/releases/tag/v0.51.0), [pinned Codex integration](https://github.com/rtk-ai/rtk/blob/v0.51.0/hooks/codex/README.md), [OpenAI hooks](https://learn.chatgpt.com/docs/hooks).
 
+## Savings reporting
+
+When reporting efficiency, use the verified runner's `gain --daily --format json`
+aggregate snapshot; keep command text and project paths out of reports. Label
+counts as local recorded invocations and values as RTK token estimates, never
+OpenAI usage, money saved or subscription quota. Historical records may include
+other RTK versions, repeated diagnostics and fixtures; do not attribute all savings
+to the current runner. Compare arithmetic totals and disclose inconsistencies.
+Pair estimates with a scoped raw/filtered byte comparison, exit/evidence checks
+and recall/fallback limitations. Missing records mean unknown, not zero benefit.
+On this user's authorized daily routine, collect daily aggregates and refresh one
+current local chart, without duplicate daily totals or routine notifications.
+Preserve recorded date/timezone limits and missing days as unknown. Compare one
+permitted read-only raw/runner diagnostic and identify probe calls separately.
+Other hosts need their own authorization. Do not run commands to increase gain.
+
 ## Existing host integrations
 
 Earlier host guidance used a user-local PATH binary and an opt-in native hook.
@@ -24,3 +40,21 @@ Do not copy host-local sandbox recovery paths or older 0.50.0 asset hashes into 
 new computer. Preserve unrelated hooks, credentials, environment and permissions.
 Sources: [Codex configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference),
 [Hooks and trust](https://learn.chatgpt.com/docs/hooks).
+
+## Use, release review and validation timing
+
+Use the owned runner when a supported diagnostic is actually needed and its
+output benefits from filtering; prefer already concise native output. Ownership
+and SHA-256 verification already run per invocation in trace_rtk.py. This is a
+local runtime check, not a network release lookup or universal hook interception.
+
+Keep release discovery and daily gain collection in the authorized daily host
+routine. One daily raw/filtered read-only probe checks the live path; count it as
+a validation invocation. A changed RTK/CLI version, filter or relevant new failure
+triggers only the affected existing checks during approved work, before relying
+on the changed path. Do not reinstall an unchanged release or run probes at every
+task start. Use native output immediately if compression hides needed evidence.
+Confirm release compatibility before installation; stable releases may change
+argument handling. Preserve existing hooks, trust, permissions and tool selection.
+A task-observed failure is handled in that task, then summarized for daily review;
+this does not install an event listener or authorize unrelated project commands.

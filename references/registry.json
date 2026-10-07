@@ -30,17 +30,21 @@
         "content_type": "text/markdown; charset=utf-8"
       },
       "applicable_files": [
-        "global/AGENTS.md"
+        "docs/operations.md",
+        "global/AGENTS.md",
+        "global/guides/official-source-workflow.md"
       ],
       "monitor": true,
       "latest_relevant_review": {
-        "date": "2026-10-05",
+        "date": "2026-10-07",
         "retrieval": "official-web-page",
-        "scope": "Named relevant sections only; no new exact-byte snapshot or full-page review claimed.",
+        "status": "relevant-body-reviewed",
         "sections": [
           "Up-to-date AGENTS.md",
           "Persistence"
-        ]
+        ],
+        "claim": "Task-relevant concise guidance and explicit completion; no performance transfer from Astra to the selected Sol model.",
+        "scope": "Relevant sections only; original snapshot bytes preserved"
       },
       "adopted_claims": [
         "Define completion before implementation; read task-relevant guidance and avoid unnecessary verification."
@@ -113,20 +117,21 @@
       },
       "snapshot": null,
       "applicable_files": [
-        "global/AGENTS.md",
         "docs/operations.md",
+        "global/AGENTS.md",
+        "global/guides/official-source-workflow.md",
         "templates/project/AGENTS.md"
       ],
       "monitor": true,
       "latest_relevant_review": {
-        "date": "2026-10-05",
+        "date": "2026-10-07",
         "retrieval": "official-web-page",
-        "scope": "Named relevant sections only; no new exact-byte snapshot or full-page review claimed.",
+        "status": "relevant-body-reviewed",
         "sections": [
-          "Strong first use: Context and prompts",
-          "Make guidance reusable with AGENTS.md",
-          "Improve reliability with testing and review"
-        ]
+          "Strong first use: Context and prompts"
+        ],
+        "claim": "Codify confirmed recurring mistakes in concise scoped guidance; verify requested results.",
+        "scope": "Relevant sections only; original snapshot bytes preserved"
       },
       "adopted_claims": [
         "Define the requested outcome and acceptance criteria.",
@@ -1116,7 +1121,22 @@
         "retrieved_at_utc": "2026-10-05T12:04:44.382806+00:00",
         "content_type": "text/markdown; charset=utf-8"
       },
-      "monitor": true
+      "monitor": true,
+      "latest_relevant_review": {
+        "date": "2026-10-07",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "sections": [
+          "Local scheduled tasks",
+          "Manage scheduled tasks"
+        ],
+        "claim": "Local files require host/app availability; saved prompts preserve recurring work; future executions are not guaranteed.",
+        "scope": "Relevant sections only; original snapshot bytes preserved"
+      },
+      "applicable_files": [
+        "docs/operations.md",
+        "global/guides/official-source-workflow.md"
+      ]
     },
     {
       "id": "R47",
@@ -1169,6 +1189,34 @@
         "global/guides/official-source-workflow.md",
         "docs/operations.md"
       ]
+    },
+    {
+      "id": "R50",
+      "url": "https://learn.chatgpt.com/docs/customization/overview",
+      "canonical_url": "https://learn.chatgpt.com/docs/customization/overview",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "snapshot": null,
+      "monitor": true,
+      "disposition": "adopted",
+      "reason": "Official support for concise scoped guidance, correction feedback and scheduled drift review; local private ledger and authority bounds are TRACE policy.",
+      "review_status": "relevant-sections-reviewed-2026-10-07",
+      "body_fetched": true,
+      "applicable_files": [
+        "global/AGENTS.md",
+        "global/guides/official-source-workflow.md",
+        "docs/operations.md"
+      ],
+      "latest_relevant_review": {
+        "date": "2026-10-07",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "sections": [
+          "AGENTS Guidance",
+          "When to update AGENTS.md"
+        ],
+        "scope": "No full-page or exact-byte snapshot claim"
+      }
     }
   ]
 }

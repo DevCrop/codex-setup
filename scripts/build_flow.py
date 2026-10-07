@@ -12,6 +12,8 @@ from setup import ROOT, atomic, read_json, safe, save_json
 def main():
     canonical = ROOT / 'diagrams/global'
     spec = canonical / 'codex-flow.json'
+    if b'\r\n' in spec.read_bytes():
+        raise ValueError('Canonical flow JSON must use LF, matching Git checkout bytes')
     artifact = canonical / 'codex-flow.html'
     receipt_path = canonical / 'codex-flow.receipt.json'
     old = read_json(receipt_path)
@@ -48,7 +50,8 @@ def main():
                 raise ValueError('Archify ' + stage + ' failed; canonical output preserved')
             raw[stage] = json.loads(result.stdout)
             stages[stage] = 'pass'
-        data = out.read_bytes()
+        # Bind the receipt to portable Git bytes, not platform newline translation.
+        data = out.read_bytes().replace(b'\r\n', b'\n')
         value = {'schema_version': 2, 'diagram_type': 'workflow',
                  'specification_sha256': hashlib.sha256(spec.read_bytes()).hexdigest(),
                  'artifact_sha256': hashlib.sha256(data).hexdigest(),

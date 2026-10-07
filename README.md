@@ -98,9 +98,9 @@ authorization; local applied and publicly released states remain distinct.
 Start with [the project authoring contract](templates/project/README.md). Reuse
 existing rule documents; do not blindly copy the template into an existing repo.
 This release does not install product-project rules. Registered project health and
-RTK checks are separate from project onboarding. The v1.2 release installation/
-optional-maintenance diagram lives in [codex-flow.html](diagrams/global/codex-flow.html);
-the current adaptive scheduled routine is documented in [the portable guide](docs/portable-routine.md).
+RTK checks are separate from project onboarding. The current installation and
+adaptive-maintenance flow lives in [codex-flow.html](diagrams/global/codex-flow.html);
+the portable routine is documented in [the portable guide](docs/portable-routine.md).
 Each project's diagram must live
 in that project's own repository and describe inspected source.
 
@@ -113,7 +113,7 @@ python -B scripts/index_docs.py
 ```
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
-[release verification](docs/verification-v1.2.md). Update detection produces review
+[current release verification](docs/verification-adaptive-routine.md). Update detection produces review
 candidates only. Preserve the designated host's existing schedule and authorization;
 installing this repository does not create or transfer an automation. The current
 observed TRACE host preserves Monday 10:00 Asia/Seoul weekly review. A separately

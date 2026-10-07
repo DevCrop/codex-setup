@@ -322,7 +322,7 @@ platform asset; installing TRACE instructions alone does not install this binary
 Release collection produces candidates. `tools.py plan-rtk-update` reads its exact
 current successful RTK record, checks stable tag/platform asset identities and
 reports unchanged, a candidate, or a blocked/older release. It makes no network
-call or pin/install change. Missing/stale evidence is unknown, not unchanged.
+call or pin/install change. Missing, failed or mismatched evidence is unknown, not unchanged.
 Same-version asset drift is a conflict; the installed receipt records the asset
 digest for new installs. An older receipt without that field remains limited
 historical evidence, not retroactively verified. Review the exact release notes

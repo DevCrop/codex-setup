@@ -2,12 +2,12 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "TRACE v1.2.3 · 글로벌 셋업 전체 흐름",
+    "title": "TRACE v1.2.4 · 글로벌 셋업 전체 흐름",
     "quality_profile": "showcase",
     "output": "diagrams/global/codex-flow.html",
     "repository": {
       "url": "https://github.com/DevCrop/codex-setup.git",
-      "revision": "0e072ed624d0a3a0e26b6d8c13fb946ba2ccdd7f",
+      "revision": "09db45214ee53c2c604dde3e7fcc35c25420b323",
       "provider": "github",
       "link_mode": "web"
     }
@@ -84,8 +84,8 @@
         },
         {
           "path": "README.md",
-          "line": 95,
-          "end_line": 112
+          "line": 98,
+          "end_line": 105
         }
       ],
       "yOffset": 60
@@ -216,8 +216,8 @@
         },
         {
           "path": "docs/operations.md",
-          "line": 284,
-          "end_line": 294
+          "line": 312,
+          "end_line": 320
         }
       ]
     },
@@ -287,11 +287,6 @@
           "path": "README.md",
           "line": 19,
           "end_line": 33
-        },
-        {
-          "path": "docs/operations.md",
-          "line": 305,
-          "end_line": 309
         }
       ]
     },
@@ -307,7 +302,7 @@
         {
           "path": "docs/operations.md",
           "line": 13,
-          "end_line": 32
+          "end_line": 27
         }
       ]
     },
@@ -317,18 +312,18 @@
       "col": 1,
       "type": "database",
       "label": "공식 변경 수집",
-      "sublabel": "Astra · 문서 · 도구",
+      "sublabel": "변경 수집·RTK 계획",
       "width": 145,
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 71,
-          "end_line": 84
+          "line": 97,
+          "end_line": 111
         },
         {
-          "path": "references/registry.json",
-          "line": 1,
-          "end_line": 1
+          "path": "scripts/tools.py",
+          "line": 55,
+          "end_line": 69
         }
       ]
     },
@@ -337,21 +332,22 @@
       "lane": "monitor",
       "col": 2,
       "type": "backend",
-      "label": "원문·관련성 검토",
-      "sublabel": "해시 ≠ 정책 변경",
+      "label": "원문·피드백 검토",
+      "sublabel": "관련성·실패 원인",
       "width": 145,
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 71,
-          "end_line": 86
+          "line": 103,
+          "end_line": 109
         },
         {
-          "path": "docs/operations.md",
-          "line": 216,
-          "end_line": 221
+          "path": "global/guides/official-source-workflow.md",
+          "line": 35,
+          "end_line": 73
         }
-      ]
+      ],
+      "tag": "관측된 피드백만"
     },
     {
       "id": "authority",
@@ -364,13 +360,13 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 158,
-          "end_line": 178
+          "line": 185,
+          "end_line": 204
         },
         {
           "path": "scripts/render_heartbeat.py",
-          "line": 9,
-          "end_line": 21
+          "line": 12,
+          "end_line": 29
         }
       ]
     },
@@ -385,8 +381,8 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 180,
-          "end_line": 193
+          "line": 208,
+          "end_line": 228
         }
       ],
       "tag": "권한·호환성 필요"
@@ -402,8 +398,8 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 203,
-          "end_line": 206
+          "line": 229,
+          "end_line": 232
         },
         {
           "path": "scripts/setup.py",
@@ -423,13 +419,13 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 225,
-          "end_line": 230
+          "line": 249,
+          "end_line": 254
         },
         {
           "path": "docs/operations.md",
-          "line": 211,
-          "end_line": 214
+          "line": 177,
+          "end_line": 181
         }
       ]
     },
@@ -444,8 +440,8 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 99,
-          "end_line": 111
+          "line": 127,
+          "end_line": 139
         },
         {
           "path": "scripts/check_closure.py",
@@ -461,13 +457,13 @@
       "col": 4,
       "type": "security",
       "label": "적용 후 재검증",
-      "sublabel": "검사 · 로딩 확인",
+      "sublabel": "해당 검사·증거 재사용",
       "width": 145,
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 194,
-          "end_line": 214
+          "line": 220,
+          "end_line": 247
         }
       ]
     },
@@ -482,15 +478,21 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 246,
-          "end_line": 250
+          "line": 272,
+          "end_line": 276
         },
         {
           "path": "docs/operations.md",
-          "line": 280,
-          "end_line": 282
+          "line": 306,
+          "end_line": 308
+        },
+        {
+          "path": "scripts/render_heartbeat.py",
+          "line": 26,
+          "end_line": 42
         }
-      ]
+      ],
+      "tag": "별도 승인 범위"
     },
     {
       "id": "idle",
@@ -503,8 +505,8 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 252,
-          "end_line": 257
+          "line": 278,
+          "end_line": 283
         }
       ]
     },
@@ -519,8 +521,8 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 263,
-          "end_line": 267
+          "line": 289,
+          "end_line": 293
         }
       ]
     },
@@ -535,8 +537,8 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 258,
-          "end_line": 272
+          "line": 284,
+          "end_line": 293
         }
       ],
       "tag": "알림 후 7일"
@@ -552,8 +554,8 @@
       "sources": [
         {
           "path": "docs/operations.md",
-          "line": 273,
-          "end_line": 282
+          "line": 294,
+          "end_line": 308
         }
       ]
     }
@@ -789,18 +791,18 @@
         "모델과 추론 강도는 사용자 선택 · 자동 모델 전환 없음",
         "스킬은 명시 요청만 · 서브에이전트는 호스트 허용 시",
         "자식 최대 2개·재위임 기본 금지 · 부모가 통합·검증",
-        "RTK는 선택한 명령 출력만 압축 · 전체 토큰 절감 측정 아님",
+        "RTK 추정치는 전체 토큰 절감 증명 아님 · 완료 정확성 우선",
         "반복 실패: 원인 구분 → 새 근거·수정 → 해당 검사"
       ]
     },
     {
       "dot": "emerald",
-      "title": "기기별 상태·수명주기",
+      "title": "기기 상태·피드백 개선",
       "items": [
-        "공유: 정책·manifest·검토 버전은 Git에 보관",
-        "로컬: 경로·로그인·MCP·권한·운영 기록은 각 기기에 유지",
-        "설치본과 소유권 대조 · 변경된 사용자 파일은 충돌로 보존",
-        "활성 경로에 사본 누적 없음 · 이전 관리 상태는 1세트"
+        "공유 정책은 Git · 경로·로그인·MCP·권한은 각 기기에 유지",
+        "로컬 기록 1개: 관측 → 원인 분류 → 최소 수정 → 검증",
+        "반복 확인된 교훈만 승격 · 불필요해진 규칙은 통합·제거",
+        "사용자 수정은 충돌로 보존 · 이전 관리 상태는 1세트"
       ]
     },
     {
@@ -809,7 +811,7 @@
       "items": [
         "호환되는 기존 글로벌 Markdown 최대 3파일·120줄",
         "상시 지침 2,400바이트 이내 · TRACE 자체 범위 기준",
-        "안정 CLI·RTK도 원문·호환성·해시·적용 후 검사 필요",
+        "안정 CLI·RTK: 변경 시 원문·해시 검토 → 적용 → 해당 검사",
         "모델·권한·MCP·프로젝트 변경·새 기능·원격 게시는 별도 승인",
         "다른 PC는 검토 전용 · 운영 호스트와 예약은 자동 이전 안 됨"
       ]

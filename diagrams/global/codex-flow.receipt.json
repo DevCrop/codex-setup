@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "diagram_type": "workflow",
-  "specification_sha256": "74d49ae5205acf5c91a378f5b179759acbdc35a3429fdba0a2b1172c8cf8117e",
-  "artifact_sha256": "6ce69f8ee24515e33827b66f9b84b6fc7bfda2190425b80e4be1a9d63797c1c6",
-  "specification_bytes": 18949,
-  "artifact_bytes": 802896,
+  "specification_sha256": "57874918ede021cc00f26c28d5cfccf9f297a593bd70341a756686439867d5cd",
+  "artifact_sha256": "75dde827d7976255e6ed4d165880399ac51a125a12d32c77e35f7cce1d4127ef",
+  "specification_bytes": 19084,
+  "artifact_bytes": 803423,
   "validation": {
     "checks_passed": 9,
     "checks_total": 9,
@@ -21,7 +21,7 @@
   "repository_evidence": {
     "verified": true,
     "repository": "https://github.com/DevCrop/codex-setup",
-    "revision": "0e072ed624d0a3a0e26b6d8c13fb946ba2ccdd7f",
+    "revision": "09db45214ee53c2c604dde3e7fcc35c25420b323",
     "references": 43
   },
   "browser_evidence": "pass",
@@ -75,47 +75,12 @@
       "ok": true
     }
   ],
-  "composition_metrics": {
-    "properCrossings": 0,
-    "resolvedCrossovers": 0,
-    "ambiguousCorridors": 0,
-    "arrowheadCollisions": 0,
-    "containerBorderRuns": 0,
-    "labelRouteClearanceIssues": 0,
-    "labelCanvasOverflowIssues": 0,
-    "minLabelRouteClearance": 48,
-    "desktopReadabilityIssues": 0,
-    "viewportHeightIssues": 0,
-    "minProjectedNodeTextPx": 6.1234567901234565,
-    "maxBends": 4,
-    "routesOverSuggestedBends": 2,
-    "maxStretch": 8.165,
-    "routesOverSuggestedStretch": 1,
-    "minSegmentPx": 16,
-    "minInteriorSegmentPx": 84,
-    "shortSegmentCount": 0,
-    "shortEndpointSegmentCount": 0,
-    "shortInteriorSegmentCount": 0,
-    "microSegmentCount": 0
-  },
-  "visual_review": "passed",
-  "visual_review_scope": [
-    {
-      "width": 1440,
-      "height": 900,
-      "theme": "light"
-    },
-    {
-      "width": 2048,
-      "height": 1320,
-      "theme": "dark"
-    }
-  ],
+  "visual_review": "not-requested",
   "visual_review_notes": [
-    "Inspected current light/dark captures: criteria and diff review appear on the main path; repeated failures return through reassessment.",
-    "No overlapping node labels; optional delegation uses the outer return corridor. Zoom is useful for overview captions.",
-    "Codex pane rendering, mobile view and runtime model behavior are not established by these captures."
+    "Automated browser gates passed; current captures were not perceptually inspected.",
+    "Existing return/delegation detour advisories retained; zero blocking diagnostics.",
+    "No desktop-pane, mobile or runtime-model claim."
   ],
-  "diagram_scope": "Global operating policy at TRACE v1.2.3, not a runtime trace or project architecture map.",
+  "diagram_scope": "Global operating policy at TRACE v1.2.4, not runtime trace or product-project architecture.",
   "renderer_version": "3.0.0"
 }

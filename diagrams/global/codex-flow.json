@@ -2,12 +2,12 @@
   "schema_version": 2,
   "diagram_type": "workflow",
   "meta": {
-    "title": "TRACE v1.2.4 · 글로벌 셋업 전체 흐름",
+    "title": "TRACE v1.2.5 · 글로벌 셋업 전체 흐름",
     "quality_profile": "showcase",
     "output": "diagrams/global/codex-flow.html",
     "repository": {
       "url": "https://github.com/DevCrop/codex-setup.git",
-      "revision": "09db45214ee53c2c604dde3e7fcc35c25420b323",
+      "revision": "3c2245c9c70ae4f15fc527b167c8daab0aad6a8d",
       "provider": "github",
       "link_mode": "web"
     }
@@ -36,6 +36,14 @@
     {
       "id": "cleanup",
       "label": "등록 의존성 정리"
+    },
+    {
+      "id": "interaction",
+      "label": "요청 시 조작"
+    },
+    {
+      "id": "storage",
+      "label": ".codex 점검"
     }
   ],
   "mainPath": [
@@ -558,6 +566,176 @@
           "end_line": 308
         }
       ]
+    },
+    {
+      "id": "route",
+      "lane": "interaction",
+      "col": 0,
+      "type": "backend",
+      "label": "도구·대상 선택",
+      "sublabel": "MCP · 브라우저 · native",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "global/guides/computer-use.md",
+          "line": 6,
+          "end_line": 35
+        }
+      ]
+    },
+    {
+      "id": "observe",
+      "lane": "interaction",
+      "col": 1,
+      "type": "backend",
+      "label": "독립 기능 관찰",
+      "sublabel": "AX · 캡처 · 입력 구분",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "global/guides/computer-use.md",
+          "line": 14,
+          "end_line": 35
+        }
+      ]
+    },
+    {
+      "id": "action",
+      "lane": "interaction",
+      "col": 2,
+      "type": "backend",
+      "label": "허용된 조작",
+      "sublabel": "관찰·권한 확인 후",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "global/guides/computer-use.md",
+          "line": 28,
+          "end_line": 50
+        }
+      ]
+    },
+    {
+      "id": "checkpoint",
+      "lane": "interaction",
+      "col": 3,
+      "type": "database",
+      "label": "결과·중단 기록",
+      "sublabel": "사용자 중단은 재승인 필요",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "scripts/interaction_checkpoint.py",
+          "line": 58,
+          "end_line": 83
+        }
+      ]
+    },
+    {
+      "id": "qaresult",
+      "lane": "interaction",
+      "col": 4,
+      "type": "backend",
+      "label": "현재 결과 확인",
+      "sublabel": "실패·미상 그대로 보고",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "global/guides/computer-use.md",
+          "line": 65,
+          "end_line": 81
+        }
+      ]
+    },
+    {
+      "id": "storage-scan",
+      "lane": "storage",
+      "col": 0,
+      "type": "backend",
+      "label": "Codex home 조사",
+      "sublabel": "메타데이터만 · 링크 제외",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "scripts/codex_storage.py",
+          "line": 30,
+          "end_line": 77
+        }
+      ]
+    },
+    {
+      "id": "storage-owner",
+      "lane": "storage",
+      "col": 1,
+      "type": "security",
+      "label": "소유권 분류",
+      "sublabel": "이력·인증·작업물 보호",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "scripts/codex_storage.py",
+          "line": 16,
+          "end_line": 28
+        }
+      ]
+    },
+    {
+      "id": "storage-review",
+      "lane": "storage",
+      "col": 2,
+      "type": "backend",
+      "label": "정리 근거 검토",
+      "sublabel": "용량·날짜 ≠ 삭제 허가",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "docs/storage-and-reports.md",
+          "line": 10,
+          "end_line": 26
+        }
+      ]
+    },
+    {
+      "id": "storage-plan",
+      "lane": "storage",
+      "col": 3,
+      "type": "security",
+      "label": "관리 대상만 계획",
+      "sublabel": "미관리 보존 · 별도 범위",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "docs/storage-and-reports.md",
+          "line": 16,
+          "end_line": 26
+        }
+      ]
+    },
+    {
+      "id": "storage-record",
+      "lane": "storage",
+      "col": 4,
+      "type": "database",
+      "label": "현재 기록 1개",
+      "sublabel": "미해결·변경만 보고",
+      "width": 145,
+      "yOffset": 60,
+      "sources": [
+        {
+          "path": "scripts/codex_storage.py",
+          "line": 83,
+          "end_line": 92
+        }
+      ]
     }
   ],
   "edges": [
@@ -772,6 +950,68 @@
       "label": "반복 실패 → 재진단",
       "fromSide": "top",
       "toSide": "bottom"
+    },
+    {
+      "id": "route-observe",
+      "from": "route",
+      "to": "observe",
+      "variant": "default"
+    },
+    {
+      "id": "observe-action",
+      "from": "observe",
+      "to": "action",
+      "variant": "default",
+      "label": "준비·허용"
+    },
+    {
+      "id": "action-checkpoint",
+      "from": "action",
+      "to": "checkpoint",
+      "variant": "default",
+      "label": "실제 결과"
+    },
+    {
+      "id": "checkpoint-qaresult",
+      "from": "checkpoint",
+      "to": "qaresult",
+      "variant": "default",
+      "label": "관찰 확인"
+    },
+    {
+      "id": "checkpoint-observe",
+      "from": "checkpoint",
+      "to": "observe",
+      "variant": "default",
+      "label": "미상·실패 재진단"
+    },
+    {
+      "id": "storage-scan-storage-owner",
+      "from": "storage-scan",
+      "to": "storage-owner",
+      "variant": "default",
+      "label": "분류"
+    },
+    {
+      "id": "storage-owner-storage-review",
+      "from": "storage-owner",
+      "to": "storage-review",
+      "variant": "default",
+      "label": "후보"
+    },
+    {
+      "id": "storage-review-storage-plan",
+      "from": "storage-review",
+      "to": "storage-plan",
+      "variant": "default",
+      "label": "정확한 범위"
+    },
+    {
+      "id": "storage-plan-storage-record",
+      "from": "storage-plan",
+      "to": "storage-record",
+      "variant": "default",
+      "label": "보존·계획"
     }
   ],
   "cards": [
@@ -825,6 +1065,17 @@
         "미상 프로세스·새 활동·링크·추적 파일이면 삭제하지 않음",
         "원문 미확인·미검증 동작·보류 후보는 남겨서 보고",
         "예약은 PC·앱 실행 필요 · 도식은 실제 실행 추적이 아님"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "상호작용·저장공간의 근거",
+      "items": [
+        "브라우저 성공 ≠ native 캡처·클릭 성공 · 독립 기록",
+        "미상 조작은 현재 상태 재관찰 후 재개 · 반복 제출 금지",
+        "Codex home은 메타데이터 조사만 · 자동 일괄 삭제 없음",
+        "RTK UI는 기록 투영 · 추정과 실제 토큰 효율은 구분",
+        "Pretendard 포함 · 새 폰트·화면의 브라우저 검증은 미완료"
       ]
     }
   ]

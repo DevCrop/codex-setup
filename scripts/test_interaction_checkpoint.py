@@ -48,6 +48,13 @@ class InteractionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate(value)
 
+    def test_user_stop_cannot_resume_from_saved_passes(self):
+        value = self.sample()
+        value['stages']['user_control'] = {'status': 'stopped', 'error_code': 'human-stop'}
+        self.assertEqual(resume(value)['status'], 'user-resume-required')
+        value['stages']['browser_input'] = {'status': 'pass'}
+        self.assertEqual(resume(value)['status'], 'user-resume-required')
+
     def test_replace_one_checkpoint_preserves_other_findings(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

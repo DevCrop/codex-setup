@@ -34,7 +34,7 @@ The light document layout is inspired by Notion, not an integration or an exact
 copy of a discovered historical design. Input-minus-output and the RTK reported
 savings are displayed separately. Arithmetic discrepancies remain visible.
 Missing days stay missing; unknown verification is not shown as zero or pass.
-Runtime results are reused only with matching binary/version and harness hashes.
+Runtime results are reused only with matching binary/version, harness and runner hashes.
 The report never equates RTK estimates with actual OpenAI tokens or subscription
 savings. No model calls or benchmarks are performed.
 

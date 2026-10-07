@@ -1,7 +1,8 @@
-from pathlib import Path
+import hashlib
 import unittest
 
 from rtk_status import model, render
+from setup import ROOT
 
 
 class ReportTests(unittest.TestCase):
@@ -28,6 +29,15 @@ class ReportTests(unittest.TestCase):
         self.assertNotIn('private-secret', output)
         self.assertNotIn('<script>alert(1)</script>', output)
         self.assertIn('&lt;script&gt;', output)
+
+    def test_changed_runner_cannot_reuse_an_old_success(self):
+        identity = {'binary_sha256': 'owned', 'version': 'rtk 0.51.0',
+                    'harness_sha256': hashlib.sha256((ROOT / 'scripts/verify_rtk.py').read_bytes()).hexdigest(),
+                    'runner_sha256': hashlib.sha256((ROOT / 'global/runtime/rtk_runner.py').read_bytes()).hexdigest()}
+        routine = {'feedback_loop': {'rtk_validation': {'status': 'pass', 'check_count': 8, 'identity': identity}}}
+        self.assertEqual(model(routine, {'sha256': 'owned'}, {'status': 'pass', 'version': 'rtk 0.51.0'})['runtime_checks'], 8)
+        identity['runner_sha256'] = 'different'
+        self.assertIsNone(model(routine, {'sha256': 'owned'}, {'status': 'pass', 'version': 'rtk 0.51.0'})['runtime_checks'])
 
 
 if __name__ == '__main__':

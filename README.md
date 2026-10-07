@@ -113,7 +113,8 @@ python -B scripts/index_docs.py
 ```
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
-[current release verification](docs/verification-adaptive-routine.md). Update detection produces review
+[released v1.2.4 verification](docs/verification-adaptive-routine.md) and
+[v1.2.5 working-branch checks and limitations](docs/verification-interaction.md). Update detection produces review
 candidates only. Preserve the designated host's existing schedule and authorization;
 installing this repository does not create or transfer an automation. The current
 observed TRACE host preserves Monday 10:00 Asia/Seoul weekly review. A separately

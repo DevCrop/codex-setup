@@ -40,7 +40,7 @@ def main():
         for stage, args in [
             ('validate', ['validate', 'workflow', str(spec), '--repo-root', str(ROOT), '--quality', 'showcase', '--json']),
             ('deliver', ['deliver', 'workflow', str(spec), str(out), '--repo-root', str(ROOT), '--quality', 'showcase', '--json']),
-            ('check', ['check', str(out), '--require-provenance', '--quality', 'showcase', '--json'])]:
+            ('check', ['check', str(out), '--require-provenance', '--json'])]:
             result = subprocess.run(command + args, cwd=ROOT, capture_output=True, text=True, encoding='utf-8', timeout=120)
             if result.returncode:
                 print(result.stdout[:6000])
@@ -64,6 +64,7 @@ def main():
         value['static_validation'] = {
             'checks_passed': sum(row.get('ok') is True for row in checks),
             'checks_total': len(checks), 'profile': 'showcase',
+            'composition': raw['validate'].get('composition', {}).get('summary', {}),
             'checks': [{'name': row['name'], 'ok': row['ok']} for row in checks]}
         atomic(artifact, data)
         save_json(receipt_path, value)

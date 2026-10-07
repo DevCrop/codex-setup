@@ -16,7 +16,12 @@ Accessibility, screenshots and input are separate capabilities. This failure is
 not proof of a browser outage. Native capture/input root cause is unresolved.
 Do not treat this as a confirmed repair of historical setup-refresh errors.
 CLI doctor returned overall fail because Windows sandbox provisioning recorded a
-structured failure; authentication and app-server handshake passed. The causal
+structured failure; authentication and app-server handshake passed. A scoped
+review of the matching setup_error.json and sandbox log identified runtime
+read/execute validation failing with Win32 sharing violation (32) on an existing
+105-character runtime file. The generic setup-refresh label is confirmed in
+that structured record. The holder/process and durable repair remain unknown;
+this is not evidence of an access-denied (5) or long-path failure. The causal
 relationship to native capture is unknown. Optional MCP/config warnings and
 rollout-file/database parity warnings also remain independent observations.
 
@@ -29,6 +34,10 @@ only; do not change sandbox permissions, endpoint protection or authentication a
 a shortcut. Use /feedback with relevant redacted diagnostics if the current runtime
 still reproduces the issue. Browser-specific troubleshooting does not prove a
 native-helper repair.
+Preserve relevant version/time/error evidence for support; do not infer that
+0.160.1 repairs this issue. Its [reviewed release note](https://github.com/openai/codex/releases/tag/rust-v0.160.1) concerns remote stdio MCP
+environment preservation, not this sharing violation. After a user Escape stop,
+do not resume native or browser manipulation without fresh human authorization.
 
 ## Verification, effects and restoration
 

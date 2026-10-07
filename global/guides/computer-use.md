@@ -42,12 +42,18 @@ change or failed input. Read returned observations before selecting an action.
 | Input/refresh failure | Outcome is unknown. Reobserve and reconcile whether the action already happened before retrying; never blindly repeat a submission or mutation. |
 | Policy, protocol or permission denial | Stop the denied action. Do not route through native control, raw CDP, shell navigation, a proxy or another browser to bypass it. Use a genuinely permitted alternative or report required user action. |
 | Locked desktop or security/auth prompt | Stop as required by the installed skill and let the user handle it. Never change permissions or automate authentication as a recovery shortcut. |
+| User interruption / Escape | Stop input. A later automation or checkpoint does not revoke the user's stop. Require fresh human authorization before resuming; never delete a tool interruption marker. |
 
 `helper_unknown_error: setup refresh had errors` is an observed incident label,
 not a documented root cause or universal repair. Distinguish error text, supported
 inference and confirmed cause. Read only relevant diagnostic log entries if
 authorized; redact secrets, account data, URLs and paths before durable storage.
 Repeated unchanged failure triggers diagnosis, not repeated restart requests.
+For Windows setup-refresh failures, inspect the relevant structured setup error and
+matching sandbox log entries. Sharing violation (32), access denied (5), missing
+path and long-path errors require different diagnoses. Do not reset ACLs or remove
+runtime caches merely because the top-level label is the same. CLI sandbox health
+and native screenshot readiness remain separate claims.
 
 ## Checkpoint and resume
 

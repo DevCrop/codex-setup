@@ -1,6 +1,7 @@
 """Opt-in RTK host smoke checks. No models, installs, builds or project writes."""
 import argparse
 from datetime import datetime, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -84,6 +85,11 @@ def main():
                 break
     report = {'checked_at': datetime.now(timezone.utc).isoformat(),
               'status': 'pass' if all(c['status']=='pass' for c in checks) else 'fail', 'checks': checks,
+              'identity': {'binary_sha256': hashlib.sha256(Path(binary).read_bytes()).hexdigest(),
+                           'version': verify(state)['version'],
+                           'harness_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                           'runner_sha256': hashlib.sha256((Path(__file__).resolve().parents[1] / 'global/runtime/rtk_runner.py').read_bytes()).hexdigest(),
+                           'scope': 'Explicit project arguments plus disposable argv/exit/evidence fixtures.'},
               'limit': 'These explicit commands only; bytes are not OpenAI tokens, hook loading or proof for every command/project.'}
     save_json(state/'rtk-runtime-check.json', report)
     print(json.dumps(report, ensure_ascii=False, indent=2))

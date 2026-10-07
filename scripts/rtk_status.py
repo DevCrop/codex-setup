@@ -4,7 +4,9 @@ from datetime import datetime, timezone
 import hashlib
 import html
 import json
+import math
 from pathlib import Path
+import subprocess
 
 from presentation import font_css
 from setup import ROOT, Deployment, atomic, deployment_lock, read_json, safe, save_json
@@ -12,7 +14,7 @@ from tools import verify
 
 
 def number(value):
-    return value if isinstance(value, (int, float)) and not isinstance(value, bool) and value >= 0 else None
+    return value if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0 else None
 
 
 def model(routine, installed, runtime):
@@ -25,9 +27,11 @@ def model(routine, installed, runtime):
     evidence = feedback.get('rtk_validation', {})
     identity = evidence.get('identity', {})
     harness = ROOT / 'scripts/verify_rtk.py'
+    runner = ROOT / 'global/runtime/rtk_runner.py'
     matches = (runtime.get('status') == 'pass' and evidence.get('status') == 'pass'
                and identity.get('binary_sha256') == installed.get('sha256')
                and identity.get('version') == runtime.get('version')
+               and identity.get('runner_sha256') == hashlib.sha256(runner.read_bytes()).hexdigest()
                and harness.is_file() and identity.get('harness_sha256') == hashlib.sha256(harness.read_bytes()).hexdigest())
     daily = []
     import re
@@ -43,6 +47,7 @@ def model(routine, installed, runtime):
             'runtime_checks': number(evidence.get('check_count')) if matches else None,
             'runtime_evidence_reused': bool(matches),
             'runtime_checked_at': evidence.get('checked_at') if matches else None,
+            'runtime_scope': identity.get('scope') if matches else None,
             'collected_at': aggregate.get('collected_at'),
             'binary_sha256': installed.get('sha256'),
             'actual_openai_token_savings': None, 'browser_review': 'not-verified'}
@@ -65,7 +70,7 @@ def render(data, now):
     discrepancy = ('산술 불일치 미확인' if data['discrepancy'] is None else
                    f"RTK 보고 절약값 {fmt(data['reported_saved'])}과 입력−출력 {fmt(difference)} 사이에 {fmt(data['discrepancy'])} 차이가 있습니다. 원인 미확인; 차이를 숨기거나 실제 토큰 절약으로 해석하지 않습니다.")
     rows = [('RTK 소유권·해시', data['runtime_status'], '현재 로컬 바이너리'),
-            ('런타임 호출·종료·필수 증거', str(data['runtime_checks']) + '개 통과' if data['runtime_evidence_reused'] else '미확인 / 식별자 불일치', '기존 검증 시점의 한정된 범위'),
+            ('런타임 호출·종료·필수 증거', str(data['runtime_checks']) + '개 통과' if data['runtime_evidence_reused'] else '미확인 / 식별자 불일치', data['runtime_scope'] or '한정된 범위 / 증거 미확인'),
             ('OpenAI 전체 토큰·업무 시간', '미측정', '구독 효율 개선률 미입증')]
     values = {'FONT': font_css(), 'RTK_STATUS': esc(data['runtime_status']),
               'DIFFERENCE': fmt(difference), 'RATIO': ratio, 'COMMANDS': fmt(data['commands']),
@@ -91,7 +96,7 @@ def main():
             raise ValueError('Existing private routine state is required')
         try:
             runtime = verify(dep.state)
-        except (OSError, ValueError):
+        except (OSError, ValueError, subprocess.SubprocessError):
             runtime = {'status': 'unknown'}
         installed = read_json(safe(dep.state, 'tools-installed.json'), {}).get('rtk', {})
         data = model(routine, installed, runtime)

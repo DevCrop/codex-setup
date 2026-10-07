@@ -7,10 +7,10 @@ import re
 
 from setup import Deployment, deployment_lock, read_json, safe, save_json
 
-STAGES = {'shell', 'native_initialization', 'native_targets', 'native_accessibility',
+STAGES = {'user_control', 'shell', 'native_initialization', 'native_targets', 'native_accessibility',
           'native_screenshot', 'native_input', 'browser_connection', 'browser_targets',
           'browser_observation', 'browser_input'}
-STATUSES = {'pass', 'failed', 'unknown', 'not-required'}
+STATUSES = {'pass', 'failed', 'unknown', 'not-required', 'stopped'}
 STEP_STATUSES = {'pending', 'completed', 'failed', 'unknown-outcome'}
 
 
@@ -51,11 +51,13 @@ def validate(value):
 def resume(value):
     validate(value)
     # Every resume needs a fresh observation; persisted pass never grants input.
-    return {'status': 'observation-required', 'target_id': value['target_id'],
+    stopped = value['stages'].get('user_control', {}).get('status') == 'stopped'
+    return {'status': 'user-resume-required' if stopped else 'observation-required',
+            'target_id': value['target_id'],
             'reconcile_first': [s['id'] for s in value['steps'] if s['status'] == 'unknown-outcome'],
             'diagnose_first': [s['id'] for s in value['steps'] if s['status'] == 'failed'],
             'remaining': [s['id'] for s in value['steps'] if s['status'] == 'pending'],
-            'limit': 'No automatic retry, permission grant or live-target validation.'}
+            'limit': 'No automatic retry, permission grant or live-target validation. A recorded user stop requires fresh human authorization; never remove a tool interruption marker.'}
 
 
 def record(state, value):

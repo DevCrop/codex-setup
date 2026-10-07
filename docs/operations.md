@@ -12,21 +12,16 @@ The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate
 
 ## Designated-host maintenance
 
-Preserve the operating host's existing automation, cadence and authorization. The
-current designated host has an existing daily 10:00 Asia/Seoul heartbeat covering source updates,
-global installation health, RTK releases and explicitly registered projects.
-The daily global-maintenance authorization documented in merged PR #9 remains
-host-specific: where that existing routine is registered and authorized, stable
-CLI/RTK upgrades and narrow compatibility repairs may run with integrity checks,
-rollback and verification. Do not infer that authority from this repository on
-another host, create a duplicate monitor, change cadence, or transfer ownership.
-Keep separately authorized cleanup scope separate from a daily global update.
-Actual automation state controls cadence; an old document does not establish a
-registered scheduler. On 2026-10-05 the user explicitly extended this host's
-TRACE authority to compatible small global guidance changes and stable
-Codex CLI/RTK updates, after analysis and verification. Preserve the registered host's existing
-daily 10:00 schedule; this does not authorize other computers. Its existing
-exact dependency-cleanup exception remains separate and unchanged.
+Preserve the operating host's actual registered automation, cadence and authority.
+The observed monitor on this installation is weekly Monday 10:00 Asia/Seoul;
+another host's daily routine is not permission to change it. The merged PR #9
+records a separately authorized daily maintenance context, not this scheduler.
+On 2026-10-05 the user authorized compatible small global guidance and stable
+Codex CLI/RTK updates after review and verification on the recorded host only.
+This does not create a monitor, transfer ownership, change cadence or apply to
+another computer. The existing exact dependency-cleanup exception is separate.
+Shared policy supplies a procedure; private authority and the actual scheduler
+supply scope and timing. Record each independently.
 Machine-specific checkout paths and project registrations belong in private
 `cleanup-projects.json` beside deployment state, never in shared policy. A new computer
 does not inherit monitoring ownership merely by installing this repository.
@@ -41,15 +36,18 @@ does not inherit monitoring ownership merely by installing this repository.
 | Architecture/dependency/rule change | Affected contracts, documentation and verification commands | Review semantic consistency and run relevant checks after an authorized change |
 | Approved maintenance | Exact reviewed files and versions | Apply, verify, account for removals and preserve rollback |
 
-### User feedback and daily improvement
+### Evidence-based improvement
 
 The designated host's 2026-10-07 request adds an evidence-based feedback review to
-its existing daily routine. Follow global/guides/official-source-workflow.md for
+its existing scheduled routine. Follow global/guides/official-source-workflow.md for
 capture, diagnosis, promotion and retirement. Maintain preferences and lessons in
 the single private routine-review.json; its public/local report is a sanitized
 projection, not a second authority store. Review available authorized feedback,
-not all conversations or raw session files. Preserve the separate weekly
-dependency cleanup, permissions, model/effort and quiet notification behavior.
+not all conversations or raw session files. Preserve this monitor's separately
+recorded cleanup authority and any other cleanup monitor, permissions, model/effort
+and quiet notification behavior. Rendering deletion scope requires a matching
+host/automation and a separate `dependency_cleanup` approval; otherwise it is
+read-only. Never copy another host's inactivity threshold or protected-project policy.
 Only new actionable findings, verified improvements or needed decisions notify.
 Do not report a saved schedule as proof that a future run already occurred.
 
@@ -61,13 +59,13 @@ no additional scheduler, hook or background event service is installed.
 
 | Activity | Trigger | Action |
 |---|---|---|
-| Stable CLI/RTK release discovery | Existing daily host routine | Review relevant changes; install only an eligible changed release |
+| Stable CLI/RTK release discovery | Existing registered cadence | Review relevant changes; install only an eligible changed release |
 | RTK ownership/hash | Each explicit owned-runner invocation | Existing local checks; no network lookup |
 | Output compression | Needed supported noisy diagnostic | Preserve exits/evidence; prefer native concise or final acceptance output |
-| Compression path health | One daily read-only probe | Record bytes, exits and probe count |
+| Compression path health | Changed tool/filter identity or relevant failure | One affected byte/exit/evidence check; reuse matching success |
 | Affected runtime revalidation | Tool/filter change or new relevant failure | Smallest affected existing checks; reuse unchanged evidence |
-| Feedback and failure handling | Observation in active authorized task | Diagnose and finish authorized fix now; retain summary for daily review |
-| Aggregate/UI refresh | Existing daily successful collection | Replace same-date snapshot; preserve unknown/missing days |
+| Feedback and failure handling | Observation in active authorized task | Diagnose and finish authorized fix now; retain summary for scheduled review |
+| Aggregate/UI refresh | Existing successful collection | Replace same-date snapshot; preserve unknown/missing days |
 
 ### Normal implementation contract
 
@@ -321,7 +319,15 @@ Codex home, Git or a project. No PATH or shell profile is edited. Use `tools.py 
 or the verified absolute binary path. A new computer explicitly installs its own
 platform asset; installing TRACE instructions alone does not install this binary.
 
-Release collection produces candidates. Automatically adopt a stable binary only
+Release collection produces candidates. `tools.py plan-rtk-update` reads its exact
+current successful RTK record, checks stable tag/platform asset identities and
+reports unchanged, a candidate, or a blocked/older release. It makes no network
+call or pin/install change. Missing/stale evidence is unknown, not unchanged.
+Same-version asset drift is a conflict; the installed receipt records the asset
+digest for new installs. An older receipt without that field remains limited
+historical evidence, not retroactively verified. Review the exact release notes
+and all supported platform digests before changing the pin.
+Automatically adopt a stable binary only
 within the recorded compatible-tool authorization and its post-update checks. Standard RTK gain
 counts are estimates, not OpenAI usage. Run `verify_rtk.py --project PATH` during
 approved maintenance for Git, TypeScript when installed, Unicode/space paths,

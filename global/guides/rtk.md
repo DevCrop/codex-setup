@@ -22,10 +22,11 @@ other RTK versions, repeated diagnostics and fixtures; do not attribute all savi
 to the current runner. Compare arithmetic totals and disclose inconsistencies.
 Pair estimates with a scoped raw/filtered byte comparison, exit/evidence checks
 and recall/fallback limitations. Missing records mean unknown, not zero benefit.
-On this user's authorized daily routine, collect daily aggregates and refresh one
-current local chart, without duplicate daily totals or routine notifications.
-Preserve recorded date/timezone limits and missing days as unknown. Compare one
-permitted read-only raw/runner diagnostic and identify probe calls separately.
+On the authorized scheduled routine, collect date-keyed aggregates into one
+current private record. Refresh an optional authorized chart only when its local
+data/template contract exists; no duplicate totals or routine notifications.
+Preserve recorded date/timezone limits and missing days as unknown. Reuse a matching successful raw/runner check. Changed tool/filter identity or a
+relevant failure justifies one affected read-only comparison, counted separately.
 Other hosts need their own authorization. Do not run commands to increase gain.
 
 ## Existing host integrations
@@ -48,13 +49,18 @@ output benefits from filtering; prefer already concise native output. Ownership
 and SHA-256 verification already run per invocation in trace_rtk.py. This is a
 local runtime check, not a network release lookup or universal hook interception.
 
-Keep release discovery and daily gain collection in the authorized daily host
-routine. One daily raw/filtered read-only probe checks the live path; count it as
-a validation invocation. A changed RTK/CLI version, filter or relevant new failure
+Keep stable-release discovery and date-keyed gain collection on the existing
+registered cadence. `tools.py plan-rtk-update` reuses the current source collection
+and checks the stable tag, every pinned platform asset and exact digest/URL. It
+never approves, installs or changes the version lock. Missing evidence, duplicate
+assets, changed same-version assets and older releases block automatic adoption.
+Review breaking changes before updating pins; use the owned installer, verify,
+affected runtime checks and rollback on failure. Same versions are not reinstalled.
+Count any affected raw/filtered comparison separately as validation. A changed RTK/CLI version, filter or relevant new failure
 triggers only the affected existing checks during approved work, before relying
 on the changed path. Do not reinstall an unchanged release or run probes at every
 task start. Use native output immediately if compression hides needed evidence.
 Confirm release compatibility before installation; stable releases may change
 argument handling. Preserve existing hooks, trust, permissions and tool selection.
-A task-observed failure is handled in that task, then summarized for daily review;
+A task-observed failure is handled in that task, then summarized for scheduled review;
 this does not install an event listener or authorize unrelated project commands.

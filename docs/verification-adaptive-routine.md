@@ -1,60 +1,71 @@
-# Adaptive routine branch verification
+# TRACE v1.2.4 adaptive routine verification
 
-Scope: the current guidance and portable maintenance prompt on
-`codex/portable-adaptive-routine`, based on v1.2.3 main commit
-`f8b972ebc867a4cbf096252d912ca1374809335a`.
-This is branch/PR evidence, not a new tagged release or a transfer of monitoring authority.
+Scope: the policy-compatible integration of PR #13, based on v1.2.3 main
+`f8b972ebc867a4cbf096252d912ca1374809335a`. The branch's other-host daily
+context does not change this designated host's existing weekly `trace` monitor.
+This release is a local review-and-improvement procedure, not model retraining.
 
-## Acceptance
+## Acceptance and observed results
 
-- The existing automation ID is explicit; authority requires the matching recorded
-  host, ID, mode and approval date. A new or mismatched host stays review-only.
-- Daily collection, local per-invocation integrity checks and observed in-task
-  responses are distinct. No new event service or transparent rewrite hook.
-- Global maintenance does not delete dependencies or replace separate cleanup policies.
-- Private feedback and aggregate records remain local. Reporting does not imply
-  actual OpenAI usage, model retraining or universal desktop interception.
-- The actual payload supports isolated installation, repeat application, rollback,
-  user-change conflicts and preservation of user-selected settings/authentication.
-
-## Results
-
-Performed on 2026-10-07, Windows / Python 3.13. All lifecycle experiments used
-disposable homes, personal-skill roots and state directories; no real-home deletion.
+Performed on 2026-10-07, Windows / Python 3.13. Disposable lifecycle roots
+include spaces and Korean characters; no real-home deletion experiment.
 
 | Check | Observed result |
 |---|---|
-| Full existing suite plus four added cases | 69 tests: 65 passed, 4 skipped, 0 failures |
-| Offline repository validator | Pass; 117 manifest targets, 50 source references, two intact upstream skill packages |
-| Actual payload CLI outside checkout | Pass; CODEX_HOME, Unicode/space paths, separate skill/state roots, plan/apply/verify/repeat/rollback |
-| Existing main -> branch migration | Pass; only agreement, official-source guide and RTK guide changed in the managed payload |
-| Repeated application | Unchanged; previous restore point bytes preserved |
-| Restore to the main source | Pass against the previous source's owned-file verifier |
-| User-owned managed-file edit | Rejected even with adoption; edited bytes preserved |
-| Configuration/authentication fixtures | Model, effort, permissions, MCP, authentication/history fixtures and private state preserved |
-| Current installed deployment | Owned-file verification passed; no unmanaged-skill findings |
-| Current installed RTK | Ownership/hash/version verification passed, 0.51.0; no hook change |
-| Existing codex authorization rendering | Matching local host/ID approved; no unresolved placeholders |
-| Different host/ID and prompt injection | Review-only or invalid ID rejected, respectively |
+| Full lifecycle and update suite | 76 cases: 72 passed, 4 skipped, 0 failures |
+| Offline repository validator | Pass: 117 manifest targets, 50 source references, two intact pinned skills |
+| Actual v1.2.3 -> v1.2.4 payload | Pass: only official-source and RTK conditional guides changed |
+| Repeat / restore / user conflict | Pass: unchanged repeat preserves restore bytes; rollback verifies previous source; user edit blocked and preserved |
+| Current designated-host installation | Applied two guides; exact owned-file verify passed; repeat unchanged |
+| Protected installed bytes | Agreement, base config, authentication, optional profiles and upstream SKILL files unchanged |
+| Always-loaded instruction size | Unchanged from v1.2.3: 2,113 UTF-8 LF bytes, 284 whitespace-delimited words |
+| CLI prompt rendering | Global agreement and conditional guide paths present; zero model calls |
+| Installed RTK | Owned binary/hash/version verification passed, 0.51.0 |
+| Collected RTK stable identity | Latest 0.51.0 matches all five reviewed assets; offline plan unchanged; no reinstall |
+| RTK candidate guards | Stable/current/newer, older/draft/RC, missing/duplicate/digest/URL, same-version drift, collection mismatch and installed receipt drift tested |
+| Existing monitor update | `trace` updated; weekly Monday 10:00 cadence, thread and host retained; no duplicate monitor |
+| Authority boundaries | Different host/ID remains review-only; cleanup requires separate exact recorded approval; invalid ID rejected |
 
-The four local skips cover three unavailable symlink-creation cases and one
-POSIX-only special-file case. Windows junction tests ran and passed. Native OS
-coverage and any differing skips appear in the PR's final-commit GitHub checks.
-No other physical user computer or fresh desktop model/skill session was run here.
+The four Windows skips cover three unavailable symlink-creation cases and one
+POSIX-only special-file case. Windows junction checks ran and passed. Native
+Windows/macOS/Linux coverage uses Python 3.11 and 3.14 in the repository workflow.
+Check the [PR's final-head checks](https://github.com/DevCrop/codex-setup/pull/13/checks);
+a previous commit's green checks do not validate a future commit.
 
-The existing GitHub workflow runs the same lifecycle suite and offline validator on
-native Windows, macOS and Linux with Python 3.11 and 3.14. Its status must be checked
-for the final branch commit; a previous commit's green checks are insufficient.
-Use its live results rather than treating this document as proof of a future run.
+## Feedback and RTK evidence
 
-## Boundaries
+One current private `routine-review.json` retains confirmed preferences, compact
+lessons, classification, minimum change/check and separate review/apply/verify
+status. Existing unresolved findings and project fingerprints are preserved.
+No raw prompts, diffs, credentials, command histories or other-chat mining.
+Ordinary work does not gain an unconditional feedback/probe step.
 
-No model/API calls, model benchmarks, new plugin/hook, scheduler creation, credential
-copy, dependency deletion, merge, tag or release publication are required for this PR.
-Local saved schedules do not prove future execution. The repository renderer does
-not update the actual scheduler. The preserved designated-host automation and the
-new computer's review-only default remain separate.
+The current RTK aggregate has a 104 estimated-token arithmetic discrepancy:
+reported total saved is 2,177, while input minus output and the daily saved sum
+are 2,073. Preserve this discrepancy; neither figure proves total OpenAI tokens,
+subscription quota or task-time savings. The stored dates and mixed-version
+history do not establish performance of today's binary alone. Unavailable actual
+usage remains unknown. Same-date snapshots replace rather than accumulate.
 
-Historical [v1.2 verification](verification-v1.2.md) remains an observation of that
-earlier release. Current instructions and the fresh-host checklist are in
-[the portable routine guide](portable-routine.md).
+The planner reuses the consistent latest local collection; it does not fetch,
+review, install, mutate pins or establish a time-based freshness guarantee.
+The scheduled routine must collect successfully first. New successful tool
+installations record asset identity; old receipts are not silently backfilled.
+Reuse a successful scoped runtime/compression check only while its identity
+matches; changed identity or a relevant failure needs affected verification.
+
+## Remaining boundaries and release evidence
+
+CLI-rendered context and owned-file matching do not prove model obedience,
+transparent desktop interception or a fresh desktop skill invocation. No other
+physical user PC was used. No model benchmarks/API model calls, CLI/RTK upgrade,
+new hook/plugin, product-project edits or dependency deletion in this change.
+The separately approved registered-project cleanup policy remains gated.
+
+Global flow source references pin a reviewed policy commit. Its published receipt
+separates automated browser gates from perceptual inspection. Release packaging
+and download acceptance must bind the final tag/commit/ZIP digest to clean
+installation, repeat, migration, removal and restore in private evidence;
+[operations](operations.md) defines closure checks. A saved automation is not
+proof that a future scheduled run occurred. Historic v1.2 verification remains
+historical; use [the portable routine guide](portable-routine.md) for installation.

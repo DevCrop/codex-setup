@@ -128,7 +128,9 @@
         "retrieval": "official-web-page",
         "status": "relevant-body-reviewed",
         "sections": [
-          "Strong first use: Context and prompts"
+          "Make guidance reusable with AGENTS.md",
+          "Improve reliability with testing and review",
+          "Use scheduled tasks for repeated work"
         ],
         "claim": "Codify confirmed recurring mistakes in concise scoped guidance; verify requested results.",
         "scope": "Relevant sections only; original snapshot bytes preserved"
@@ -1018,7 +1020,14 @@
         "retrieved_at_utc": "2026-10-05T03:53:01.067710+00:00",
         "content_type": "application/json; charset=utf-8"
       },
-      "monitor": true
+      "monitor": true,
+      "latest_relevant_review": {
+        "date": "2026-10-07",
+        "retrieval": "upstream-release-api",
+        "status": "relevant-body-reviewed",
+        "claim": "Stable 0.51.0 and every pinned-platform digest match; preserve argv/exits and no unchanged reinstall.",
+        "scope": "Release notes and supported asset metadata only; original snapshot preserved"
+      }
     },
     {
       "id": "R42",
@@ -1203,7 +1212,6 @@
       "review_status": "relevant-sections-reviewed-2026-10-07",
       "body_fetched": true,
       "applicable_files": [
-        "global/AGENTS.md",
         "global/guides/official-source-workflow.md",
         "docs/operations.md"
       ],

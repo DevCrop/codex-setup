@@ -1,4 +1,4 @@
-# TRACE Setup v1.2.3
+# TRACE Setup v1.2.4
 
 Portable Codex personal instructions, optional profiles, pinned Archify/Ponytail,
 and ownership-based deployment. Python 3.11+ and Git are required; Node.js is needed
@@ -62,6 +62,7 @@ The sol preset selects GPT-6.1 Sol Medium; existing app/base effort choices are 
 ```text
 python -B scripts/tools.py install-rtk
 python -B scripts/tools.py verify
+python -B scripts/tools.py plan-rtk-update
 python -B scripts/tools.py run git status
 python -B scripts/project_cleanup.py register --id NAME --path PATH --auto
 python -B scripts/project_cleanup.py scan
@@ -99,7 +100,7 @@ existing rule documents; do not blindly copy the template into an existing repo.
 This release does not install product-project rules. Registered project health and
 RTK checks are separate from project onboarding. The v1.2 release installation/
 optional-maintenance diagram lives in [codex-flow.html](diagrams/global/codex-flow.html);
-the current adaptive daily routine is documented in [the portable guide](docs/portable-routine.md).
+the current adaptive scheduled routine is documented in [the portable guide](docs/portable-routine.md).
 Each project's diagram must live
 in that project's own repository and describe inspected source.
 
@@ -115,8 +116,8 @@ See [documentation index](docs/index.md), [operations](docs/operations.md), and
 [release verification](docs/verification-v1.2.md). Update detection produces review
 candidates only. Preserve the designated host's existing schedule and authorization;
 installing this repository does not create or transfer an automation. The current
-designated host uses daily 10:00 Asia/Seoul global review. Its separately authorized
-maintenance routine may update stable CLI/RTK releases within its approved scope,
+observed TRACE host preserves Monday 10:00 Asia/Seoul weekly review. A separately
+authorized daily maintenance routine may update stable CLI/RTK releases within its approved scope,
 with integrity checks and verification; that authorization is not portable policy.
 Broader policy, skills, hooks and permission changes need separate approval.
 The October 5 host authorization permits only the bounded compatible updates
@@ -126,7 +127,7 @@ cache is copied.
 
 ## Migrating v1.0.1 and other computers
 
-Use tag `v1.2.3` for a reproducible release checkout. On an existing TRACE host,
+Use tag `v1.2.4` for a reproducible release checkout. On an existing TRACE host,
 review `plan` before `apply`. Do not copy an entire Codex home between computers;
 authenticate independently and preserve local model, MCP, permissions and app state.
 
@@ -162,6 +163,13 @@ Do not install a second monitor on a new computer.
 
 For the current adaptive routine, exact boundaries and another computer's install/
 acceptance checklist, see [the portable setup guide](docs/portable-routine.md) and
-[branch verification evidence](docs/verification-adaptive-routine.md). Daily collection,
+[branch verification evidence](docs/verification-adaptive-routine.md). Scheduled collection,
 per-invocation local RTK checks and responses to observed failures are separate;
 this repository does not install an event daemon or perform model training.
+
+The adaptive loop keeps the v1.2.3 always-loaded agreement unchanged. Confirmed
+feedback, minimal changes and retirement live in conditional guidance and the
+existing private routine state. Efficiency means correct completion with less
+avoidable rework and total task usage when observed, not a shorter prompt alone.
+RTK release planning reuses collection, preserves stable pins and reports conflicts
+before installation. Unchanged checks are reused only with matching identities.

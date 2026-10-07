@@ -10,7 +10,7 @@ Keep personal preferences global, repository conventions in the project, runtime
 
 ## Efficient maintenance review
 
-Collect daily; review relevant originals once per changed content or unresolved
+Collect on the existing schedule; review relevant originals once per changed content or unresolved
 question. Reuse per-URL decisions tied to content identity and applicability;
 an unchanged index never proves an unread article was reviewed. Prioritize changes
 that affect this client's correctness, compatibility or recurring work. Keep a
@@ -50,7 +50,7 @@ instructions is not a substitute for fixing the actual cause. Prefer existing
 native tools and checks; use RTK only where supported output benefits. Keep
 Ponytail/Archify explicit and retain exact evidence for final acceptance.
 
-During the authorized host's existing daily routine, review new or changed lessons
+During the authorized host's existing scheduled routine, review new or changed lessons
 and official-source deltas only. Reuse settled evidence and disregard irrelevant
 changes. Consolidate duplicate rules in their narrowest owned location. Apply
 reviewed compatible changes only within recorded authorization after ownership,
@@ -64,7 +64,10 @@ remote publication require separate authority; learning never grants authority.
 Preserve one current feedback_loop object beside existing maintenance evidence,
 with preferences, lessons, decisions and distinct review/apply/verify times.
 A subsequent user correction supersedes the exact older preference; keep only a
-compact supersession reason. Retire obsolete guidance after conflict review,
+compact supersession reason. Judge efficiency by correct task completion at the
+same acceptance standard, avoidable corrections/retries and total task usage
+including verification and delegation when observable. Keep unavailable usage
+unknown; RTK estimates and shorter guidance do not establish whole-task savings. Retire obsolete guidance after conflict review,
 rather than accumulating a permanent rule for every attempt. This is a local
 review-and-improvement procedure, not model retraining, consciousness or guaranteed
 obedience. Other sessions inherit installed guidance, not automatic access to all
@@ -73,14 +76,15 @@ conversations. Unavailable evidence and failed checks remain unknown/failed.
 Sources: [Customization feedback](https://learn.chatgpt.com/docs/customization/overview),
 [Best practices](https://learn.chatgpt.com/guides/best-practices).
 
-## Daily maintenance and in-task response
+## Scheduled maintenance and in-task response
 
-Use the existing daily host routine for stable-release discovery, source drift,
-aggregate collection and one small read-only compression probe. Do not poll
+Use the existing registered cadence for stable-release discovery, source drift
+and aggregate collection. Revalidate compression only after a changed tool/filter
+identity or a relevant failure; reuse matching successful evidence. Do not poll
 release feeds or reinstall tools at every task, command or feedback event.
 During an active authorized task, a new correction, repeated failure, version
 mismatch or hidden diagnostic evidence triggers scoped diagnosis immediately.
-Record its outcome for the daily review; do not defer an authorized blocking fix
+Record its outcome for the scheduled review; do not defer an authorized blocking fix
 merely until the next schedule. Use existing tools and exact native evidence.
 No standing event daemon, new hook or cross-chat scan is implied by this policy.
 

@@ -38,14 +38,30 @@ class HeartbeatTests(unittest.TestCase):
             with self.subTest(automation=automation), self.assertRaises(ValueError):
                 render({}, automation_id=automation)
 
-    def test_daily_template_preserves_reporting_and_cleanup_boundaries(self):
+    def test_scheduled_template_preserves_reporting_and_cleanup_boundaries(self):
         prompt = render({})
-        for clause in ['daily collection', 'No drive discovery, registration or dependency deletion',
+        for clause in ['preserve cadence', 'No drive discovery, registration or dependency deletion',
                        'gain --daily --format json', 'same-date snapshot',
                        'RTK estimates are not actual OpenAI usage',
                        'Do not mine other chats', 'active authorized task',
                        'Ponytail and Archify only when explicitly requested']:
             self.assertIn(clause, prompt)
+
+    def test_cleanup_needs_separate_exact_host_and_automation_authority(self):
+        authorization = {'mode': 'compatible-global-stable-tools', 'approved_on': '2026-10-05',
+                         'automation_id': 'trace', 'host_identity': 'first-host',
+                         'dependency_cleanup': {'automation_id': 'trace', 'approved_on': '2026-10-01',
+                                                'policy': 'registered-45d-7d'}}
+        record = {'maintenance_authorization': authorization}
+        allowed = render(record, host_identity='first-host')
+        self.assertIn('45 observed idle days', allowed)
+        self.assertIn('ACTUAL candidate notification', allowed)
+        for host, automation in [('another-host', 'trace'), ('first-host', 'codex')]:
+            self.assertIn('No drive discovery, registration or dependency deletion',
+                          render(record, host_identity=host, automation_id=automation))
+        del authorization['dependency_cleanup']
+        self.assertIn('No drive discovery, registration or dependency deletion',
+                      render(record, host_identity='first-host'))
 
 
 if __name__ == '__main__':

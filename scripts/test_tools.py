@@ -1,5 +1,6 @@
 import hashlib
 import io
+import json
 import os
 from pathlib import Path
 import tempfile
@@ -8,11 +9,93 @@ import unittest
 from unittest.mock import patch
 import zipfile
 
-from tools import extract, install, rollback, uninstall, runtime_env, target_name, validate_command
-from setup import read_json
+from tools import extract, install, rollback, uninstall, runtime_env, target_name, validate_command, release_plan, plan_update, RTK_RELEASE_SOURCE
+from setup import read_json, save_json
 
 
 class ToolTests(unittest.TestCase):
+    def release_fixture(self, version='0.51.0'):
+        names = ['rtk-x86_64-pc-windows-msvc.zip', 'rtk-aarch64-apple-darwin.tar.gz']
+        assets = [{'name': name, 'digest': 'sha256:' + 'a'*64,
+                   'browser_download_url': f'https://github.com/rtk-ai/rtk/releases/download/v{version}/{name}'}
+                  for name in names]
+        release = {'tag_name': 'v'+version, 'assets': assets}
+        lock = {'version': version, 'assets': {a['name']: {'url': a['browser_download_url'],
+                                                        'sha256': 'a'*64} for a in assets}}
+        return release, lock
+
+    def test_release_plan_reuses_exact_pin_and_never_installs(self):
+        release, lock = self.release_fixture()
+        before = json.dumps(lock, sort_keys=True)
+        self.assertEqual(release_plan(release, lock)['status'], 'unchanged')
+        newer, _ = self.release_fixture('0.52.0')
+        candidate = release_plan(newer, lock)
+        self.assertEqual(candidate['status'], 'candidate')
+        self.assertTrue(candidate['requires_semantic_review'])
+        self.assertEqual(json.dumps(lock, sort_keys=True), before)
+
+    def test_release_plan_rejects_unstable_and_defers_older(self):
+        release, lock = self.release_fixture()
+        for field in ['draft', 'prerelease']:
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                release_plan({**release, field: True}, lock)
+        with self.assertRaises(ValueError):
+            release_plan({**release, 'tag_name':'v0.52.0-rc.1'}, lock)
+        older, _ = self.release_fixture('0.50.0')
+        self.assertEqual(release_plan(older, lock)['status'], 'deferred')
+
+    def test_release_plan_rejects_missing_duplicate_untrusted_assets(self):
+        release, lock = self.release_fixture('0.52.0')
+        for assets in [release['assets'][:-1], release['assets'] + release['assets'][:1],
+                       [{**release['assets'][0], 'digest':None}, release['assets'][1]],
+                       [{**release['assets'][0], 'browser_download_url':'https://example.invalid/rtk.zip'}, release['assets'][1]]]:
+            with self.subTest(assets=assets), self.assertRaises(ValueError):
+                release_plan({**release, 'assets': assets}, lock)
+
+    def test_same_version_asset_drift_preserves_reviewed_pin(self):
+        release, lock = self.release_fixture()
+        release['assets'][0]['digest'] = 'sha256:'+'b'*64
+        with self.assertRaises(ValueError):
+            release_plan(release, lock)
+        self.assertEqual(lock['assets'][release['assets'][0]['name']]['sha256'], 'a'*64)
+
+    def test_update_plan_requires_current_matching_collection(self):
+        release, lock = self.release_fixture()
+        body = json.dumps(release, sort_keys=True)
+        sha = hashlib.sha256(body.encode()).hexdigest()
+        with tempfile.TemporaryDirectory() as directory:
+            state = Path(directory)
+            with self.assertRaises(ValueError):
+                plan_update(state, lock)
+            report = {'checked_at':'2026-10-07T00:00:00Z', 'results':[
+                {'id':'R41', 'url':RTK_RELEASE_SOURCE, 'status':'fetched', 'sha256':sha}]}
+            save_json(state/'source-report.json', report)
+            save_json(state/'source-status.json', {'R41':{'body':body,'sha256':sha}})
+            with patch('tools.download', side_effect=AssertionError('No network allowed')):
+                self.assertEqual(plan_update(state, lock)['status'], 'unchanged')
+            report['results'][0]['status'] = 'error'
+            save_json(state/'source-report.json', report)
+            with self.assertRaises(ValueError):
+                plan_update(state, lock)
+            report['results'][0]['status'] = 'fetched'
+            save_json(state/'source-report.json', report)
+            save_json(state/'source-status.json', {'R41':{'body':body+' ', 'sha256':sha}})
+            with self.assertRaises(ValueError):
+                plan_update(state, lock)
+
+    def test_same_version_install_cannot_replace_receipted_asset(self):
+        with tempfile.TemporaryDirectory() as directory:
+            state = Path(directory)
+            lock, fetcher = self.package('fixture')
+            installed = install(state, lock, fetcher, verify_binary=False)
+            record = (state/'tools-installed.json').read_bytes()
+            before = Path(installed['path']).read_bytes()
+            lock['assets'][target_name()]['sha256'] = 'b'*64
+            with self.assertRaises(ValueError):
+                install(state, lock, fetcher, verify_binary=False)
+            self.assertEqual(Path(installed['path']).read_bytes(), before)
+            self.assertEqual((state/'tools-installed.json').read_bytes(), record)
+
     def package(self, version):
         payload = version.encode()
         buffer = io.BytesIO()

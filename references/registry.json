@@ -1225,6 +1225,87 @@
         ],
         "scope": "No full-page or exact-byte snapshot claim"
       }
+    },
+    {
+      "id": "R51",
+      "url": "https://learn.chatgpt.com/docs/computer-use",
+      "canonical_url": "https://learn.chatgpt.com/docs/computer-use",
+      "origin": "user",
+      "authority": "official-vendor",
+      "snapshot": null,
+      "monitor": true,
+      "disposition": "adopted",
+      "reason": "Scoped computer/browser routing and recovery; checkpoint and retry policy remain TRACE choices. No guarantee of error-free runtime.",
+      "review_status": "relevant-body-reviewed-2026-10-07",
+      "body_fetched": true,
+      "applicable_files": [
+        "global/guides/computer-use.md",
+        "docs/operations.md"
+      ],
+      "latest_relevant_review": {
+        "date": "2026-10-07",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "sections": [
+          "Windows app policy",
+          "Permissions and approvals"
+        ],
+        "scope": "Relevant body reviewed; no complete-page or exact-hash review claim"
+      }
+    },
+    {
+      "id": "R52",
+      "url": "https://learn.chatgpt.com/docs/chrome-extension",
+      "canonical_url": "https://learn.chatgpt.com/docs/chrome-extension",
+      "origin": "user",
+      "authority": "official-vendor",
+      "snapshot": null,
+      "monitor": true,
+      "disposition": "adopted",
+      "reason": "Scoped computer/browser routing and recovery; checkpoint and retry policy remain TRACE choices. No guarantee of error-free runtime.",
+      "review_status": "relevant-body-reviewed-2026-10-07",
+      "body_fetched": true,
+      "applicable_files": [
+        "global/guides/computer-use.md",
+        "docs/operations.md"
+      ],
+      "latest_relevant_review": {
+        "date": "2026-10-07",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "sections": [
+          "Set up your browser",
+          "Troubleshooting"
+        ],
+        "scope": "Relevant body reviewed; no complete-page or exact-hash review claim"
+      }
+    },
+    {
+      "id": "R53",
+      "url": "https://learn.chatgpt.com/use-cases/use-your-computer-with-codex",
+      "canonical_url": "https://learn.chatgpt.com/use-cases/use-your-computer-with-codex",
+      "origin": "user",
+      "authority": "official-vendor",
+      "snapshot": null,
+      "monitor": true,
+      "disposition": "adopted",
+      "reason": "Scoped computer/browser routing and recovery; checkpoint and retry policy remain TRACE choices. No guarantee of error-free runtime.",
+      "review_status": "relevant-body-reviewed-2026-10-07",
+      "body_fetched": true,
+      "applicable_files": [
+        "global/guides/computer-use.md",
+        "docs/operations.md"
+      ],
+      "latest_relevant_review": {
+        "date": "2026-10-07",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "sections": [
+          "How to use",
+          "Avoid parallel runs in the same app"
+        ],
+        "scope": "Relevant body reviewed; no complete-page or exact-hash review claim"
+      }
     }
   ]
 }

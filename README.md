@@ -1,4 +1,4 @@
-# TRACE Setup v1.2.4
+# TRACE Setup v1.2.5 (working revision)
 
 Portable Codex personal instructions, optional profiles, pinned Archify/Ponytail,
 and ownership-based deployment. Python 3.11+ and Git are required; Node.js is needed
@@ -173,3 +173,19 @@ existing private routine state. Efficiency means correct completion with less
 avoidable rework and total task usage when observed, not a shorter prompt alone.
 RTK release planning reuses collection, preserves stable pins and reports conflicts
 before installation. Unchanged checks are reused only with matching identities.
+
+## Computer/browser reliability
+
+For computer or browser tasks the concise agreement loads only
+[the interaction guide](global/guides/computer-use.md). It keeps shell, helper and
+browser readiness independent, follows installed tool instructions, and reconciles
+unknown mutation outcomes before retry. The existing private routine keeps one
+[sanitized QA checkpoint](scripts/interaction_checkpoint.py); it does not replay
+actions, grant access or restart apps. The scheduled feedback loop reviews confirmed
+causes and identity-bound verification; it never claims self-awareness or a guarantee
+of error-free runtime.
+
+The existing routine also uses a [metadata-only Codex home audit and portable RTK
+report](docs/storage-and-reports.md). It does not infer cache deletion authority
+from size or age. The canonical global flow and local report embed pinned
+Pretendard offline; changed artifacts need their own verification evidence.

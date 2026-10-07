@@ -47,6 +47,22 @@ class HeartbeatTests(unittest.TestCase):
                        'Ponytail and Archify only when explicitly requested']:
             self.assertIn(clause, prompt)
 
+    def test_interaction_recovery_does_not_authorize_unattended_actions(self):
+        prompt = render({})
+        for clause in ['native helper, browser connection',
+                       'unknown mutation outcome requires fresh observation',
+                       'Do not run unattended browser suites',
+                       'exact affected source or installed identity',
+                       'failed check or unresolved source cannot be marked resolved']:
+            self.assertIn(clause, prompt)
+
+    def test_codex_home_audit_cannot_expand_dependency_cleanup(self):
+        prompt = render({})
+        for clause in ['codex_storage.py scan', 'metadata-only',
+                       'Never read raw contents or automatically delete',
+                       'Do not auto-register Codex workspaces', 'rtk_status.py']:
+            self.assertIn(clause, prompt)
+
     def test_cleanup_needs_separate_exact_host_and_automation_authority(self):
         authorization = {'mode': 'compatible-global-stable-tools', 'approved_on': '2026-10-05',
                          'automation_id': 'trace', 'host_identity': 'first-host',

@@ -355,3 +355,35 @@ Only project-specific incidents belong in the project.
 Check C-only Windows, different checkout/home drives, Unicode and spaces, OneDrive paths, execution outside checkout, custom CODEX_HOME, missing/read-only paths and links/junctions. Also verify native macOS/Linux install, repeat install, conflict and rollback behavior before declaring those platforms tested. Simulated paths do not establish native OS support.
 
 Sources: [Configuration and paths](https://learn.chatgpt.com/docs/config-file/config-advanced), [Authentication](https://learn.chatgpt.com/docs/auth), [App settings](https://learn.chatgpt.com/docs/app/settings).
+
+## Computer/browser readiness and resume
+
+The installed [conditional interaction guide](../global/guides/computer-use.md)
+owns routing and recovery. Keep permissions and installed OpenAI plugin guidance
+on each host; TRACE neither copies caches nor changes always-allowed apps.
+A current successful helper initialization does not establish that a historical
+setup-refresh error is fixed. Browser and native actions need their own evidence.
+
+For an authorized interrupted QA task, record only opaque task/target/step IDs,
+capability statuses and sanitized error codes in a reviewed input JSON, then run:
+
+```text
+python -B scripts/interaction_checkpoint.py record --input PATH
+python -B scripts/interaction_checkpoint.py resume
+```
+
+The format has exactly task_id, target_id, stages and steps. Stages are independent
+shell/native/browser/input status objects; steps have id and status (pending,
+completed, failed or unknown-outcome). See the executable contract in
+[scripts/interaction_checkpoint.py](../scripts/interaction_checkpoint.py).
+One current checkpoint replaces the previous one in private routine-review.json;
+other lessons/findings remain intact. A fresh observation is mandatory on resume;
+unknown mutations are reconciled and failed steps diagnosed before any retry.
+The command does not click, grant access, restart, replay, or claim live readiness.
+Raw evidence belongs only in the authorized project QA record, never public Git.
+
+See [Codex storage and reports](storage-and-reports.md) for metadata-only home
+audits and the owned portable RTK report. The routine does not expand deletion
+authority to application state or mixed user work. Native accessibility, screenshot,
+native input and browser input are recorded separately; one success cannot clear
+another capability's failure.

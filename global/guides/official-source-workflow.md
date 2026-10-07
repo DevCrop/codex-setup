@@ -95,3 +95,13 @@ An unchanged version/evidence reuses its acceptance result. New tool versions,
 changed filter behavior or newly observed failures justify targeted revalidation;
 new tasks alone do not justify repeating full test suites. Report only meaningful
 verified changes, new failures or needed decisions; preserve cadence and scope.
+
+## Interaction lessons
+
+For browser/computer failures use [the interaction guide](computer-use.md). Keep
+capabilities independent and an interrupted QA checkpoint separate from a verified
+lesson. Promote only after confirming the cause and the affected acceptance result;
+bind that result to the reviewed file/tool identity. Store distinct review, apply
+and verification times, and reopen the lesson when that identity or evidence changes.
+Do not mark a runtime issue resolved because documentation or source collection
+passed. Retire superseded guidance after ownership and preference conflict review.

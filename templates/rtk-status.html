@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TRACE · RTK 검증 노트</title>
+<style>
+:root{color-scheme:light;--ink:#292826;--muted:#78756f;--line:#e9e7e2;--paper:#fff;--side:#f7f7f5}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);line-height:1.65}
+aside{position:fixed;inset:0 auto 0 0;width:230px;background:var(--side);border-right:1px solid var(--line);padding:28px 20px}
+aside strong{font-size:16px}aside small{display:block;color:var(--muted);margin:8px 0 32px}
+nav a{display:block;padding:9px 12px;color:var(--ink);text-decoration:none;border-radius:5px}nav a:hover{background:#ededea}
+main{margin-left:230px;max-width:1300px;padding:45px 65px 80px}.crumb{font-size:13px;color:var(--muted)}h1{font-size:38px;line-height:1.2;letter-spacing:-1px;margin:35px 0 15px}h2{font-size:23px;margin:44px 0 16px}
+.intro{color:var(--muted);max-width:760px}.badge{display:inline-block;background:#eaf2ed;color:#386248;padding:3px 9px;border-radius:4px;font-size:13px}.warn{background:#fff0d5;color:#805800}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0}.metric{border:1px solid var(--line);border-radius:7px;padding:19px 22px}.metric span{font-size:13px;color:var(--muted)}.metric strong{display:block;font-size:29px;line-height:1.5}.metric small{color:var(--muted)}
+.callout{background:#f7f6f2;border-radius:5px;padding:18px 22px;margin:20px 0;border-left:3px solid #d9bd75}table{border-collapse:collapse;width:100%;font-size:14px}th{text-align:left;color:var(--muted);font-weight:500;background:var(--side)}td,th{padding:12px;border-bottom:1px solid var(--line)}td.num{text-align:right;font-variant-numeric:tabular-nums}code{background:#f3f2ef;font-size:12px;padding:2px 5px;overflow-wrap:anywhere}a{color:#416984}details{border:1px solid var(--line);padding:14px 18px;border-radius:5px;margin:15px 0}summary{cursor:pointer;font-weight:600}.note{font-size:13px;color:var(--muted)}.bar{height:5px;background:#c5d2bf;border-radius:3px;margin-top:7px}footer{border-top:1px solid var(--line);margin-top:50px;padding-top:20px}
+@media(max-width:900px){aside{position:static;width:auto;border-bottom:1px solid var(--line);padding:16px 22px}aside small{margin:4px 0}nav{display:flex;flex-wrap:wrap}main{margin:0;padding:25px 22px}.grid{grid-template-columns:1fr}h1{font-size:30px}.table-wrap{overflow-x:auto}}
+</style>{{FONT}}</head>
+<body><aside><strong>TRACE Workspace</strong><small>글로벌 셋업 / 검증 노트</small><nav><a href="#overview">▧ RTK 개요</a><a href="#verification">✓ 검증 상태</a><a href="#history">▦ 관측 기록</a><a href="#limits">◇ 해석과 한계</a></nav></aside>
+<main><div class="crumb">TRACE / Global setup / RTK evidence</div><h1 id="overview">RTK 검증 노트</h1>
+<p class="intro">실제 수집 기록을 보여주는 로컬 노트입니다. 압축 추정치와 기능 검증을 구분하고, 확인하지 못한 항목은 그대로 남깁니다.</p>
+<span class="badge">{{RTK_STATUS}}</span> <span class="badge warn">OpenAI 실제 토큰 절감률 미측정</span>
+<div class="grid"><div class="metric"><span>입력 − 출력 추정치</span><strong>{{DIFFERENCE}}</strong><small>{{RATIO}} · RTK 기록 기준</small></div><div class="metric"><span>기록된 명령</span><strong>{{COMMANDS}}</strong><small>검증용 호출도 포함</small></div><div class="metric"><span>RTK 런타임 검증</span><strong>{{CHECKS}}</strong><small>동일한 바이너리·하네스에만 유효</small></div></div>
+<div class="callout">{{DISCREPANCY}}</div>
+<h2 id="verification">검증 상태</h2><div class="table-wrap"><table><thead><tr><th>대상</th><th>확인 결과</th><th>범위</th></tr></thead><tbody>{{VERIFICATION_ROWS}}</tbody></table></div>
+<details><summary>검증 식별자와 시각</summary>{{IDENTITY}}</details>
+<h2 id="history">관측 기록</h2><p class="note">기록이 없는 날은 미관측입니다. 0으로 채우거나 같은 날짜를 중복 합산하지 않습니다.</p>
+<div class="table-wrap"><table><thead><tr><th>RTK 날짜</th><th>명령</th><th>입력 추정</th><th>출력 추정</th><th>차이</th><th>차이 비율</th></tr></thead><tbody>{{DAILY_ROWS}}</tbody></table></div>
+<h2 id="limits">해석과 한계</h2><p>RTK 수치는 도구 출력의 추정치입니다. 모델 입력·출력·추론, 캐시 할인, 구독 사용량, 업무 시간의 절감률을 입증하지 않습니다. 과거 여러 버전의 사용 기록과 검증 비용이 섞일 수 있습니다.</p>
+<p>글로벌 flow는 운영 정책의 도식입니다. 제품 프로젝트 구조와 실행 성공 여부는 해당 프로젝트에서 따로 검증합니다. 새 UI의 브라우저 렌더링·폰트 적용·시각 검토 결과: <strong>{{BROWSER_STATUS}}</strong>.</p>
+<p><a href="https://github.com/rtk-ai/rtk/blob/develop/docs/guide/resources/savings-explained.md">RTK 추정치 설명</a> · <a href="https://github.com/DevCrop/codex-setup">TRACE 원본</a></p>
+<footer class="note">{{GENERATED}} · Pretendard 1.3.9 · 오프라인 폰트 포함 · Notion에서 영감을 받은 TRACE 자체 UI</footer></main></body></html>

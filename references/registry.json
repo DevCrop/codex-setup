@@ -847,7 +847,20 @@
       },
       "snapshot": null,
       "applicable_files": [],
-      "monitor": true
+      "monitor": true,
+      "latest_relevant_review": {
+        "date": "2026-10-09",
+        "scope": "Exact Windows runtime ACL repair patch and stable-tag comparison only; not a full repository semantic review.",
+        "url": "https://github.com/openai/codex/commit/dd12f892f1b857e5161abd33a2967125b265d550",
+        "claim": "Active runtime files can cause sharing violations when opened with MAXIMUM_ALLOWED; the vendor patch narrows file ACL access while preserving permissions.",
+        "stable_version_reviewed": "0.161.0",
+        "stable_source_contains_fix": false,
+        "host_repair_verified": false,
+        "applicable_files": [
+          "docs/troubleshooting/incident-08-computer-capabilities.md",
+          "docs/verification-integration.md"
+        ]
+      }
     },
     {
       "id": "R33",

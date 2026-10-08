@@ -82,3 +82,32 @@ still documents it as saved Windows Computer Use app approvals, removed through
 the desktop settings. Keep those user permissions: one client's ignored-key warning
 does not establish global legacy. Three stale archived database rows were reported
 separately; no database repair/deletion was performed.
+
+## Post-restart contrast and upstream fix candidate — 2026-10-09
+
+After the user reported restarting the app, stable CLI 0.161.0 still failed on
+the original sandbox path. The already installed app-owned 0.162.0-alpha.2 also
+failed; its fresh log again records a root-only ACL open failing with Win32 32
+on an active runtime executable. Restart did not resolve this incident.
+
+A non-mutating handle contrast on that runtime file opened successfully with
+`READ_CONTROL` and `READ_CONTROL | WRITE_DAC`, but `MAXIMUM_ALLOWED` failed with
+Win32 32. The probe opened/closed handles only; it did not update ACLs or terminate
+processes. This narrows the failure to requested access/share compatibility;
+it does not identify the incompatible holder or prove a native-capture cause.
+Normal CLI sandbox initialization may provision ACLs independently of this probe.
+
+OpenAI's [exact fix commit](https://github.com/openai/codex/commit/dd12f892f1b857e5161abd33a2967125b265d550)
+restricts the broad open to directories and narrows file ACL-write access when an
+update is required. Its regression test holds a runtime executable open while
+repairing and revalidating permissions. The reviewed stable-tag source lacks
+this change. Latest stable release collection still returned 0.161.0; the
+app-owned version's observed failure is not proof of its source ancestry.
+
+Keep this as a relevant vendor fix candidate, not a verified host repair.
+At the existing maintenance cadence, review the next stable release for this
+exact change and compatibility before any authorized update. Then recheck the
+original sandbox path and doctor, preserving config, credentials and saved app
+approvals. Do not install an alpha, rebuild a custom CLI, manually reset ACLs or
+repeat unchanged restart attempts to bypass the release gate. Screen-control
+acceptance remains separate and requires lifting the user's existing hold.

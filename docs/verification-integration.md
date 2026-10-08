@@ -63,3 +63,21 @@ as failure, warning as caution and unknown/unrecognized status as unknown; a
 recorded failure takes precedence over a green installation/publication banner.
 Affected Python report tests and executable Node DOM checks cover these cases;
 they do not establish current browser rendering or sandbox repair.
+
+## Post-restart review — 2026-10-09
+
+All 12 CI checks passed for exact commit
+`6eaf37f3f753c10561eb440ad9fd2edb50d48edd`; later commits need their own checks.
+The user's app restart was followed by fresh original-path failures in both
+stable CLI 0.161.0 and the already installed app-owned 0.162.0-alpha.2.
+The non-mutating handle contrast and matching vendor patch are recorded in the
+[existing incident](troubleshooting/incident-08-computer-capabilities.md#post-restart-contrast-and-upstream-fix-candidate--2026-10-09).
+The vendor patch is a candidate for a future stable update, not an installed fix.
+
+The private report evidence retains the actual diagnostic time and failure;
+doctor's epoch-based timestamp is normalized to UTC without substituting report
+generation time. Collection, diagnosis, policy application and publication dates
+remain separate. The existing daily 08:00 routine retains this unresolved finding.
+No model calls, manual permission reset, process termination, app-runtime removal
+or new monitor were introduced. Browser/native acceptance and final release gates
+remain outstanding; app restart does not authorize screen manipulation.

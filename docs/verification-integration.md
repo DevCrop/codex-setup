@@ -12,11 +12,11 @@ Integration source: PR #15 commit 7d8a825466e05a2d4407a0283eff7ab0dcf054ba and P
 - Missing telemetry remains unknown. Stale live probe identity clears successful evidence without changing the old timestamp or daily snapshot.
 - Shared templates contain no fixed 08:00 schedule, 135-to-127-byte result or inherited cross-root discovery success. Global FLOW has one JSON source.
 
-## Acceptance still to perform
+## Installed and runtime evidence
 
 Current-host apply changed seven owned targets; verify passed and repeat apply was unchanged for 122 entries including the config patch. The exact current config SHA-256 remained 05681800958e5e69f510af7bc92cad3712731327e6c80def4658bd01d0e6a88d. CLI 0.161.0 and ChatGPT subscription login were confirmed.
 
-Actual loopback HTTP execution refreshed across two samples, retained the original probe time and scheduled report bytes, and added zero compression calls. Overview/RTK/sanitized JSON routes returned 200; the private ledger returned 404. The test server was shut down. Full-byte cache invalidation covers modified same-size/same-mtime binaries and unavailable files; the gain runner still validates each invocation. Global flow has 40 nodes/nine lanes: nine static checks passed, zero composition errors/warnings; browser gates remain unperformed. RTK 0.51.0 verifies and the release plan is unchanged. Exact-head CI passed for e7430f2; subsequent changes require their own final-head result. Public release remains v1.2.4. User-requested screen-control hold remains in force; no visual/native success is inherited.
+Actual loopback HTTP execution refreshed across two samples, retained the original probe time and scheduled report bytes, and added zero compression calls. Overview/RTK/sanitized JSON routes returned 200; the private ledger returned 404. The test server was shut down. Full-byte cache invalidation covers modified same-size/same-mtime binaries and unavailable files; the gain runner still validates each invocation. Global flow has 40 nodes/nine lanes: nine static checks passed, zero composition errors/warnings; browser gates remain unperformed. RTK 0.51.0 verifies and the release plan is unchanged. Exact-head CI for integrated artifact commit f5483701118052d70b8e9c6296d9f12e7d3510ac passed all 12 push/PR checks across Windows/macOS/Linux and Python 3.11/3.14; later commits need their own result. Public release remains v1.2.4. User-requested screen-control hold remains in force; no visual/native success is inherited.
 
 Fresh CLI app-server initialization and forced skills/list discovery passed in the TRACE checkout and a disposable unrelated root: Archify, Ponytail and Computer Use Workflow were enabled, with no discovery errors or model calls. This proves fresh metadata discovery, not desktop invocation, implicit-selection behavior or rendered UI.
 
@@ -29,3 +29,22 @@ User model/effort, credentials, MCP, permissions and existing hooks are preserve
 The global agreement is 1,802 UTF-8 bytes/236 words, compared with the previous installed source at 2,179 bytes/290 words. The maintenance template is 6,259 bytes/781 words, compared with 9,423 bytes/1,188 words. These are instruction-size measurements, not OpenAI token or performance savings. Shared report CSS removes a 10,565-byte duplicated prefix; the pinned font has one tracked source. Two dated unowned config backups total 8,402 bytes; ownership is not established and both are preserved. No whole-home deletion occurred.
 
 Current home metadata collection found 90 entries and about 17.87 GB logical bytes, with no deletions. Root-level managed profiles now derive their classification from manifest targets; dated backups and misplaced personal-skill names do not inherit ownership.
+
+## Final documentation audit and remaining acceptance
+
+The October 8 follow-up verified the installed files and RTK again: both passed,
+and all 122 plan entries were keep. No installation replacement was needed.
+The PR #15 handoff and older interaction checks are explicitly scoped historical
+records; current installation links target the integrated branch. Report field
+documentation now distinguishes branch_published from artifact-verified published.
+
+Fourteen app-state temporary files total 3,480,024 logical bytes. They are not
+TRACE-owned and inactivity/disposability is unverified, so none was deleted.
+Size, age and a temporary filename do not establish cleanup eligibility.
+
+Actual changed-HTML rendering, desktop skill invocation, native capture/input
+and CLI sandbox findings remain unverified or unresolved. The screen-control hold
+must be lifted before interaction acceptance. Main merge, a new release tag and
+downloaded release-artifact acceptance are outstanding; draft branch publication
+is not a completed v1.2.5 release. Source decisions clear only exact reviewed
+content; unrelated or unreviewed candidates and their existing incidents persist.

@@ -1,7 +1,8 @@
 # 글로벌 셋업 인수인계 — 2026-10-08
 
-> Imported PR #15 evidence describes the source branch's exercised host/session.
-> It is not fresh evidence for this integration or another host; use verification-integration.md for the final integration.
+> PR #15 원본의 호스트·세션 기록이다. 현재 통합본의 설치는 README와
+> operations.md, 검증은 verification-integration.md를 따른다. 아래 원본 호스트의
+> 자동화 ID·모델·의존성 정리 권한은 현재 호스트나 다른 PC로 이전되지 않는다.
 
 이 문서는 `codex/global-setup-handoff-20261008` 브랜치에 정리한 변경의 목적,
 구성, 운영 방식과 다른 PC의 검증 절차를 설명한다. 기반은 v1.2.4의 커밋
@@ -86,9 +87,9 @@ flowchart TD
 저장소의 `diagrams/global/` 및 이전 Archify 산출물은 각각의 검증 시점·호스트 문맥을
 가진다. 기존 영수증이 있는 도식을 현재 PC의 새 일정으로 임의 덮어쓰지 않는다.
 
-## 호스트별 일정과 권한
+## PR #15 원본 호스트의 일정과 권한
 
-| 구분 | 2026-10-08 현재 Windows 호스트의 확인된 운영 | 다른 PC의 의미 |
+| 구분 | 2026-10-08 PR #15 원본 호스트의 기록 | 현재 통합 호스트·다른 PC의 의미 |
 |---|---|---|
 | 글로벌 점검 | 기존 `codex` 자동화, 매일 08:00 Asia/Seoul, 같은 스레드·조용한 알림 | 설치만으로 생성·이전되지 않음 |
 | 호환 변경 | 승인된 작은 글로벌 지침 보완·안정 CLI/RTK 업데이트 | 새 호스트는 review-only; 사람의 승인 필요 |
@@ -100,7 +101,9 @@ flowchart TD
 이 호스트의 비공개 자동화가 정본이다. 저장소의 선택적 등록 프로젝트 45일 정책은
 이 주간 7일 정책을 대체하지 않는다. 다른 릴리스 문서의 월요일 10:00 루틴은
 다른 호스트의 과거 운영 기록이며 현재 호스트 일정의 근거로 사용하지 않는다.
-PC와 앱이 실행 불가한 기간에는 성공을 기록하지 않는다.
+현재 통합 호스트는 기존 `trace` 자동화의 매일 08:00 Asia/Seoul 일정과
+등록 프로젝트 45일 관찰·실제 통지 후 7일 정책을 유지한다. 현재 운영 정본은
+[operations.md](operations.md)다. PC와 앱이 실행 불가한 기간에는 성공을 기록하지 않는다.
 
 ## 오류를 어떻게 다루는가
 
@@ -147,7 +150,7 @@ $200 구독 절감률·남은 사용량·업무 시간으로 환산하지 않는
 의존성 설치·없는 작업 폴더 생성·프로젝트별 패키지·로그인·루틴 등록까지 단계별로 정리했다.
 
 ```text
-git clone --branch codex/global-setup-handoff-20261008 https://github.com/DevCrop/codex-setup.git
+git clone --branch codex/interaction-recovery https://github.com/DevCrop/codex-setup.git
 cd codex-setup
 git rev-parse HEAD
 python --version

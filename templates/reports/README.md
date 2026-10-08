@@ -44,8 +44,11 @@ RTK 보고 데이터의 top-level 필드는 `collected_at`, `collection_date_kst
 
 선택 필드는 `browser_workflow.routes`, `incident_summary`, `flow_review`,
 `publication`이다. 라우트별 상태·실행 검증 시각·범위·제약을 별도로 둔다.
-`publication`의 `applied`, `verified`, `committed`, `published`는 해당 단계의
-실제 증거가 있어야 `true`다. 도식 논리 검사와 실제 UI 실행은 서로 다른 근거다.
+`publication`의 `applied`, `verified`, `committed`, `branch_published`, `published`는
+해당 단계의 실제 증거가 있어야 `true`다. `branch_published`는 깨끗한 현재 소스와
+기록된 원격 HEAD가 일치한 브랜치 게시다. `published`는 같은 커밋의 릴리스와
+산출물 인수 검증까지 확인된 경우만 참이며, 브랜치 게시로 대체하지 않는다.
+도식 논리 검사와 실제 UI 실행은 서로 다른 근거다.
 선호의 `id/label/value/scope/status/evidence/target`, 교훈의
 `id/label/change/cause/status/evidence/acceptance`는 허용 목록 요약이다.
 고객 자료·내부 경로·원문 대화·명령 인자·프로필·비밀을 넣지 않는다.

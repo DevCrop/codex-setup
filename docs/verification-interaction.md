@@ -3,6 +3,11 @@
 Working branch evidence, not a completed release. Performed on 2026-10-07,
 Windows / Python 3.13. The existing v1.2.4 evidence remains historical.
 
+This is the pre-integration host/session record. Its weekly cadence, CLI version,
+test inventory and runtime findings are not current-host acceptance. See
+[integrated verification](verification-integration.md) for the current build;
+unresolved findings require their own affected-path evidence before resolution.
+
 ## Completed checks
 
 | Requirement | Observed result |

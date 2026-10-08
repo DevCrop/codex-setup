@@ -87,6 +87,33 @@ def render(data, now):
         html.escape(str(data['collected_at'] or '미확인'), quote=True) + '">\n</head>').encode())
 
 
+def recorded_cli_checks(routine):
+    """Project dated, allowlisted diagnosis; report generation is not a new check."""
+    feedback = routine.get('feedback_loop', {})
+    doctor = feedback.get('current_cli_doctor', {})
+    version = doctor.get('version')
+    if not isinstance(version, str) or not re.fullmatch(r'\d+\.\d+\.\d+(?:-[a-zA-Z0-9.]+)?', version):
+        version = '미확인'
+    checked_at = doctor.get('checked_at')
+    try:
+        stamp = datetime.fromisoformat(checked_at.replace('Z', '+00:00'))
+        if stamp.tzinfo is None:
+            raise ValueError('Undated runtime evidence')
+        checked_at = stamp.isoformat()
+    except (AttributeError, TypeError, ValueError):
+        return [{'label': '기록된 CLI 진단', 'status': 'unknown',
+                 'evidence': '날짜가 확인된 진단 없음; 보고 생성은 실행 검증이 아님'}]
+    states = {'ok': 'pass', 'pass': 'pass', 'fail': 'fail', 'warning': 'warning'}
+    checks = doctor.get('checks', [])
+    sandbox = next((row.get('status') for row in checks
+                    if isinstance(row, dict) and row.get('check') == 'checks.sandbox.helpers'), None) if isinstance(checks, list) else None
+    evidence = 'CLI ' + version + ' · 확인 ' + checked_at + ' · 이전 진단 기록; 현재 실행 재검증과 별도'
+    return [{'label': '기록된 CLI 전체 진단',
+             'status': states.get(doctor.get('overall_status'), 'unknown'), 'evidence': evidence},
+            {'label': '기록된 Windows sandbox 진단',
+             'status': states.get(sandbox, 'unknown'), 'evidence': evidence}]
+
+
 def overview(routine, installed_status, source_commit, now, *, source_clean=None, sources=None, flow=None):
     feedback = routine.get('feedback_loop', {})
     def rows(values, fields):
@@ -118,7 +145,7 @@ def overview(routine, installed_status, source_commit, now, *, source_clean=None
         'checks': [{'label': '현재 설치 파일', 'status': installed_status,
                     'evidence': '이번 생성 시 manifest 대조'},
                    {'label': '소스 커밋', 'status': 'unknown', 'evidence': source_commit},
-                   {'label': '화면·새 세션 동작', 'status': 'unknown', 'evidence': '파일 검사와 별도 검증 필요'}],
+                   {'label': '화면·새 세션 동작', 'status': 'unknown', 'evidence': '파일 검사와 별도 검증 필요'}] + recorded_cli_checks(routine),
         'sources': sources or [], 'browser_workflow': {'routes': [
             {'name': name, 'status': 'unknown', 'when': trigger,
              'method': '현재 제공되는 공식 도구와 사용자가 선택한 대상 사용',

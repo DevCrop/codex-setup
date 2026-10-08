@@ -97,6 +97,24 @@ class IntegratedReportTests(unittest.TestCase):
             self.assertFalse(data['publication']['branch_published'])
             self.assertFalse(data['publication']['published'])
 
+    def test_recorded_cli_failure_stays_separate_from_installation_and_redacts_details(self):
+        record = {'feedback_loop': {'current_cli_doctor': {
+            'version': '0.161.0', 'checked_at': '2026-10-08T14:34:48Z',
+            'overall_status': 'fail', 'raw_report': 'private-secret',
+            'checks': [{'check': 'checks.sandbox.helpers', 'status': 'fail',
+                        'details': 'private-secret'}]}}}
+        data = overview(record, 'pass', 'commit', 'later')
+        self.assertEqual(data['checks'][0]['status'], 'pass')
+        diagnoses = [row for row in data['checks'] if row['label'].startswith('기록된')]
+        self.assertEqual([row['status'] for row in diagnoses], ['fail', 'fail'])
+        self.assertTrue(all('2026-10-08T14:34:48+00:00' in row['evidence'] for row in diagnoses))
+        self.assertTrue(all('현재 실행 재검증과 별도' in row['evidence'] for row in diagnoses))
+        self.assertNotIn('private-secret', json.dumps(data))
+        record['feedback_loop']['current_cli_doctor']['checked_at'] = 'private-secret'
+        data = overview(record, 'pass', 'commit', 'later')
+        self.assertEqual(data['checks'][-1]['status'], 'unknown')
+        self.assertNotIn('private-secret', json.dumps(data))
+
     def test_flow_success_requires_current_exact_artifact_bytes(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); folder = root / 'diagrams/global'; folder.mkdir(parents=True)

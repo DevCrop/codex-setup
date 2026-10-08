@@ -91,3 +91,9 @@ Publication is bound to the recorded exact source and remote head. A branch push
 displayed separately from a tagged, artifact-verified release. Current flow hashes
 establish static receipt reuse only; browser/native routes stay unknown without
 current-session evidence. Source cards describe registry reviews, not collection success.
+
+Overview checks include the latest recorded, dated CLI overall/sandbox diagnosis
+when available. Only version, diagnosis time and allowlisted statuses are projected;
+raw diagnostic details are excluded. Rendering neither reruns doctor nor renews
+that evidence. Failure/warning/unknown states remain visible independently of
+manifest installation success, and failure overrides the overall success badge.

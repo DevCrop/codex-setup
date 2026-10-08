@@ -48,3 +48,18 @@ must be lifted before interaction acceptance. Main merge, a new release tag and
 downloaded release-artifact acceptance are outstanding; draft branch publication
 is not a completed v1.2.5 release. Source decisions clear only exact reviewed
 content; unrelated or unreviewed candidates and their existing incidents persist.
+
+## Runtime failure visibility follow-up
+
+The stable 0.161.0 CLI doctor and original Windows sandbox execution failed on
+2026-10-08; see the existing [capability incident](troubleshooting/incident-08-computer-capabilities.md#current-cli-reproduction--2026-10-08).
+App-owned CLI 0.162.0-alpha.2 is a separate runtime, not the stable updater's target.
+Installation/RTK integrity success cannot resolve the sandbox or native UI findings.
+
+The overview now projects only dated, allowlisted CLI overall/sandbox statuses.
+It retains the original diagnosis time, does not launch doctor while rendering,
+and excludes raw details. Undated evidence remains unknown. The UI displays fail
+as failure, warning as caution and unknown/unrecognized status as unknown; a
+recorded failure takes precedence over a green installation/publication banner.
+Affected Python report tests and executable Node DOM checks cover these cases;
+they do not establish current browser rendering or sandbox repair.

@@ -15,7 +15,27 @@ function app(live=true){
  return {elements,timers,doc,docEvents,windowEvents,get calls(){return calls;},set response(value){response=value;},set failure(value){failure=value;},set pending(value){pending=value;},
   async tick(){const item=[...timers].find(([,t])=>t.delay<=30000);assert.ok(item,'scheduled poll');timers.delete(item[0]);await item[1].fn();},context};
 }
+function checkOverviewFailures(){
+ const source=fs.readFileSync(path.join(__dirname,'../templates/reports/adaptive-routine.template.html'),'utf8');
+ const script=[...source.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].at(-1)[1];
+ function render(statuses){
+  const elements=new Map();
+  for(const [,id] of source.matchAll(/\bid="([^"]+)"/g))elements.set(id,{textContent:'',innerHTML:'',className:''});
+  const data={preferences:[],lessons:[],sources:[],checks:statuses.map(status=>({label:status,status,evidence:'dated fixture'})),timing_policy:{rows:[]},publication:{applied:true,verified:true,branch_published:true,published:true}};
+  elements.get('routine-report-data').textContent=JSON.stringify(data);
+  vm.runInNewContext(script,{document:{getElementById:id=>elements.get(id),querySelectorAll:()=>[]},window:{addEventListener(){}},location:{hash:''},Date,JSON});
+  return elements;
+ }
+ const failed=render(['pass','fail','warning','unknown','pending','unexpected']);
+ assert.equal(failed.get('overall-state').textContent,'● 실패 항목 있음');
+ assert.equal(failed.get('overall-state').className,'badge problem');
+ const rows=failed.get('acceptance-rows').innerHTML;
+ for(const label of ['확인','실패','주의','미확인','대기'])assert.ok(rows.includes('>'+label+'</span>'),label);
+ assert.ok(!rows.includes('설정됨'));
+ assert.equal(render(['pass']).get('overall-state').textContent,'● 공개 배포 완료');
+}
 (async()=>{
+ checkOverviewFailures();
  const staticView=app(false);assert.equal(staticView.timers.size,0);assert.equal(staticView.elements.get('live-state').textContent,'저장 스냅샷');
  const a=app();const probe=a.elements.get('probe-date').textContent;
  await a.tick();assert.equal(a.calls,1);assert.match(a.elements.get('metrics').innerHTML,/>3</);assert.equal(a.elements.get('probe-date').textContent,probe);
@@ -31,5 +51,5 @@ function app(live=true){
  const calls=a.calls;await vm.runInContext('pollLive()',a.context);assert.equal(a.calls,calls);release();await underway;
  assert.match(a.elements.get('metrics').innerHTML,/>4</);assert.equal(a.elements.get('probe-date').textContent,probe);
  assert.match(a.elements.get('trend').innerHTML,/막대 차트/);a.windowEvents.pagehide();assert.equal(a.timers.size,0);
- console.log('PASS: static/live, refresh, retained probe, error, visibility, pause, validation, no overlap');
+ console.log('PASS: overview failure states; static/live, refresh, retained probe, error, visibility, pause, validation, no overlap');
 })().catch(error=>{console.error(error);process.exitCode=1;});

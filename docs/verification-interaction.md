@@ -18,6 +18,7 @@ Windows / Python 3.13. The existing v1.2.4 evidence remains historical.
 | Flow and report | Tracked generators embed pinned Pretendard with its OFL license; upstream Archify is adapted in a temporary copy only |
 | Archify static delivery | Validate, deliver and provenance check passed; nine static checks, no composition errors or warnings |
 | Clean Git checkout | Independent local clone in a Unicode/space path passed repository validation; canonical JSON/HTML bytes match the working checkout exactly |
+| Scoped uv cache check | Official uv 0.11.16 prune returned no unused entries; zero files removed, surrounding 25,375 regular-file metadata records unchanged |
 
 The five local skips are four unavailable symlink-creation cases and one
 POSIX-only special-file case. Windows junction checks are covered separately.
@@ -56,6 +57,9 @@ The Codex home scan is metadata-only: no cache, session, database, visualization
 or plugin data was deleted. Large mixed artifact/dependency directories are not
 proven unused or reclaimable; exact ownership/activity/regeneration and scope
 remain required. This is not completed whole-home storage optimization.
+The inspected uv cache contains about 5.28 GB of logical data, about 5.23 GB in
+multi-link files. Clearing that directory does not establish the same physical
+space saving; usage of its associated 3D environment remains a user decision.
 
 The report keeps RTK estimates separate from actual OpenAI usage; mixed historical
 measurements and their arithmetic discrepancy do not establish subscription

@@ -52,3 +52,19 @@ Sources: [Codex home](https://learn.chatgpt.com/docs/config-file/config-advanced
 [supported diagnostic/lifecycle commands](https://learn.chatgpt.com/docs/developer-commands),
 [Pretendard license](https://github.com/orioncactus/pretendard/blob/v1.3.9/LICENSE).
 Storage classification and report layout are TRACE choices, not OpenAI defaults.
+
+## Reviewed uv cache maintenance
+
+For an explicitly reviewed uv cache, use the installed tool's supported
+`uv cache prune --cache-dir <exact-cache> --offline --no-config` rather than direct
+filesystem deletion. Verify the cache marker/layout, resolved scope and absence
+of links first. Keep uv's in-use checks; do not use `--force` or workstation
+cleanup's `--ci` shortcut. Bound the lock wait and record failures.
+
+Compare surrounding source, outputs and installed-environment metadata before
+and after. Hardlink sizes are not additive or a physical reclaim estimate.
+No unused entries means no removals; do not repeat an unchanged prune or treat
+it as proof that a person no longer needs the environment. This current-task
+procedure does not expand the heartbeat's automatic deletion authority.
+
+Source: [uv cache safety and pruning](https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache).

@@ -10,8 +10,8 @@
 | `rtk-efficiency.template.html` | `__RTK_REPORT_DATA__` 한 개 | 일별 추정치·출력 바이트·압축 경로·명령 예시·검증 한계 |
 | `adaptive-routine.template.html` | `__ROUTINE_REPORT_DATA__` 한 개 | 선호/교훈·검토 상태·시점·브라우저/앱·오류·현재 흐름 |
 
-두 보고서를 같은 폴더의 `rtk-efficiency.html`, `adaptive-routine.html`로 저장하면
-상호 링크가 연결된다. 폰트는 저장소의 assets/pretendard 원본을 검증한 생성기가 HTML에 내장한다. 로컬 파일 열기를 지원하지 않는
+통합 생성기는 같은 폴더의 `rtk-status.html`, `overview.html`로 저장하고
+상호 링크를 연결한다. 폰트는 저장소의 assets/pretendard 원본을 검증한 생성기가 HTML에 내장한다. 로컬 파일 열기를 지원하지 않는
 검증 도구의 정책을 우회하지 말고 실제 화면 검증은 미확인으로 구분한다.
 
 개선 루틴 FLOW는 활성 작업과 등록된 정기 점검의 두 진입점, 여덟 단계와
@@ -59,8 +59,8 @@ RTK 보고 데이터의 top-level 필드는 `collected_at`, `collection_date_kst
 1. 승인된 현재 호스트 데이터만 수집한다. RTK 집계·바이트·실제 OpenAI 사용량을 구분한다.
 2. 같은 날짜 스냅샷을 교체하며 중복 합산하지 않는다. 시간대 미확인은 유지한다.
 3. JSON 직렬화 후 `</`를 `<\/`로 바꾸고 해당 데이터 자리를 한 번만 치환한다.
-   HTML 소스를 문자열로 임의 구성하거나 원시 로그를 삽입하지 않는다.
-4. 데이터 자리 미잔존, 임베디드 JSON 동일성, 고유 ID/내부 앵커, 폰트 상대 경로를 확인한다.
+   통합 생성기는 `<`와 `>`를 JSON 유니코드 이스케이프로 처리한다. 원시 로그를 삽입하지 않는다.
+4. 데이터 자리 미잔존, 임베디드 JSON 동일성, 고유 ID/내부 앵커, 내장 폰트 해시를 확인한다.
 5. 수치·차트·정렬·필터·미수집 상태와 현재 검사/과거 근거 분리를 영향 범위에서 확인한다.
 6. 실제 화면을 확인할 수 없다면 데이터·스크립트 검사와 화면 검증을 구분해 기록한다.
 
@@ -83,3 +83,8 @@ RTK 보고 데이터의 top-level 필드는 `collected_at`, `collection_date_kst
 Run `python -B scripts/rtk_status.py` from the reviewed checkout. It writes owned overview.html and rtk-status.html from the current private ledger, and an owned live template plus sanitized JSON projection. The JSON is a report projection, not a second authority. All target hashes are checked before any replacement; user edits conflict. Font bytes and OFL come only from assets/pretendard. The global FLOW link refers to diagrams/global/codex-flow.html; no duplicate manual flow is maintained in the overview.
 
 Common report CSS is authored once in shared.css and embedded by the generator; no external stylesheet or network font is required.
+
+Publication is bound to the recorded exact source and remote head. A branch push is
+displayed separately from a tagged, artifact-verified release. Current flow hashes
+establish static receipt reuse only; browser/native routes stay unknown without
+current-session evidence. Source cards describe registry reviews, not collection success.

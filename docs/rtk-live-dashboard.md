@@ -73,3 +73,10 @@ DOM 대역을 쓴 스크립트 검사는 실제 브라우저 렌더링 증거와
 [Page Visibility API](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API).
 
 Stored probe success is reused only after current binary/version, deployed runner, harness and scope match. A live aggregate refresh never renews the original validation time.
+
+The live viewer hashes full binary/receipt/runner/harness bytes and probe identity
+before reusing its in-memory validation result. Unchanged identity avoids another
+version subprocess; changed or unavailable bytes reopen validation. The verified
+gain runner still checks owned binary integrity on every aggregate read. This is
+query overhead reduction, not measured model-token savings. The overview's RTK
+and sanitized JSON links are explicit allowed routes; the private ledger is not served.

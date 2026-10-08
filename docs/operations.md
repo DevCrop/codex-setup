@@ -66,7 +66,7 @@ no additional scheduler, hook or background event service is installed.
 |---|---|---|
 | Stable CLI/RTK release discovery | Existing registered cadence | Review relevant changes; install only an eligible changed release |
 | RTK ownership/hash | Each explicit owned-runner invocation | Existing local checks; no network lookup |
-| Output compression | Every needed supported diagnostic, including nested orchestration | Use verified RTK; preserve exits/evidence and native exact reads, structured data, mutations and final acceptance |
+| Output compression | Needed supported noisy diagnostics when filtering helps, including nested orchestration | Use verified RTK; preserve exits/evidence and native exact reads, structured data, mutations and final acceptance |
 | Compression path health | Changed tool/filter identity or relevant failure | One affected byte/exit/evidence check; reuse matching success |
 | Affected runtime revalidation | Tool/filter change or new relevant failure | Smallest affected existing checks; reuse unchanged evidence |
 | Feedback and failure handling | Observation in active authorized task | Diagnose and finish authorized fix now; retain summary for scheduled review |

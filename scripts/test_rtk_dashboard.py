@@ -155,6 +155,17 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertNotIn(b'__RTK_REPORT_DATA__', body)
 
+    def test_integrated_overview_links_resolve_without_exposing_private_state(self):
+        (self.root / 'overview.html').write_text('<a href="rtk-status.html">RTK</a><a href="overview.json">JSON</a>')
+        (self.root / 'overview.json').write_text('{"publication":{"published":false}}')
+        (self.root / 'routine-review.json').write_text('PRIVATE')
+        for path in ('/overview.html', '/overview.json', '/rtk-status.html'):
+            with self.subTest(path=path):
+                status, _, body = self.request(path)
+                self.assertEqual(status, 200)
+                self.assertNotIn(b'PRIVATE', body)
+        self.assertEqual(self.request('/routine-review.json')[0], 404)
+
     def test_paths_origins_methods_and_failures(self):
         for path in ('/../private.json', '/private.json', '/api/rtk?command=delete', '/assets/'):
             with self.subTest(path=path):

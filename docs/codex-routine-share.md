@@ -7,7 +7,7 @@
 OpenAI의 기능을 기반으로 구성한 개인 TRACE 운영 정책이며, OpenAI가 배포한 공식 셋업은 아니다.
 
 > **배포 범위:** 이 문서와 최신 RTK 호출 정책·프로젝트 도구 라우팅·회고 규칙은
-> `codex/global-setup-handoff-20261008` 브랜치의 검토 대상이다. 현재 호스트는 로컬 적용·검증했다.
+> `codex/interaction-recovery` 브랜치의 검토 대상이다. 현재 호스트는 로컬 적용·검증했다.
 > 브랜치/PR 게시와 main 병합·태그 릴리스는 별개이며, v1.2.4에는 이번 추가 변경이 포함되지 않는다.
 > 이 문서는 공유용 설명이며 다른 PC의 자동화 등록이나 실행 권한을 부여하지 않는다.
 
@@ -65,7 +65,7 @@ Projects나 문서 폴더에서 작업한다는 선호는 형제 폴더 전체 �
 | 글로벌 AGENTS.md | 작업의 기본 기대와 선호 | 프로젝트 override와 실제 세션 로딩을 함께 확인 |
 | 조건부 가이드 | 해당 절차가 필요한 작업 | 모든 가이드를 매번 읽지 않음 |
 | 커넥터·전용 도구 | 외부 자료·앱 작업에 적합할 때 | 실제 접근과 실행 가능 여부 확인 |
-| TRACE RTK 러너 | 필요한 지원 진단을 실행할 때마다 | 소유권·해시·종료 코드·필요 증거 보존 |
+| TRACE RTK 러너 | 필요한 지원 진단에서 출력 축약이 유용할 때 | 소유권·해시·종료 코드·필요 증거 보존 |
 | Ponytail | 사용자가 명시 요청한 작업 | 기존 코드·도구·표준 기능부터 판단하고 최소 구현 |
 | Archify | 사용자가 명시 요청한 작업 | 실제 소스·계약 기반 FLOW; 도식은 실행 증거가 아님 |
 | Computer Use | 실제 화면 조작·UI 검증이 필요할 때 | 공식 도구로 대상·동작·결과 확인; 파일 검사와 분리 |
@@ -157,7 +157,7 @@ flowchart LR
 
 | 관찰 | 반영한 원칙 |
 |---|---|
-| 중첩 명령은 기본 RTK 훅이 인식하지 못할 수 있음 | 지원 진단마다 명시 검증 러너 사용 |
+| 중첩 명령은 기본 RTK 훅이 인식하지 못할 수 있음 | 축약이 유용한 지원 진단은 중첩 호출에서도 명시 검증 러너 사용 |
 | 보고서의 이전 스냅샷이 현재 실행 상태처럼 보임 | 수집 시각·실제 집계·실행 증거 분리 |
 | 작은 출력의 압축 이점이 없을 수 있음 | 절감 0 허용, 수치용 추가 호출 금지 |
 | UI 초기화 증상은 해소됐지만 원인은 미확인 | 해소 증거와 원인 confidence 분리 |
@@ -170,11 +170,11 @@ flowchart LR
 
 저장소: <https://github.com/DevCrop/codex-setup>
 
-공개 인수인계 브랜치: `codex/global-setup-handoff-20261008`
+공개 인수인계 브랜치: `codex/interaction-recovery`
 
-- [다른 Windows PC 상세 설치 안내](https://github.com/DevCrop/codex-setup/blob/codex/global-setup-handoff-20261008/docs/install-another-windows-pc.md)
-- [인수인계와 검증 범위](https://github.com/DevCrop/codex-setup/blob/codex/global-setup-handoff-20261008/docs/setup-handoff-20261008.md)
-- [운영 계약](https://github.com/DevCrop/codex-setup/blob/codex/global-setup-handoff-20261008/docs/operations.md)
+- [다른 Windows PC 상세 설치 안내](https://github.com/DevCrop/codex-setup/blob/codex/interaction-recovery/docs/install-another-windows-pc.md)
+- [인수인계와 검증 범위](https://github.com/DevCrop/codex-setup/blob/codex/interaction-recovery/docs/setup-handoff-20261008.md)
+- [운영 계약](https://github.com/DevCrop/codex-setup/blob/codex/interaction-recovery/docs/operations.md)
 
 **검토한 브랜치의 실제 커밋과 PR 검사 결과를 먼저 확인한다.**
 이 문서가 포함된 최신 커밋의 규칙을 plan/apply/verify로 적용한다.
@@ -245,7 +245,7 @@ PR #15의 별도 호스트 기록에는 7일 정리가 있었다. 현재 통합 
 > 검토한 TRACE 체크아웃과 적용 지침을 기준으로 기존 글로벌 유지관리 루틴을 운영한다.
 > 확인된 사용자 선호, 승인된 활성 작업의 새 오류·교정, 관련 공식 원문 변경, 남은 후보를 실제 설치·일정·보고서와 대조한다.
 > 유지·적용·보류·미확인을 근거와 함께 결정하고, 소유자가 승인한 호환 범위의 필요한 개선만 복구점·충돌 검토·검증 후 적용한다.
-> 지원 진단마다 검증 RTK 러너를 사용하되 원문·JSON·변경·최종 검증은 native로 유지한다.
+> 출력 축약이 유용한 지원 진단에 검증 RTK 러너를 사용하되 원문·JSON·변경·최종 검증은 native로 유지한다.
 > 작업 중 승인된 차단 오류는 즉시 처리하고 원래 실패 경로를 확인한다.
 > 같은 증거는 재사용하며 불필요한 변경·재설치·전체 조사·새 권한·원격 게시를 하지 않는다.
 > 기존 단일 비공개 기록과 보고 계약을 유지하고 실제 완료·새 실패·필요 결정만 알린다.
@@ -265,5 +265,5 @@ RTK 실시간 화면을 별도로 승인한 호스트는 일일 보고 생성 �
 - [OpenAI Scheduled tasks](https://learn.chatgpt.com/docs/automations): 예약 작업과 로컬 실행 조건.
 - [RTK 공식 저장소](https://github.com/rtk-ai/rtk): 제3자 출력 필터의 기능과 제한.
 
-08:00 일정, 매 지원 진단의 RTK 사용, 기록 구조와 알림 방식은 사용자 선택·TRACE 정책이다.
+08:00 일정, 출력 축약이 유용한 지원 진단의 RTK 사용, 기록 구조와 알림 방식은 사용자 선택·TRACE 정책이다.
 공식 글이나 스킬이 플랫폼 실행 권한을 추가하거나 승인 차단을 해제하지 않는다.

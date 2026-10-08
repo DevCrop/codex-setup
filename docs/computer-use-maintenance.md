@@ -50,8 +50,9 @@ Inventory narrowly. Remove only exact owned temporary files or stale cache entri
 whose producer, inactivity and regeneration are established; record before/after
 bytes and retained categories. Reject linked/reparse paths, uncertain ownership and
 active files. Never delete history databases to reduce apparent disk usage. Keep
-the separately authorized node_modules routine's actual cadence, seven-day threshold
-and protected projects; this workflow does not broaden its scope.
+the host's registered dependency-cleanup scope. This designated host requires 45
+observed idle days plus seven days after actual notification; another host's
+seven-day record is historical and never transfers deletion authority.
 
 ## Acceptance
 

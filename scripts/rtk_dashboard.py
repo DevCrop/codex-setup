@@ -45,6 +45,21 @@ def probe_matches(home, probe):
         return False
 
 
+def probe_fingerprint(home, probe):
+    """Full bytes, not age/mtime: invalidate cached validation on any identity drift."""
+    import hashlib
+    from setup import ROOT, Deployment
+    try:
+        dep = Deployment(home=home)
+        paths = [dep.state / 'tools-installed.json',
+                 dep.state / 'tools/rtk' / ('rtk.exe' if os.name == 'nt' else 'rtk'),
+                 Path(home) / 'bin/trace_rtk.py', ROOT / 'scripts/verify_rtk.py']
+        return tuple(hashlib.sha256(safe_file(p).read_bytes()).hexdigest() for p in paths) + (
+            hashlib.sha256(json.dumps(probe, sort_keys=True).encode()).hexdigest(),)
+    except (OSError, ValueError, TypeError):
+        return None
+
+
 def safe_file(path):
     path = Path(path).absolute()
     for ancestor in (path, *path.parents):
@@ -101,6 +116,15 @@ class Collector:
         self.cached = None
         self.attempt_at = None
         self.error = False
+        self.probe_key = None
+        self.probe_valid = False
+
+    def retained_probe_matches(self, probe):
+        key = probe_fingerprint(self.home, probe)
+        if key is None or key != self.probe_key:
+            self.probe_valid = probe_matches(self.home, probe)
+            self.probe_key = key
+        return self.probe_valid
 
     def snapshot(self):
         with self.lock:
@@ -140,7 +164,7 @@ class Collector:
                     saved = json.loads(baseline.read_text(encoding='utf-8'))
                     probe = {k: v for k, v in saved.get('probe', {}).items()
                              if k in PROBE_FIELDS}
-                    matched = probe_matches(self.home, probe)
+                    matched = self.retained_probe_matches(probe)
                     probe['identity_verified'] = matched
                     if not matched:
                         probe['required_evidence_preserved'] = False
@@ -210,7 +234,7 @@ class Handler(BaseHTTPRequestHandler):
                 data = self.server.collector.snapshot()
                 return self.send_body(200, json.dumps(data, ensure_ascii=False).encode(),
                                       'application/json; charset=utf-8')
-            if parsed.path in ('/', '/rtk-efficiency.html'):
+            if parsed.path in ('/', '/rtk-efficiency.html', '/rtk-status.html'):
                 data = self.server.collector.snapshot()
                 template = safe_file(self.server.reports / 'rtk-efficiency.template.html').read_text(encoding='utf-8')
                 if template.count('__RTK_REPORT_DATA__') != 1:
@@ -220,6 +244,7 @@ class Handler(BaseHTTPRequestHandler):
                                       'text/html; charset=utf-8')
             allowlist = {
                 '/overview.html': ('overview.html', 'text/html; charset=utf-8'),
+                '/overview.json': ('overview.json', 'application/json; charset=utf-8'),
             }
             if parsed.path in allowlist:
                 file, mime = allowlist[parsed.path]

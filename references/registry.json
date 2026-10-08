@@ -36,14 +36,16 @@
       ],
       "monitor": true,
       "latest_relevant_review": {
-        "date": "2026-10-07",
+        "date": "2026-10-08",
         "retrieval": "official-web-page",
         "status": "relevant-body-reviewed",
         "sections": [
+          "Better skills",
           "Up-to-date AGENTS.md",
+          "Decision boundaries",
           "Persistence"
         ],
-        "claim": "Task-relevant concise guidance and explicit completion; no performance transfer from Astra to the selected Sol model.",
+        "claim": "Short scoped descriptions, progressive disclosure, relevant context and explicit completion; remove repeated scaffolding without claiming measured token savings.",
         "scope": "Relevant sections only; original snapshot bytes preserved"
       },
       "adopted_claims": [

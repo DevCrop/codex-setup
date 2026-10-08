@@ -6,8 +6,8 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-from rtk_status import publish_reports, overview, template_render, model, render
-from rtk_dashboard import Collector
+from rtk_status import publish_reports, overview, template_render, model, render, current_flow
+from rtk_dashboard import Collector, probe_fingerprint
 from setup import ROOT
 
 
@@ -84,6 +84,57 @@ class IntegratedReportTests(unittest.TestCase):
             self.assertFalse(result['probe']['required_evidence_preserved'])
             self.assertEqual(result['probe']['checked_at'], baseline['probe']['checked_at'])
             self.assertEqual(json.loads((reports / 'rtk-efficiency.json').read_text()), baseline)
+
+    def test_publication_is_bound_to_exact_clean_source_and_remote(self):
+        record = {'current_checks': {'git_publication': {'head': 'new', 'remote_head': 'new',
+                   'checked_at': 'now', 'release_commit': 'old', 'release_asset_install': 'pass'}}}
+        data = overview(record, 'pass', 'new', 'now', source_clean=True)
+        self.assertTrue(data['publication']['committed'])
+        self.assertTrue(data['publication']['branch_published'])
+        self.assertFalse(data['publication']['published'])
+        for commit, clean in [('old', True), ('new', False), ('new', None)]:
+            data = overview(record, 'pass', commit, 'now', source_clean=clean)
+            self.assertFalse(data['publication']['branch_published'])
+            self.assertFalse(data['publication']['published'])
+
+    def test_flow_success_requires_current_exact_artifact_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); folder = root / 'diagrams/global'; folder.mkdir(parents=True)
+            receipt = {'gates': {k: 'pass' for k in ('validate', 'deliver', 'check')}}
+            for key, name in [('specification_sha256', 'codex-flow.json'), ('artifact_sha256', 'codex-flow.html')]:
+                data = name.encode(); (folder / name).write_bytes(data)
+                receipt[key] = hashlib.sha256(data).hexdigest()
+            (folder / 'codex-flow.receipt.json').write_text(json.dumps(receipt))
+            with patch('rtk_status.ROOT', root):
+                self.assertEqual(current_flow()['status'], 'pass')
+                (folder / 'codex-flow.html').write_bytes(b'changed')
+                self.assertEqual(current_flow()['status'], 'unknown')
+
+    def test_live_validation_reuses_exact_bytes_and_reopens_on_drift_or_unknown(self):
+        collector = Collector(Path('fixture-home'), Path('fixture-reports'))
+        with patch('rtk_dashboard.probe_fingerprint', side_effect=[('one',), ('one',), ('two',), None]), \
+                patch('rtk_dashboard.probe_matches', side_effect=[True, False, False]) as validate:
+            self.assertTrue(collector.retained_probe_matches({}))
+            self.assertTrue(collector.retained_probe_matches({}))
+            self.assertFalse(collector.retained_probe_matches({}))
+            self.assertFalse(collector.retained_probe_matches({}))
+            self.assertEqual(validate.call_count, 3)
+
+    def test_probe_cache_identity_uses_bytes_not_unchanged_size_or_mtime(self):
+        import os
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); state = root / 'state'; home = root / 'home'
+            paths = [state / 'tools-installed.json', state / 'tools/rtk' / ('rtk.exe' if os.name == 'nt' else 'rtk'),
+                     home / 'bin/trace_rtk.py', root / 'scripts/verify_rtk.py']
+            for p in paths:
+                p.parent.mkdir(parents=True, exist_ok=True); p.write_bytes(b'original')
+            with patch('setup.Deployment', return_value=SimpleNamespace(state=state)), patch('setup.ROOT', root):
+                before = probe_fingerprint(home, {})
+                info = paths[1].stat(); paths[1].write_bytes(b'modified')
+                os.utime(paths[1], ns=(info.st_atime_ns, info.st_mtime_ns))
+                self.assertNotEqual(before, probe_fingerprint(home, {}))
+                paths[1].unlink()
+                self.assertIsNone(probe_fingerprint(home, {}))
 
 
 if __name__ == '__main__':

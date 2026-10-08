@@ -13,7 +13,7 @@ Follow the [detailed Windows installation guide](docs/install-another-windows-pc
 for missing dependencies/folders, project packages, login and host-local scheduling.
 The v1.2.4 tag remains the preceding published release; branch publication is separate.
 
-For the final two-lane task/maintenance flow, per-diagnostic RTK routing and
+For the final two-lane task/maintenance flow, task-relevant RTK routing and
 confirmed-history review, see the Korean [shareable routine](docs/codex-routine-share.md).
 The current branch carries these added policies; installing v1.2.4 does not.
 
@@ -137,7 +137,7 @@ python -B scripts/index_docs.py
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
 [released v1.2.4 verification](docs/verification-adaptive-routine.md) and
-[v1.2.5 working-branch checks and limitations](docs/verification-interaction.md). Update detection produces review
+[v1.2.5 integrated checks and limitations](docs/verification-integration.md). Update detection produces review
 candidates only. Preserve the designated host's existing schedule and authorization;
 installing this repository does not create or transfer an automation. The current
 observed TRACE host preserves daily 08:00 Asia/Seoul review (authorized 2026-10-08). A separately
@@ -192,8 +192,8 @@ per-invocation local RTK checks and responses to observed failures are separate;
 this repository does not install an event daemon or perform model training.
 
 The published v1.2.4 retains the preceding agreement. This development branch
-adds active-root/tool/acceptance routing and verified RTK for every supported
-diagnostic, including nested orchestration, while retaining native evidence and
+adds active-root/tool/acceptance routing and verified RTK for needed supported noisy
+diagnostics when filtering helps, including nested orchestration, while retaining native evidence and
 final acceptance. Confirmed feedback, minimal changes and retirement live in
 conditional guidance and the existing private routine state. Efficiency means correct completion with less
 avoidable rework and total task usage when observed, not a shorter prompt alone.

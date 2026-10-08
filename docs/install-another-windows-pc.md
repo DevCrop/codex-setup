@@ -1,6 +1,6 @@
 # 다른 Windows PC에 동일한 글로벌 셋업 적용하기
 
-2026-10-08 기준 `codex/global-setup-handoff-20261008` 브랜치용 상세 안내다.
+2026-10-08 기준 `codex/interaction-recovery` 브랜치용 상세 안내다.
 설정 이유는 [인수인계 문서](setup-handoff-20261008.md), 실행 경계는
 [운영 계약](operations.md)을 함께 읽는다. 아래 명령은 단계별로 실행하며
 오류가 나면 그 단계에서 멈추고 실제 상태를 확인한다.
@@ -169,14 +169,14 @@ foreach ($tracePath in @($traceProjectsRoot, $traceChatGptRoot, $traceSetupParen
 아래 코드는 새 체크아웃 전용이다. `codex-setup`이 이미 있으면 중단하며 삭제하지 않는다.
 
 설치할 커밋의 [최종 공유 루틴](codex-routine-share.md)도 읽는다. 현재 브랜치는
-활성 프로젝트 도구 선택·매 지원 진단의 RTK 러너·히스토리 기반 회고 지침을 포함한다.
+활성 프로젝트 도구 선택·출력 축약이 유용한 지원 진단의 RTK 러너·히스토리 기반 회고 지침을 포함한다.
 기존 훅 설정·개인 집계·자동화 권한은 설치로 복제되지 않는다.
 
 ```powershell
 if (Test-Path -LiteralPath $traceCheckout) {
     throw '체크아웃 경로가 이미 있습니다. 아래의 기존 체크아웃 절차로 확인하세요.'
 }
-git clone --branch codex/global-setup-handoff-20261008 --single-branch `
+git clone --branch codex/interaction-recovery --single-branch `
     https://github.com/DevCrop/codex-setup.git $traceCheckout
 if ($LASTEXITCODE -ne 0) { throw 'Git clone 실패' }
 Set-Location -LiteralPath $traceCheckout
@@ -193,7 +193,7 @@ Set-Location -LiteralPath $traceCheckout
 git remote -v
 git branch --show-current
 git status --short
-git fetch origin codex/global-setup-handoff-20261008
+git fetch origin codex/interaction-recovery
 if ($LASTEXITCODE -ne 0) { throw 'Git fetch 실패' }
 git log --oneline HEAD..FETCH_HEAD
 git diff HEAD..FETCH_HEAD -- README.md docs global manifest.json templates versions.lock.json scripts
@@ -379,8 +379,8 @@ PR #15의 별도 호스트에 기록된 주간 정리는 그 호스트의 기준
 처음에는 scan/후보 검토부터 하며 폴더 생성이나 글로벌 설치를 삭제 승인으로 해석하지 않는다.
 저장소의 선택적 등록 프로젝트 45일 정책으로 7일 규칙을 대체하지 않는다.
 
-보고 UI를 쓸 경우 설치 부모 폴더 아래의 `reports`처럼 승인된 결과 폴더를 없을 때만
-생성하고 `templates/reports/`의 템플릿 두 개와 `assets`를 가져온다.
+보고 UI는 `python -B scripts/rtk_status.py`로 현재 호스트의 비공개 상태에 생성한다.
+기존 사용자 수정은 충돌로 보존하며 템플릿·폰트를 따로 복사하지 않는다.
 [데이터·생성 계약](../templates/reports/README.md)을 따라 **새 PC의 실제 수집 결과**로
 JSON/HTML을 갱신한다. 템플릿의 데이터 자리만 복사한 HTML은 완성 보고서가 아니다.
 집계가 없으면 미수집, 루틴이 없으면 미등록으로 표시한다. 폰트 라이선스를 보존한다.

@@ -87,7 +87,7 @@ def render(data, now):
         html.escape(str(data['collected_at'] or '미확인'), quote=True) + '">\n</head>').encode())
 
 
-def overview(routine, installed_status, source_commit, now):
+def overview(routine, installed_status, source_commit, now, *, source_clean=None, sources=None, flow=None):
     feedback = routine.get('feedback_loop', {})
     def rows(values, fields):
         if isinstance(values, dict):
@@ -96,6 +96,12 @@ def overview(routine, installed_status, source_commit, now):
                 for row in values if isinstance(row, dict)] if isinstance(values, list) else []
     finding_rows = rows(routine.get('unresolved_findings', {}),
         ('id', 'label', 'status', 'impact', 'action', 'proposed_action', 'validation'))
+    publication = routine.get('current_checks', {}).get('git_publication', {})
+    branch_published = (source_clean is True and publication.get('head') == source_commit
+                        and publication.get('remote_head') == source_commit
+                        and bool(publication.get('checked_at')))
+    release_published = (branch_published and publication.get('release_commit') == source_commit
+                         and publication.get('release_asset_install') == 'pass')
     # Never transfer another host's success; only this invocation verifies deployment.
     return {'reported_at': now, 'last_review_at': routine.get('last_substantive_review'),
         'last_apply_at': routine.get('last_policy_application'),
@@ -113,13 +119,47 @@ def overview(routine, installed_status, source_commit, now):
                     'evidence': '이번 생성 시 manifest 대조'},
                    {'label': '소스 커밋', 'status': 'unknown', 'evidence': source_commit},
                    {'label': '화면·새 세션 동작', 'status': 'unknown', 'evidence': '파일 검사와 별도 검증 필요'}],
-        'sources': [], 'browser_workflow': {'routes': []},
+        'sources': sources or [], 'browser_workflow': {'routes': [
+            {'name': name, 'status': 'unknown', 'when': trigger,
+             'method': '현재 제공되는 공식 도구와 사용자가 선택한 대상 사용',
+             'evidence': '이 통합본의 현재 세션 실행 근거 없음',
+             'limit': '과거 호스트·다른 경로의 성공을 이전하지 않음', 'verified_at': None}
+            for name, trigger in [('내장 브라우저', '로컬 웹 작업'),
+                ('지정 브라우저', '사용자가 선택한 탭·프로필 작업'),
+                ('Windows 앱', '네이티브 UI 작업')]]},
         'incident_summary': [{'label': x.get('label', x.get('id')), 'status': 'unresolved',
             'summary': x.get('impact', ''), 'validation': x.get('validation', ''),
             'recheck': x.get('action', x.get('proposed_action', ''))} for x in finding_rows],
-        'flow_review': {'status': 'unknown', 'findings': ['정본 FLOW에서 검증·복원·종료 분기를 확인'], 'reviewed_at': None},
+        'flow_review': flow or {'status': 'unknown', 'findings': ['정본 FLOW에서 검증·복원·종료 분기를 확인'], 'reviewed_at': None},
         'publication': {'applied': installed_status == 'pass', 'verified': installed_status == 'pass',
-                        'committed': False, 'published': False}}
+                        'committed': source_clean is True, 'branch_published': branch_published,
+                        'published': release_published}}
+
+
+def reviewed_sources():
+    """Registry claims are reviewed guidance, never current collection success."""
+    registry = read_json(ROOT / 'references/registry.json', {})
+    result = []
+    for item in registry.get('sources', []):
+        review = item.get('latest_relevant_review', {})
+        if item.get('id') not in ('R01', 'R10', 'R24', 'R51', 'R56') or not review.get('claim'):
+            continue
+        result.append({'title': item['id'] + ' · ' + item['url'].rstrip('/').split('/')[-1],
+            'url': item['url'], 'claim': review['claim'], 'reviewed_on': review.get('date'),
+            'authority': '공식 문서의 기록된 검토 근거'})
+    return result
+
+
+def current_flow():
+    """Bind static results to exact current bytes; rendering stays a separate gate."""
+    receipt = read_json(ROOT / 'diagrams/global/codex-flow.receipt.json', {})
+    paths = [('specification_sha256', 'codex-flow.json'), ('artifact_sha256', 'codex-flow.html')]
+    matches = all(receipt.get(key) == hashlib.sha256((ROOT / 'diagrams/global' / name).read_bytes()).hexdigest()
+                  for key, name in paths)
+    passed = matches and all(receipt.get('gates', {}).get(k) == 'pass' for k in ('validate', 'deliver', 'check'))
+    return {'status': 'pass' if passed else 'unknown', 'reviewed_at': None,
+            'findings': ['현재 JSON·HTML과 정적 검증 영수증 일치' if passed else '현재 도식의 정적 검증 근거 미확인',
+                         '브라우저 렌더링·시각 검증은 별도이며 미완료']}
 
 
 def publish_reports(dep, artifacts):
@@ -178,7 +218,9 @@ def main():
                 required_evidence_preserved=probe.get('status') == 'pass', identity_verified=True,
                 identity=probe_record['identity'])
         commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
-        view = overview(routine, dep.verify()['status'], commit, now)
+        clean = not subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()
+        view = overview(routine, dep.verify()['status'], commit, now, source_clean=clean,
+                        sources=reviewed_sources(), flow=current_flow())
         view['flow_link'] = (ROOT / 'diagrams/global/codex-flow.html').as_uri()
         encoded = render(data, now)
         rt = payload(data)

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "reviewed_on": "2026-10-05",
+  "reviewed_on": "2026-10-08",
   "scope": "36 previously registered references, plus implementation sources. Fetched is not equivalent to reviewed. Historical inventory identifiers are archival provenance, not runtime dependencies.",
   "sources": [
     {
@@ -292,9 +292,17 @@
         "content_type": "text/markdown; charset=utf-8"
       },
       "applicable_files": [
-        "templates/project/AGENTS.md"
+        "templates/project/AGENTS.md",
+        "global/guides/official-source-workflow.md"
       ],
-      "monitor": true
+      "monitor": true,
+      "latest_relevant_review": {
+        "date": "2026-10-08",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "claim": "Global Codex-home instructions load across working roots; closer project overrides and global AGENTS.override precedence must be respected.",
+        "scope": "Project error workflow; preserve historical snapshots and exact installed runtime boundaries"
+      }
     },
     {
       "id": "R11",
@@ -637,10 +645,18 @@
       "snapshot": null,
       "applicable_files": [
         "global/skill-policy/openai.yaml",
-        "manifest.json"
+        "manifest.json",
+        "global/guides/official-source-workflow.md"
       ],
       "monitor": true,
-      "last_reviewed": "2026-09-21"
+      "last_reviewed": "2026-09-21",
+      "latest_relevant_review": {
+        "date": "2026-10-08",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "claim": "Keep workflows focused and prefer instructions over scripts; user skills are cross-repository and selected by task match.",
+        "scope": "Project error workflow; preserve historical snapshots and exact installed runtime boundaries"
+      }
     },
     {
       "id": "R25",
@@ -711,9 +727,9 @@
       "applicable_files": [],
       "monitor": true,
       "last_review": {
-        "date": "2026-10-05",
-        "version": "0.160.0",
-        "claim": "Relevant Windows startup/sandbox, SQLite and plugin loading fixes reviewed. Adopt exact stable CLI under user authorization; interactive behavior has separate evidence limits."
+        "date": "2026-10-08",
+        "version": "0.161.0",
+        "claim": "Reviewed stable release; installed binary matches official release digest. Protected settings and login preserved; desktop behavior remains separate."
       }
     },
     {
@@ -959,7 +975,8 @@
       "body_fetched": false,
       "snapshot": null,
       "monitor": true,
-      "discovery": "html"
+      "discovery": "html",
+      "applicable_files": []
     },
     {
       "id": "R39",
@@ -1001,7 +1018,8 @@
         "retrieved_at_utc": "2026-09-30T15:37:09.079039+00:00",
         "content_type": "text/markdown; charset=utf-8"
       },
-      "monitor": true
+      "monitor": true,
+      "applicable_files": []
     },
     {
       "id": "R41",
@@ -1027,7 +1045,8 @@
         "status": "relevant-body-reviewed",
         "claim": "Stable 0.51.0 and every pinned-platform digest match; preserve argv/exits and no unchanged reinstall.",
         "scope": "Release notes and supported asset metadata only; original snapshot preserved"
-      }
+      },
+      "applicable_files": []
     },
     {
       "id": "R42",
@@ -1049,8 +1068,16 @@
       "monitor": true,
       "applicable_files": [
         "global/AGENTS.md",
-        "global/guides/rtk.md"
-      ]
+        "global/guides/rtk.md",
+        "global/guides/official-source-workflow.md"
+      ],
+      "latest_relevant_review": {
+        "date": "2026-10-08",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "claim": "PostToolUse observes supported local outputs/nonzero shell exits; hosted/specialized paths and cloud orchestration limit coverage; hooks cannot undo completed effects.",
+        "scope": "Project error workflow; preserve historical snapshots and exact installed runtime boundaries"
+      }
     },
     {
       "id": "R43",
@@ -1159,7 +1186,8 @@
       "body_fetched": true,
       "snapshot": null,
       "monitor": true,
-      "discovery": "rss"
+      "discovery": "rss",
+      "applicable_files": []
     },
     {
       "id": "R48",
@@ -1179,7 +1207,8 @@
         "content_type": "text/markdown; charset=utf-8"
       },
       "monitor": true,
-      "discovery": "markdown"
+      "discovery": "markdown",
+      "applicable_files": []
     },
     {
       "id": "R49",
@@ -1230,17 +1259,19 @@
       "id": "R51",
       "url": "https://learn.chatgpt.com/docs/computer-use",
       "canonical_url": "https://learn.chatgpt.com/docs/computer-use",
-      "origin": "user",
+      "origin": "implementation",
       "authority": "official-vendor",
       "snapshot": null,
       "monitor": true,
       "disposition": "adopted",
-      "reason": "Scoped computer/browser routing and recovery; checkpoint and retry policy remain TRACE choices. No guarantee of error-free runtime.",
-      "review_status": "relevant-body-reviewed-2026-10-07",
+      "reason": "Official native Windows foreground/setup constraints; preserve chosen model and permission boundaries",
+      "review_status": "relevant-sections-reviewed",
       "body_fetched": true,
       "applicable_files": [
         "global/guides/computer-use.md",
-        "docs/operations.md"
+        "docs/operations.md",
+        "global/skills/computer-use-workflow/SKILL.md",
+        "docs/computer-use-maintenance.md"
       ],
       "latest_relevant_review": {
         "date": "2026-10-07",
@@ -1251,23 +1282,26 @@
           "Permissions and approvals"
         ],
         "scope": "Relevant body reviewed; no complete-page or exact-hash review claim"
-      }
+      },
+      "last_reviewed": "2026-10-08"
     },
     {
       "id": "R52",
       "url": "https://learn.chatgpt.com/docs/chrome-extension",
       "canonical_url": "https://learn.chatgpt.com/docs/chrome-extension",
-      "origin": "user",
+      "origin": "implementation",
       "authority": "official-vendor",
       "snapshot": null,
       "monitor": true,
       "disposition": "adopted",
-      "reason": "Scoped computer/browser routing and recovery; checkpoint and retry policy remain TRACE choices. No guarantee of error-free runtime.",
-      "review_status": "relevant-body-reviewed-2026-10-07",
+      "reason": "Selected browser/profile connection, Manage state and bounded documented troubleshooting",
+      "review_status": "relevant-sections-reviewed",
       "body_fetched": true,
       "applicable_files": [
         "global/guides/computer-use.md",
-        "docs/operations.md"
+        "docs/operations.md",
+        "global/skills/computer-use-workflow/SKILL.md",
+        "docs/computer-use-maintenance.md"
       ],
       "latest_relevant_review": {
         "date": "2026-10-07",
@@ -1278,7 +1312,8 @@
           "Troubleshooting"
         ],
         "scope": "Relevant body reviewed; no complete-page or exact-hash review claim"
-      }
+      },
+      "last_reviewed": "2026-10-08"
     },
     {
       "id": "R53",
@@ -1306,6 +1341,62 @@
         ],
         "scope": "Relevant body reviewed; no complete-page or exact-hash review claim"
       }
+    },
+    {
+      "id": "R54",
+      "url": "https://docs.python.org/3/library/http.server.html",
+      "canonical_url": "https://docs.python.org/3/library/http.server.html",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Standard-library HTTP handlers for an opt-in loopback viewer; unsuitable for public production hosting",
+      "review_status": "relevant-sections-reviewed",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "last_reviewed": "2026-10-08",
+      "applicable_files": [
+        "scripts/rtk_dashboard.py",
+        "templates/reports/rtk-efficiency.template.html",
+        "docs/rtk-live-dashboard.md"
+      ]
+    },
+    {
+      "id": "R55",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API",
+      "canonical_url": "https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Suspend optional polling when the report document is hidden and resume when visible",
+      "review_status": "relevant-sections-reviewed",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "last_reviewed": "2026-10-08",
+      "applicable_files": [
+        "scripts/rtk_dashboard.py",
+        "templates/reports/rtk-efficiency.template.html",
+        "docs/rtk-live-dashboard.md"
+      ]
+    },
+    {
+      "id": "R56",
+      "url": "https://learn.chatgpt.com/docs/browser",
+      "canonical_url": "https://learn.chatgpt.com/docs/browser",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Prefer built-in browser for local web UI; client capability is distinct from CLI and skill files",
+      "review_status": "relevant-sections-reviewed",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": true,
+      "last_reviewed": "2026-10-08",
+      "applicable_files": [
+        "global/skills/computer-use-workflow/SKILL.md",
+        "docs/computer-use-maintenance.md"
+      ]
     }
   ]
 }

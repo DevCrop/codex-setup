@@ -7,6 +7,8 @@ import json
 import math
 from pathlib import Path
 import subprocess
+import copy
+import re
 
 from presentation import font_css
 from setup import ROOT, Deployment, atomic, deployment_lock, read_json, safe, save_json
@@ -38,8 +40,12 @@ def model(routine, installed, runtime):
     for date, row in sorted(aggregate.get('daily_by_date', {}).items()):
         if not re.fullmatch(r'\d{4}-\d{2}-\d{2}', date) or not isinstance(row, dict):
             continue
+        try:
+            datetime.strptime(date, '%Y-%m-%d')
+        except ValueError:
+            continue
         daily.append({'date': date, **{k: number(row.get(k)) for k in
-                      ('commands', 'input_tokens', 'output_tokens')}})
+                      ('commands', 'input_tokens', 'output_tokens', 'saved_tokens', 'savings_pct')}})
     return {'input': inp, 'output': out, 'difference': difference, 'reported_saved': saved,
             'discrepancy': saved - difference if saved is not None and difference is not None else None,
             'commands': number(summary.get('total_commands')), 'daily': daily[-90:],
@@ -53,36 +59,96 @@ def model(routine, installed, runtime):
             'actual_openai_token_savings': None, 'browser_review': 'not-verified'}
 
 
+def payload(data):
+    return {'collected_at': data['collected_at'], 'summary': {
+        'total_commands': data['commands'], 'total_input': data['input'],
+        'total_output': data['output'], 'total_saved': data['reported_saved'],
+        'avg_savings_pct': 100 * data['reported_saved'] / data['input']
+        if data['input'] and data['reported_saved'] is not None else None},
+        'daily': data['daily'], 'probe': data.get('probe', {}),
+        'arithmetic_difference': data['discrepancy'], 'openai_usage_measured': False,
+        'live': {'enabled': False}}
+
+
+def template_render(name, slot, data):
+    source = (ROOT / 'templates/reports' / name).read_text(encoding='utf-8')
+    if source.count(slot) != 1:
+        raise ValueError('Report requires exactly one data slot')
+    encoded = json.dumps(data, ensure_ascii=False, allow_nan=False).replace('<', r'\u003c').replace('>', r'\u003e')
+    return source.replace(slot, encoded).replace('</head>', font_css() + '\n</head>').encode('utf-8')
+
+
 def render(data, now):
-    def esc(value):
-        return html.escape(str(value if value is not None else '미확인'))
-    def fmt(value):
-        return format(value, ',') if value is not None else '미확인'
-    difference = data['difference']
-    ratio = f"{100 * difference / data['input']:.1f}%" if data['input'] and difference is not None else '미확인'
-    daily = []
-    for row in data['daily']:
-        inp, out = row['input_tokens'], row['output_tokens']
-        diff = inp - out if inp is not None and out is not None else None
-        pct = 100 * diff / inp if inp and diff is not None else None
-        daily.append('<tr><td>' + esc(row['date']) + '</td>' + ''.join('<td class="num">' + fmt(v) + '</td>' for v in (row['commands'], inp, out, diff))
-                     + '<td>' + (f'{pct:.1f}%' if pct is not None else '미확인') + '</td></tr>')
-    discrepancy = ('산술 불일치 미확인' if data['discrepancy'] is None else
-                   f"RTK 보고 절약값 {fmt(data['reported_saved'])}과 입력−출력 {fmt(difference)} 사이에 {fmt(data['discrepancy'])} 차이가 있습니다. 원인 미확인; 차이를 숨기거나 실제 토큰 절약으로 해석하지 않습니다.")
-    rows = [('RTK 소유권·해시', data['runtime_status'], '현재 로컬 바이너리'),
-            ('런타임 호출·종료·필수 증거', str(data['runtime_checks']) + '개 통과' if data['runtime_evidence_reused'] else '미확인 / 식별자 불일치', data['runtime_scope'] or '한정된 범위 / 증거 미확인'),
-            ('OpenAI 전체 토큰·업무 시간', '미측정', '구독 효율 개선률 미입증')]
-    values = {'FONT': font_css(), 'RTK_STATUS': esc(data['runtime_status']),
-              'DIFFERENCE': fmt(difference), 'RATIO': ratio, 'COMMANDS': fmt(data['commands']),
-              'CHECKS': fmt(data['runtime_checks']), 'DISCREPANCY': esc(discrepancy),
-              'VERIFICATION_ROWS': ''.join('<tr>' + ''.join('<td>' + esc(x) + '</td>' for x in row) + '</tr>' for row in rows),
-              'DAILY_ROWS': ''.join(daily) or '<tr><td colspan="6">수집 기록 없음</td></tr>',
-              'IDENTITY': '<p>수집: ' + esc(data['collected_at']) + '</p><p>런타임 검증: ' + esc(data['runtime_checked_at']) + '</p><p>바이너리 SHA-256: <code>' + esc(data['binary_sha256']) + '</code></p>',
-              'BROWSER_STATUS': '미검증', 'GENERATED': esc(now)}
-    result = (ROOT / 'templates/rtk-status.html').read_text(encoding='utf-8')
-    for key, value in values.items():
-        result = result.replace('{{' + key + '}}', value)
-    return result.encode('utf-8')
+    result = template_render('rtk-efficiency.template.html', '__RTK_REPORT_DATA__', payload(data))
+    # Escaped metadata stays useful when scripts are unavailable.
+    return result.replace(b'</head>', ('<meta name="collection" content="' +
+        html.escape(str(data['collected_at'] or '미확인'), quote=True) + '">\n</head>').encode())
+
+
+def overview(routine, installed_status, source_commit, now):
+    feedback = routine.get('feedback_loop', {})
+    def rows(values, fields):
+        if isinstance(values, dict):
+            values = [{'id': k, **v} for k, v in values.items() if isinstance(v, dict)]
+        return [{k: str(row[k])[:1500] for k in fields if k in row and isinstance(row[k], (str, int, float, bool))}
+                for row in values if isinstance(row, dict)] if isinstance(values, list) else []
+    finding_rows = rows(routine.get('unresolved_findings', {}),
+        ('id', 'label', 'status', 'impact', 'action', 'validation'))
+    # Never transfer another host's success; only this invocation verifies deployment.
+    return {'reported_at': now, 'last_review_at': routine.get('last_substantive_review'),
+        'last_apply_at': routine.get('last_policy_application'),
+        'last_verify_at': now, 'preferences': rows(feedback.get('preferences', {}),
+            ('id', 'label', 'value', 'scope', 'status', 'evidence', 'target')),
+        'lessons': rows(feedback.get('lessons', {}),
+            ('id', 'label', 'change', 'cause', 'status', 'evidence', 'acceptance')),
+        'host_schedule': {'label': routine.get('automation', {}).get('schedule') or '미등록',
+            'note': '현재 호스트의 저장된 일정. 미래 실행 완료를 의미하지 않음'},
+        'timing_policy': {'rows': [
+            {'activity': '공식·릴리스 검토', 'trigger': '현재 등록 일정', 'action': '관련 변경과 미해결만 검토', 'kind': '정기'},
+            {'activity': '진행 중 오류', 'trigger': '승인된 작업에서 관찰', 'action': '원인 구분·수정·원래 경로 검증', 'kind': '조건부'},
+            {'activity': 'RTK 재검증', 'trigger': '식별자 변경·관련 실패', 'action': '최소 영향 검사', 'kind': '조건부'}]},
+        'checks': [{'label': '현재 설치 파일', 'status': installed_status,
+                    'evidence': '이번 생성 시 manifest 대조'},
+                   {'label': '소스 커밋', 'status': 'unknown', 'evidence': source_commit},
+                   {'label': '화면·새 세션 동작', 'status': 'unknown', 'evidence': '파일 검사와 별도 검증 필요'}],
+        'sources': [], 'browser_workflow': {'routes': []},
+        'incident_summary': [{'label': x.get('label', x.get('id')), 'status': 'unresolved',
+            'summary': x.get('impact', ''), 'validation': x.get('validation', ''),
+            'recheck': x.get('action', '')} for x in finding_rows],
+        'flow_review': {'status': 'unknown', 'findings': ['정본 FLOW에서 검증·복원·종료 분기를 확인'], 'reviewed_at': None},
+        'publication': {'applied': installed_status == 'pass', 'verified': installed_status == 'pass',
+                        'committed': False, 'published': False}}
+
+
+def publish_reports(dep, artifacts):
+    # Preflight every owned target before replacing any bytes.
+    receipt_path = safe(dep.state, 'reports/report-artifacts.json')
+    previous = read_json(receipt_path, {}).get('artifacts', {})
+    old_rtk = read_json(safe(dep.state, 'reports/rtk-status.evidence.json'), {})
+    paths = {}
+    for name in artifacts:
+        path = safe(dep.state, 'reports/' + name)
+        expected = previous.get(name)
+        if name == 'rtk-status.html' and not expected:
+            expected = old_rtk.get('artifact_sha256')
+        if path.exists() and hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+            raise ValueError('Report ownership conflict: ' + name)
+        paths[name] = path
+    before = {name: path.read_bytes() if path.exists() else None for name, path in paths.items()}
+    written = []
+    try:
+        for name, data in artifacts.items():
+            atomic(paths[name], data); written.append(name)
+        save_json(receipt_path, {'schema_version': 1, 'artifacts': {
+            name: hashlib.sha256(data).hexdigest() for name, data in artifacts.items()},
+            'browser_review': 'not-verified'})
+    except Exception:
+        for name in reversed(written):
+            if before[name] is None:
+                paths[name].unlink()
+            else:
+                atomic(paths[name], before[name])
+        raise
 
 
 def main():
@@ -101,17 +167,31 @@ def main():
         installed = read_json(safe(dep.state, 'tools-installed.json'), {}).get('rtk', {})
         data = model(routine, installed, runtime)
         now = datetime.now(timezone.utc).isoformat()
-        output = safe(dep.state, 'reports/rtk-status.html')
-        receipt = safe(dep.state, 'reports/rtk-status.evidence.json')
-        previous = read_json(receipt, {})
-        if output.exists() and hashlib.sha256(output.read_bytes()).hexdigest() != previous.get('artifact_sha256'):
-            raise ValueError('Existing report ownership differs; preserve user edits')
+        probe_record = read_json(safe(dep.state, 'rtk-runtime-check.json'), {})
+        if data['runtime_evidence_reused'] and probe_record.get('identity') == routine.get('feedback_loop', {}).get('rtk_validation', {}).get('identity'):
+            probe = next((x for x in probe_record.get('checks', []) if x.get('check') == 'project-1-git-status'), {})
+            data['probe'] = {new: probe[old] for new, old in {'raw_bytes': 'raw_output_bytes', 'filtered_bytes': 'rtk_output_bytes', 'raw_exit': 'raw_exit', 'filtered_exit': 'rtk_exit'}.items() if old in probe}
+            data['probe']['recorded_invocation_delta'] = routine.get('feedback_loop', {}).get('rtk_validation', {}).get('rtk_probe_invocations')
+            data['probe'].update(checked_at=data['runtime_checked_at'],
+                required_evidence_preserved=probe.get('status') == 'pass', identity_verified=True,
+                identity=probe_record['identity'])
+        commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+        view = overview(routine, dep.verify()['status'], commit, now)
+        view['flow_link'] = (ROOT / 'diagrams/global/codex-flow.html').as_uri()
         encoded = render(data, now)
-        atomic(output, encoded)
-        save_json(receipt, {'schema_version': 2, 'generated_at': now, 'data': data,
-                           'template_sha256': hashlib.sha256((ROOT / 'templates/rtk-status.html').read_bytes()).hexdigest(),
-                           'artifact_sha256': hashlib.sha256(encoded).hexdigest(),
-                           'status': 'rendered-static-checks-only', 'browser_review': 'not-verified'})
+        rt = payload(data)
+        live_template = (ROOT / 'templates/reports/rtk-efficiency.template.html').read_text(encoding='utf-8').replace('</head>', font_css() + '\n</head>')
+        overview_html = template_render('adaptive-routine.template.html', '__ROUTINE_REPORT_DATA__', view)
+        artifacts = {'rtk-status.html': encoded, 'overview.html': overview_html,
+            'rtk-efficiency.template.html': live_template.encode(),
+            'rtk-efficiency.json': json.dumps(rt, ensure_ascii=False, allow_nan=False).encode(),
+            'overview.json': json.dumps(view, ensure_ascii=False, allow_nan=False).encode()}
+        publish_reports(dep, artifacts)
+        output = safe(dep.state, 'reports/rtk-status.html')
+        save_json(safe(dep.state, 'reports/rtk-status.evidence.json'), {
+            'schema_version': 3, 'generated_at': now, 'data': data,
+            'artifact_sha256': hashlib.sha256(encoded).hexdigest(),
+            'status': 'rendered-static-checks-only', 'browser_review': 'not-verified'})
     print(json.dumps({'status': 'rendered-static-checks-only', 'path': str(output),
                       'runtime_checks_reused': data['runtime_evidence_reused'], 'browser_review': 'not-verified'}))
 

@@ -24,8 +24,8 @@ lifecycle controls after the user selects the target; `codex plugin remove` or
 ## RTK verification note
 
 Run `python -B scripts/rtk_status.py` to replace the same owned private
-reports/rtk-status.html and its evidence receipt. The tracked template is
-templates/rtk-status.html; data is a sanitized projection of routine-review.json,
+reports/rtk-status.html, overview.html and their ownership receipts. The tracked template is
+templates/reports/rtk-efficiency.template.html; data is a sanitized projection of routine-review.json,
 not a separate source of truth. Another computer has its own unknown baseline.
 Do not copy a private report, credentials, machine paths or historical command
 records into Git. Conflicting report bytes are preserved.
@@ -68,3 +68,5 @@ it as proof that a person no longer needs the environment. This current-task
 procedure does not expand the heartbeat's automatic deletion authority.
 
 Source: [uv cache safety and pruning](https://docs.astral.sh/uv/concepts/cache/#clearing-the-cache).
+
+The integrated generator uses current host evidence only. Shared font source is assets/pretendard; generated pages embed it offline. The 2026-10-08 user decision preserves the reviewed TripoSR environment and downloaded models. No repeated prune without new evidence.

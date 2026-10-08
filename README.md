@@ -9,6 +9,8 @@ For the current reviewed development branch, start with the Korean
 [2026-10-08 setup handoff](docs/setup-handoff-20261008.md): what changed, why,
 host-specific authority, incident recovery, actual checks and another-PC acceptance.
 Portable report UI sources are in [templates/reports](templates/reports/README.md).
+Follow the [detailed Windows installation guide](docs/install-another-windows-pc.md)
+for missing dependencies/folders, project packages, login and host-local scheduling.
 The v1.2.4 tag remains the preceding published release; branch publication is separate.
 
 ## Install

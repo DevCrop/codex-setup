@@ -135,6 +135,9 @@ $200 구독 절감률·남은 사용량·업무 시간으로 환산하지 않는
 
 ## 다른 PC에서 검증하기
 
+처음 설치하는 Windows PC는 [상세 적용법](install-another-windows-pc.md)을 먼저 따른다.
+의존성 설치·없는 작업 폴더 생성·프로젝트별 패키지·로그인·루틴 등록까지 단계별로 정리했다.
+
 ```text
 git clone --branch codex/global-setup-handoff-20261008 https://github.com/DevCrop/codex-setup.git
 cd codex-setup

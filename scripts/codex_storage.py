@@ -6,14 +6,14 @@ import os
 from pathlib import Path
 import stat
 
-from setup import Deployment, deployment_lock, read_json, safe, save_json
+from setup import ROOT, Deployment, deployment_lock, read_json, safe, save_json
 
 
 def linked(path):
     return path.is_symlink() or bool(getattr(path.lstat(), 'st_file_attributes', 0) & 0x400)
 
 
-def classify(name):
+def classify(name, manifest_entries=()):
     if name in ('auth.json', 'secrets.json'):
         return 'credentials-preserve'
     if name in ('sessions', 'archived_sessions', 'attachments', 'generated_images', 'memories') or 'sqlite' in name:
@@ -22,7 +22,7 @@ def classify(name):
         return 'mixed-user-work-and-dependencies-review'
     if name in ('cache', '.tmp', 'plugins', 'vendor_imports', '.sandbox', '.sandbox-bin'):
         return 'application-owned-review-only'
-    if name in ('AGENTS.md', 'guides', 'skills', 'profiles', 'config.toml', 'bin'):
+    if name in manifest_entries or name in ('AGENTS.md', 'guides', 'skills', 'profiles', 'config.toml', 'bin'):
         return 'configuration-check-with-installer'
     return 'unknown-ownership-preserve'
 
@@ -62,9 +62,11 @@ def scan(home):
     safe(home, 'config.toml')
     if not home.is_dir():
         raise ValueError('Codex home is unavailable; not an empty healthy scan')
+    managed = {Path(row['target']).parts[0] for row in read_json(ROOT / 'manifest.json')['files']
+               if row.get('root', 'codex') != 'personal_skills'}
     rows = []
     for path in sorted(home.iterdir()):
-        rows.append({'entry': path.name, 'classification': classify(path.name),
+        rows.append({'entry': path.name, 'classification': classify(path.name, managed),
                      **measure(path), 'deletion': 'not-authorized-by-this-audit'})
     return {'schema_version': 1, 'checked_at': datetime.now(timezone.utc).isoformat(),
             'status': 'partial' if any(r['errors'] for r in rows) else 'collected',

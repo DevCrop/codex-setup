@@ -4,7 +4,7 @@ Integration source: PR #15 commit 7d8a825466e05a2d4407a0283eff7ab0dcf054ba and P
 
 ## Current checks
 
-- Windows Python suite: 105 cases, 100 passed, five named platform skips; no failures.
+- Windows Python suite: 106 cases, 101 passed, five named platform skips; no failures.
 - Repository inventory: 121 managed files, 56 unique reference IDs/URLs, three skills.
 - RTK client DOM/timer contract passed; actual rendering remains separate.
 - Existing trace automation changed by explicit user request to daily 08:00 Asia/Seoul; ACTIVE, same thread, and prompt/template readback match.
@@ -27,3 +27,5 @@ Overview publication now distinguishes clean local source, exact-head branch pub
 User model/effort, credentials, MCP, permissions and existing hooks are preserved. Separate dependency-cleanup authority remains registered-45d-7d. The reviewed TripoSR environment/models stay protected. Earlier uv prune found no unused entries: zero removals and no demonstrated disk reclaim. Retired duplicated tracked font assets and old report template are Git history; sessions/databases/plugin runtimes are not purged.
 
 The global agreement is 1,802 UTF-8 bytes/236 words, compared with the previous installed source at 2,179 bytes/290 words. The maintenance template is 6,259 bytes/781 words, compared with 9,423 bytes/1,188 words. These are instruction-size measurements, not OpenAI token or performance savings. Shared report CSS removes a 10,565-byte duplicated prefix; the pinned font has one tracked source. Two dated unowned config backups total 8,402 bytes; ownership is not established and both are preserved. No whole-home deletion occurred.
+
+Current home metadata collection found 90 entries and about 17.87 GB logical bytes, with no deletions. Root-level managed profiles now derive their classification from manifest targets; dated backups and misplaced personal-skill names do not inherit ownership.

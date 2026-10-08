@@ -7,6 +7,17 @@ from codex_storage import scan
 
 
 class StorageTests(unittest.TestCase):
+    def test_root_profiles_follow_manifest_without_treating_backups_as_owned(self):
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            for name in ('sol.config.toml', 'config.toml.old', 'computer-use-workflow'):
+                (home / name).write_bytes(b'preserve')
+            rows = {r['entry']: r for r in scan(home)['entries']}
+            self.assertEqual(rows['sol.config.toml']['classification'], 'configuration-check-with-installer')
+            self.assertEqual(rows['config.toml.old']['classification'], 'unknown-ownership-preserve')
+            self.assertEqual(rows['computer-use-workflow']['classification'], 'unknown-ownership-preserve')
+            self.assertTrue(all((home / name).read_bytes() == b'preserve' for name in rows))
+
     def test_credentials_and_artifacts_are_not_deleted_or_read(self):
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)

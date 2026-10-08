@@ -112,3 +112,45 @@ chart modes. Host-specific successful history was not copied. Node VM checks
 passed for empty and zero-denominator data, synthetic totals, three modes,
 seven-day filtering, table binding, unique IDs and finite narrow-chart geometry.
 These are data/script checks; no new visual rendering claim is made.
+
+## 2026-10-08 opt-in RTK live viewer addendum
+
+The read-only loopback viewer and Windows launcher are separately requested new
+execution logic. They do not change the deployment/install lifecycle, hook trust,
+permissions, chosen model/effort, 08:00 daily cadence or weekly cleanup policy.
+The installed legacy hook and verified runner remain different integrations.
+
+Checks performed on the current Windows host:
+
+- Seven Python tests passed for fixed verified-runner collection, allowed aggregate
+  fields, cache, sanitized failures, invalid dates/counts, missing probe evidence,
+  HTTP paths/Host/Origin/methods and unavailable aggregate responses.
+  An unrelated readiness file was preserved; recognized viewer receipts could be replaced.
+- Client DOM/timer checks passed for static versus live mode, updated totals,
+  retained probe timestamp, stale/error state, hidden tabs, pause/resume, invalid
+  response refusal and preventing overlapping requests. This is not rendering.
+- Actual HTTP collection refreshed its timestamp across two samples, preserved
+  the scheduled JSON and recorded no extra compression invocations. The scoped
+  stored probe timestamp remained unchanged. Font serving and unique IDs passed.
+- The hidden Windows launcher started the viewer; a repeat invocation reused the
+  same process/instance. Multiple Python application candidates were handled by
+  selecting the first resolved application. This does not change shell policy.
+- Repository validation passed with 120 managed files, 55 sources and three
+  skills. Current owned-file/tool verification and closure inspection passed.
+- The complete Python suite passed: 83 tests, four explicitly skipped cases.
+  The live client contract and Windows launcher syntax check also passed.
+- Existing daily automation readback matched the real 08:00 cadence, active
+  status and thread after adding the live report contract. The separate weekly
+  cleanup file and hook definition remained unchanged. Git publication is checked
+  independently against the final PR head and its CI; prior-head CI is historical.
+
+Live collection is in-memory only; the daily collector remains the scheduled
+writer of the canonical date-keyed aggregate. Reboot requires manual relaunch.
+There is no new scheduler, startup registration, API/model call, cross-project
+scan or public service. Raw commands, private review data, ready files, process
+identifiers and actual host snapshots are excluded from Git.
+
+The CI workflow also runs the live client contract with Node 22 in each existing
+OS/Python matrix job. Native tests in CI do not establish installation on another
+person's physical PC. Actual UI rendering remains unverified. Existing arithmetic
+and recovery-cause unknowns remain unresolved rather than inferred from refresh.

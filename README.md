@@ -17,6 +17,11 @@ For the final two-lane task/maintenance flow, per-diagnostic RTK routing and
 confirmed-history review, see the Korean [shareable routine](docs/codex-routine-share.md).
 The current branch carries these added policies; installing v1.2.4 does not.
 
+The 2026-10-08 branch also includes an opt-in [RTK live viewer](docs/rtk-live-dashboard.md):
+local read-only aggregate polling, visible-tab refresh, pause/error states and a
+Windows launcher. The existing daily maintenance and stored probe timestamps
+remain independent. No startup task, hook or public web service is installed.
+
 ## Install
 
 Clone this repository anywhere, including paths with spaces and non-Latin names.

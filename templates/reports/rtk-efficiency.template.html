@@ -14,9 +14,9 @@ code,pre{font-family:Pretendard,'Malgun Gothic',sans-serif;font-variant-ligature
 @media(max-width:420px){.kpis{grid-template-columns:1fr}.hero-number{font-size:34px}.hero-number small{display:block;margin-left:0;margin-top:5px}.segmented button{padding:6px 8px}.chart-toolbar{gap:7px}.byte-box strong{font-size:23px}}
 
 </style></head><body>
-<div class="shell"><aside class="sidebar"><div class="brand"><span class="mark">T</span>TRACE Workspace</div><div class="nav-caption">GLOBAL SETUP</div><a class="nav-item active" href="#overview"><span>▥</span>효율 분석</a><a class="nav-item" href="#evidence"><span>↳</span>실행 근거</a><a class="nav-item" href="#coverage"><span>◫</span>도구 검증 범위</a><a class="nav-item" href="#commands"><span>⌘</span>명령어 안내</a><a class="nav-item" href="adaptive-routine.html"><span>↻</span>개선 루틴</a><div class="nav-caption">DATA</div><a class="nav-item" href="#records"><span>≡</span>일별 기록</a><a class="nav-item" href="rtk-efficiency.json"><span>↗</span>원본 집계</a><div class="side-note"><span class="dot"></span>로컬 보고서<br>매일 08:00 · Asia/Seoul<br><span style="font-size:11px">호스트 실행 가능 시 수집</span></div></aside>
+<div class="shell"><aside class="sidebar"><div class="brand"><span class="mark">T</span>TRACE Workspace</div><div class="nav-caption">GLOBAL SETUP</div><a class="nav-item active" href="#overview"><span>▥</span>효율 분석</a><a class="nav-item" href="#evidence"><span>↳</span>실행 근거</a><a class="nav-item" href="#coverage"><span>◫</span>도구 검증 범위</a><a class="nav-item" href="#commands"><span>⌘</span>명령어 안내</a><a class="nav-item" href="adaptive-routine.html"><span>↻</span>개선 루틴</a><div class="nav-caption">DATA</div><a class="nav-item" href="#records"><span>≡</span>일별 기록</a><a class="nav-item" href="rtk-efficiency.json"><span>↗</span>원본 집계</a><div class="side-note"><span class="dot"></span>로컬 보고서<br>일정은 호스트별 등록<br><span style="font-size:11px">실시간 보기는 별도 시작</span></div></aside>
 <div class="workspace"><div class="topbar"><div class="crumb">워크스페이스 <span>/</span> 글로벌 셋업 <span>/</span> <b>효율 분석</b></div><span class="badge">Private · Local data</span></div>
-<main class="content" id="overview"><header class="page-head"><div><div class="eyebrow">RTK / OUTPUT ANALYTICS</div><h1>효율 분석</h1><p class="sub">수집 시점의 출력 압축 집계입니다. 아래 시각 이후의 사용량은 다음 수집에 반영됩니다.</p></div><div class="head-meta"><span class="badge good" id="collection-state">수집 상태</span><br><span id="collected"></span></div></header>
+<main class="content" id="overview"><header class="page-head"><div><div class="eyebrow">RTK / OUTPUT ANALYTICS</div><h1>효율 분석</h1><p class="sub" id="live-note">출력 압축 집계와 마지막 검증 시각을 구분해서 표시합니다.</p></div><div class="head-meta"><span id="live-state" class="badge">저장 스냅샷</span> <button class="button" id="live-toggle" type="button" hidden>일시정지</button><br><span class="badge good" id="collection-state">수집 상태</span><br><span id="collected"></span></div></header>
 <nav class="tabs" aria-label="보고서 섹션"><a class="tab" href="#overview">개요</a><a class="tab" href="#evidence">검증 근거</a><a class="tab" href="#commands">명령어</a><a class="tab" href="#records">데이터</a></nav>
 <section class="visual-hero" aria-label="누적 절감과 출력 검증">
 <article class="card savings-hero"><div class="hero-label">누적 절감 추정치 <span class="badge good">RTK 로컬 기록</span></div><div class="hero-number" id="hero-saved"></div><div class="hero-summary"><strong id="hero-rate"></strong><span class="caption">누적 입력 대비 기록상 절감률</span></div><div class="compare" id="comparison"></div><div class="comparison-total"><span>입력 − 출력 <span class="badge">산술 차감</span></span><strong id="arithmetic"></strong></div><p class="chart-note">위 큰 수치는 RTK의 절감 합계입니다. 입력−출력과의 집계 차이는 아래에 별도 표시합니다. 이전 버전·검증 실행 포함.</p></article>
@@ -99,11 +99,14 @@ git status
 <script id="rtk-report-data" type="application/json">__RTK_REPORT_DATA__</script>
 <script>
 'use strict';
-const data=JSON.parse(document.getElementById('rtk-report-data').textContent),s=data.summary||{},p=data.probe||{},days=[...(data.daily||[])].sort((a,b)=>a.date.localeCompare(b.date));
+let data=JSON.parse(document.getElementById('rtk-report-data').textContent),s={},p={},days=[];
 const known=n=>n!==null&&n!==undefined&&Number.isFinite(Number(n)),f=n=>known(n)?Number(n).toLocaleString('ko-KR'):'—',pct=n=>known(n)?Number(n).toFixed(2)+'%':'—',el=id=>document.getElementById(id);
-const finite=n=>known(n)?Number(n):null,byteRate=known(p.raw_bytes)&&known(p.filtered_bytes)&&Number(p.raw_bytes)>0?(1-Number(p.filtered_bytes)/Number(p.raw_bytes))*100:null;
-const stamp=iso=>iso&&Number.isFinite(Date.parse(iso))?new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(iso))+' KST':'미수집';
-el('collection-state').textContent=data.collected_at?'수집 완료':'미수집';el('collection-state').className='badge '+(data.collected_at?'good':'warn');el('collected').textContent=stamp(data.collected_at);el('footer-date').textContent=data.collection_date_kst?'수집일 '+data.collection_date_kst+' · 일일 스냅샷':'현재 호스트 집계 미수집';
+const finite=n=>known(n)?Number(n):null;
+const stamp=iso=>iso&&Number.isFinite(Date.parse(iso))?new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date(iso))+' KST':'미수집';
+function renderSnapshot(next){
+data=next;s=data.summary||{};p=data.probe||{};days=[...(data.daily||[])].sort((a,b)=>a.date.localeCompare(b.date));
+const byteRate=known(p.raw_bytes)&&known(p.filtered_bytes)&&Number(p.raw_bytes)>0?(1-Number(p.filtered_bytes)/Number(p.raw_bytes))*100:null;
+el('collection-state').textContent=data.collected_at?'수집 완료':'미수집';el('collection-state').className='badge '+(data.collected_at?'good':'warn');el('collected').textContent=stamp(data.collected_at);el('footer-date').textContent=data.collection_date_kst?'수집일 '+data.collection_date_kst+(data.live?.enabled?' · 실시간 조회':' · 일일 스냅샷'):'현재 호스트 집계 미수집';
 el('hero-saved').innerHTML=f(s.total_saved)+'<small>추정 토큰</small>';el('hero-rate').textContent=pct(s.avg_savings_pct);
 el('byte-rate').textContent=byteRate===null?'미검증':pct(Math.abs(byteRate))+(byteRate>=0?' 감소':' 증가');el('byte-before').textContent=f(p.raw_bytes)+' B';el('byte-after').textContent=f(p.filtered_bytes)+' B';
 const byteWidth=byteRate===null?null:Math.max(0,Math.min(100,100-byteRate));el('byte-composition').innerHTML=byteWidth===null?'':`<div class="probe-track" role="img" aria-label="원본 ${f(p.raw_bytes)} 바이트에서 출력 ${f(p.filtered_bytes)} 바이트, 감소 ${pct(byteRate)}"><span class="remaining" style="width:${byteWidth}%"></span><span class="removed" style="width:${100-byteWidth}%"></span></div><div class="probe-labels"><span>남은 출력 ${pct(100-byteRate)}</span><span>감소 ${pct(byteRate)}</span></div>`;
@@ -117,7 +120,9 @@ el('probe-status').textContent=pass?'최근 저장된 검사 통과':'검사 실
 el('command-status-detail').textContent=f(p.raw_bytes)+' → '+f(p.filtered_bytes)+' B · '+pct(byteRate);
 el('probe-row').innerHTML=`<tr><td>셋업 저장소 · git status</td><td>${f(p.raw_bytes)} → ${f(p.filtered_bytes)} B</td><td>${pct(byteRate)}</td></tr>`;el('probe-meta').innerHTML=`<span>종료 코드 ${f(p.raw_exit)} / ${f(p.filtered_exit)}</span><span>필요 증거 ${p.required_evidence_preserved===true?'보존':'미확인'}</span>`;
 const latest=days.at(-1);el('latest-date').textContent=latest?latest.date+' · RTK 기록 날짜':'미수집';el('latest-saved').innerHTML=f(latest?.saved_tokens)+'<small>절감 추정 토큰</small>';el('latest-rate').textContent=pct(latest?.savings_pct);el('latest-count').textContent=f(latest?.commands)+'회';el('latest-io').textContent=f(latest?.input_tokens)+' → '+f(latest?.output_tokens);
-function table(){const list=[...days];if(el('sort').value==='desc')list.reverse();el('daily-table').innerHTML=list.map(r=>`<tr><td>${r.date}</td><td>${f(r.commands)}</td><td>${f(r.input_tokens)}</td><td>${f(r.output_tokens)}</td><td>${f(r.saved_tokens)}</td><td>${pct(r.savings_pct)}</td></tr>`).join('');el('row-count').textContent=days.length+'일';}el('sort').addEventListener('change',table);table();
+table();chart();
+}
+function table(){const list=[...days];if(el('sort').value==='desc')list.reverse();el('daily-table').innerHTML=list.map(r=>`<tr><td>${r.date}</td><td>${f(r.commands)}</td><td>${f(r.input_tokens)}</td><td>${f(r.output_tokens)}</td><td>${f(r.saved_tokens)}</td><td>${pct(r.savings_pct)}</td></tr>`).join('');el('row-count').textContent=days.length+'일';}el('sort').addEventListener('change',table);
 let mode='saved';
 function visibleDays(){if(el('chart-range').value==='7'&&days.length){const end=Date.parse(days.at(-1).date);return days.filter(r=>Date.parse(r.date)>=end-6*86400000);}return days;}
 function chart(){
@@ -137,6 +142,42 @@ function chart(){
  el('trend').innerHTML=svg+'</svg>';el('chart-window').textContent=rows[0].date+' — '+rows.at(-1).date+' · 기록 '+rows.length+'일';
  for(const g of el('trend').querySelectorAll('[data-date]')){const show=e=>{const r=rows.find(d=>d.date===g.dataset.date);el('tip').textContent=r.date+'\n입력 '+f(r.input_tokens)+' · 출력 '+f(r.output_tokens)+'\n절감 '+f(r.saved_tokens)+' 추정 토큰\n절감률 '+pct(r.savings_pct)+' · 실행 '+f(r.commands)+'회';const b=g.getBoundingClientRect();el('tip').style.cssText=`display:block;left:${Math.max(8,Math.min(window.innerWidth-250,e.clientX||b.x))}px;top:${Math.max(8,b.y-126)}px`;};g.addEventListener('mouseenter',show);g.addEventListener('focus',show);for(const event of ['mouseleave','blur'])g.addEventListener(event,()=>el('tip').style.display='none');}
 }
-for(const b of document.querySelectorAll('[data-mode]'))b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',x===b));chart();});el('chart-range').addEventListener('change',chart);let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(chart,120);});chart();
+for(const b of document.querySelectorAll('[data-mode]'))b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',x===b));chart();});el('chart-range').addEventListener('change',chart);let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(chart,120);});
 el('download').addEventListener('click',()=>{const keys=['date','commands','input_tokens','output_tokens','saved_tokens','savings_pct'];const csv='\ufeff'+keys.join(',')+'\r\n'+days.map(r=>keys.map(k=>r[k]).join(',')).join('\r\n');const u=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=u;a.download='rtk-daily-'+(data.collection_date_kst||'uncollected')+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);});
+
+renderSnapshot(data);
+const liveEnabled=data.live?.enabled===true&&location.hostname==='127.0.0.1'&&location.protocol==='http:';
+let paused=false,pollTimer,request=null,failures=0;
+function liveStatus(message,good=false){el('live-state').textContent=message;el('live-state').className='badge '+(good?'good':'warn');}
+function schedulePoll(delay=2000){clearTimeout(pollTimer);if(liveEnabled&&!paused&&!document.hidden)pollTimer=setTimeout(pollLive,delay);}
+function validSnapshot(next){
+ const numeric=v=>typeof v==='number'&&Number.isFinite(v)&&v>=0;
+ const fields=['total_commands','total_input','total_output','total_saved','avg_savings_pct'];
+ return next?.live?.enabled===true&&Number.isFinite(Date.parse(next.collected_at))&&fields.every(k=>numeric(next.summary?.[k]))&&Array.isArray(next.daily)&&next.daily.every(r=>/^\d{4}-\d{2}-\d{2}$/.test(r.date)&&['commands','input_tokens','output_tokens','saved_tokens','savings_pct'].every(k=>numeric(r[k])));
+}
+async function pollLive(){
+ if(!liveEnabled||paused||document.hidden||request)return;
+ const controller=new AbortController();request=controller;
+ const timeout=setTimeout(()=>controller.abort(),15000);
+ try{
+  const response=await fetch('/api/rtk',{cache:'no-store',signal:controller.signal});
+  if(!response.ok)throw new Error('Unavailable');
+  const next=await response.json();if(!validSnapshot(next))throw new Error('Invalid aggregate');
+  if(!paused&&!document.hidden){renderSnapshot(next);failures=0;liveStatus('실시간 · 2초',true);}
+ }catch(error){
+  if(!paused&&!document.hidden){failures++;liveStatus('연결 오류 · 이전 값 유지');el('collection-state').textContent='이전 수집값';el('collection-state').className='badge warn';}
+ }finally{
+  clearTimeout(timeout);request=null;schedulePoll(failures?Math.min(30000,2000*2**Math.min(failures,4)):2000);
+ }
+}
+function stopPolling(){clearTimeout(pollTimer);if(request)request.abort();}
+if(liveEnabled){
+ el('live-toggle').hidden=false;el('live-note').textContent='화면이 보일 때 2초 간격으로 집계를 조회합니다. 새 압축 검사는 실행하지 않습니다.';
+ liveStatus('실시간 · 2초',true);schedulePoll();
+ el('live-toggle').addEventListener('click',()=>{paused=!paused;el('live-toggle').textContent=paused?'다시 시작':'일시정지';if(paused){stopPolling();liveStatus('일시정지 · 이전 값 유지');}else if(!document.hidden){liveStatus('다시 연결 중');schedulePoll(0);}});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){stopPolling();liveStatus(paused?'일시정지 · 이전 값 유지':'탭 숨김 · 조회 대기');}else if(!paused){liveStatus('다시 연결 중');schedulePoll(0);}});
+ window.addEventListener('pagehide',stopPolling);
+ window.addEventListener('pageshow',()=>{if(!paused)schedulePoll(0);});
+}else{liveStatus('저장 스냅샷');el('live-note').textContent='파일 보고서는 수집 시점의 스냅샷입니다. 실시간 보기에서는 집계가 자동 갱신됩니다.';}
+
 </script></body></html>

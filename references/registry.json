@@ -1303,6 +1303,44 @@
         "global/skills/computer-use-workflow/SKILL.md",
         "docs/computer-use-maintenance.md"
       ]
+    },
+    {
+      "id": "R54",
+      "url": "https://docs.python.org/3/library/http.server.html",
+      "canonical_url": "https://docs.python.org/3/library/http.server.html",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Standard-library HTTP handlers for an opt-in loopback viewer; unsuitable for public production hosting",
+      "review_status": "relevant-sections-reviewed",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "last_reviewed": "2026-10-08",
+      "applicable_files": [
+        "scripts/rtk_dashboard.py",
+        "templates/reports/rtk-efficiency.template.html",
+        "docs/rtk-live-dashboard.md"
+      ]
+    },
+    {
+      "id": "R55",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API",
+      "canonical_url": "https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Suspend optional polling when the report document is hidden and resume when visible",
+      "review_status": "relevant-sections-reviewed",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "last_reviewed": "2026-10-08",
+      "applicable_files": [
+        "scripts/rtk_dashboard.py",
+        "templates/reports/rtk-efficiency.template.html",
+        "docs/rtk-live-dashboard.md"
+      ]
     }
   ]
 }

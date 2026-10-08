@@ -32,6 +32,7 @@ class ReportTests(unittest.TestCase):
 
     def test_changed_runner_cannot_reuse_an_old_success(self):
         identity = {'binary_sha256': 'owned', 'version': 'rtk 0.51.0',
+                    'scope': 'Explicit project arguments plus disposable argv/exit/evidence fixtures.',
                     'harness_sha256': hashlib.sha256((ROOT / 'scripts/verify_rtk.py').read_bytes()).hexdigest(),
                     'runner_sha256': hashlib.sha256((ROOT / 'global/runtime/rtk_runner.py').read_bytes()).hexdigest()}
         routine = {'feedback_loop': {'rtk_validation': {'status': 'pass', 'check_count': 8, 'identity': identity}}}

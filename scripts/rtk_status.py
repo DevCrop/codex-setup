@@ -33,6 +33,7 @@ def model(routine, installed, runtime):
     matches = (runtime.get('status') == 'pass' and evidence.get('status') == 'pass'
                and identity.get('binary_sha256') == installed.get('sha256')
                and identity.get('version') == runtime.get('version')
+               and identity.get('scope') == 'Explicit project arguments plus disposable argv/exit/evidence fixtures.'
                and identity.get('runner_sha256') == hashlib.sha256(runner.read_bytes()).hexdigest()
                and harness.is_file() and identity.get('harness_sha256') == hashlib.sha256(harness.read_bytes()).hexdigest())
     daily = []
@@ -72,6 +73,7 @@ def payload(data):
 
 def template_render(name, slot, data):
     source = (ROOT / 'templates/reports' / name).read_text(encoding='utf-8')
+    source = source.replace('__TRACE_SHARED_STYLE__', '<style>' + (ROOT / 'templates/reports/shared.css').read_text(encoding='utf-8') + '</style>')
     if source.count(slot) != 1:
         raise ValueError('Report requires exactly one data slot')
     encoded = json.dumps(data, ensure_ascii=False, allow_nan=False).replace('<', r'\u003c').replace('>', r'\u003e')
@@ -93,7 +95,7 @@ def overview(routine, installed_status, source_commit, now):
         return [{k: str(row[k])[:1500] for k in fields if k in row and isinstance(row[k], (str, int, float, bool))}
                 for row in values if isinstance(row, dict)] if isinstance(values, list) else []
     finding_rows = rows(routine.get('unresolved_findings', {}),
-        ('id', 'label', 'status', 'impact', 'action', 'validation'))
+        ('id', 'label', 'status', 'impact', 'action', 'proposed_action', 'validation'))
     # Never transfer another host's success; only this invocation verifies deployment.
     return {'reported_at': now, 'last_review_at': routine.get('last_substantive_review'),
         'last_apply_at': routine.get('last_policy_application'),
@@ -114,7 +116,7 @@ def overview(routine, installed_status, source_commit, now):
         'sources': [], 'browser_workflow': {'routes': []},
         'incident_summary': [{'label': x.get('label', x.get('id')), 'status': 'unresolved',
             'summary': x.get('impact', ''), 'validation': x.get('validation', ''),
-            'recheck': x.get('action', '')} for x in finding_rows],
+            'recheck': x.get('action', x.get('proposed_action', ''))} for x in finding_rows],
         'flow_review': {'status': 'unknown', 'findings': ['정본 FLOW에서 검증·복원·종료 분기를 확인'], 'reviewed_at': None},
         'publication': {'applied': installed_status == 'pass', 'verified': installed_status == 'pass',
                         'committed': False, 'published': False}}
@@ -180,7 +182,7 @@ def main():
         view['flow_link'] = (ROOT / 'diagrams/global/codex-flow.html').as_uri()
         encoded = render(data, now)
         rt = payload(data)
-        live_template = (ROOT / 'templates/reports/rtk-efficiency.template.html').read_text(encoding='utf-8').replace('</head>', font_css() + '\n</head>')
+        live_template = (ROOT / 'templates/reports/rtk-efficiency.template.html').read_text(encoding='utf-8').replace('__TRACE_SHARED_STYLE__', '<style>' + (ROOT / 'templates/reports/shared.css').read_text(encoding='utf-8') + '</style>').replace('</head>', font_css() + '\n</head>')
         overview_html = template_render('adaptive-routine.template.html', '__ROUTINE_REPORT_DATA__', view)
         artifacts = {'rtk-status.html': encoded, 'overview.html': overview_html,
             'rtk-efficiency.template.html': live_template.encode(),

@@ -81,3 +81,5 @@ RTK 보고 데이터의 top-level 필드는 `collected_at`, `collection_date_kst
 ## Integrated generator
 
 Run `python -B scripts/rtk_status.py` from the reviewed checkout. It writes owned overview.html and rtk-status.html from the current private ledger, and an owned live template plus sanitized JSON projection. The JSON is a report projection, not a second authority. All target hashes are checked before any replacement; user edits conflict. Font bytes and OFL come only from assets/pretendard. The global FLOW link refers to diagrams/global/codex-flow.html; no duplicate manual flow is maintained in the overview.
+
+Common report CSS is authored once in shared.css and embedded by the generator; no external stylesheet or network font is required.

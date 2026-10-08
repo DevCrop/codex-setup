@@ -12,6 +12,18 @@ from setup import ROOT
 
 
 class IntegratedReportTests(unittest.TestCase):
+    def test_report_control_ids_are_real_and_unique(self):
+        import re
+        for name in ('adaptive-routine.template.html', 'rtk-efficiency.template.html'):
+            source = (ROOT / 'templates/reports' / name).read_text(encoding='utf-8')
+            ids = re.findall(r'\bid="([^"]+)"', source)
+            self.assertEqual(len(ids), len(set(ids)))
+            refs = set(re.findall(r"el\('([^']+)'\)", source))
+            optional = {'flow-state', 'flow-findings', 'flow-reviewed-at'}
+            self.assertFalse(refs - set(ids) - optional)
+            for target in refs - set(ids):
+                self.assertIn("if(el('" + target + "'))", source)
+
     def test_conflict_in_later_target_preserves_every_target(self):
         with tempfile.TemporaryDirectory() as tmp:
             dep = SimpleNamespace(state=Path(tmp))

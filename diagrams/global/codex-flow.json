@@ -7,7 +7,7 @@
     "output": "diagrams/global/codex-flow.html",
     "repository": {
       "url": "https://github.com/DevCrop/codex-setup.git",
-      "revision": "7c331b1387124514cd5167667794385b43c0f189",
+      "revision": "46afed51fbaf82c5b48111e6537026b17a6b66c8",
       "provider": "github",
       "link_mode": "web"
     }

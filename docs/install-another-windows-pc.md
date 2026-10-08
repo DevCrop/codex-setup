@@ -168,6 +168,10 @@ foreach ($tracePath in @($traceProjectsRoot, $traceChatGptRoot, $traceSetupParen
 
 아래 코드는 새 체크아웃 전용이다. `codex-setup`이 이미 있으면 중단하며 삭제하지 않는다.
 
+설치할 커밋의 [최종 공유 루틴](codex-routine-share.md)도 읽는다. 현재 브랜치는
+활성 프로젝트 도구 선택·매 지원 진단의 RTK 러너·히스토리 기반 회고 지침을 포함한다.
+기존 훅 설정·개인 집계·자동화 권한은 설치로 복제되지 않는다.
+
 ```powershell
 if (Test-Path -LiteralPath $traceCheckout) {
     throw '체크아웃 경로가 이미 있습니다. 아래의 기존 체크아웃 절차로 확인하세요.'

@@ -13,6 +13,10 @@ Follow the [detailed Windows installation guide](docs/install-another-windows-pc
 for missing dependencies/folders, project packages, login and host-local scheduling.
 The v1.2.4 tag remains the preceding published release; branch publication is separate.
 
+For the final two-lane task/maintenance flow, per-diagnostic RTK routing and
+confirmed-history review, see the Korean [shareable routine](docs/codex-routine-share.md).
+The current branch carries these added policies; installing v1.2.4 does not.
+
 ## Install
 
 Clone this repository anywhere, including paths with spaces and non-Latin names.
@@ -181,9 +185,11 @@ acceptance checklist, see [the portable setup guide](docs/portable-routine.md) a
 per-invocation local RTK checks and responses to observed failures are separate;
 this repository does not install an event daemon or perform model training.
 
-The adaptive loop keeps the v1.2.3 always-loaded agreement unchanged. Confirmed
-feedback, minimal changes and retirement live in conditional guidance and the
-existing private routine state. Efficiency means correct completion with less
+The published v1.2.4 retains the preceding agreement. This development branch
+adds active-root/tool/acceptance routing and verified RTK for every supported
+diagnostic, including nested orchestration, while retaining native evidence and
+final acceptance. Confirmed feedback, minimal changes and retirement live in
+conditional guidance and the existing private routine state. Efficiency means correct completion with less
 avoidable rework and total task usage when observed, not a shorter prompt alone.
 RTK release planning reuses collection, preserves stable pins and reports conflicts
 before installation. Unchanged checks are reused only with matching identities.

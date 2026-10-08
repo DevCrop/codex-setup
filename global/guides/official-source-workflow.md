@@ -47,7 +47,8 @@ Treat explicit durable preferences as confirmed; inferred or one-off lessons sta
 candidates. Classify gaps as missing guidance, existing guidance not followed,
 tool/runtime defect, access/permission limit or requirement conflict. Adding more
 instructions is not a substitute for fixing the actual cause. Prefer existing
-native tools and checks; use RTK only where supported output benefits. Keep
+native tools and checks; route every supported diagnostic through verified RTK
+under guides/rtk.md, including nested calls. Keep
 Ponytail/Archify explicit and retain exact evidence for final acceptance.
 
 During the authorized host's existing scheduled routine, review new or changed lessons
@@ -64,7 +65,14 @@ remote publication require separate authority; learning never grants authority.
 Preserve one current feedback_loop object beside existing maintenance evidence,
 with preferences, lessons, decisions and distinct review/apply/verify times.
 A subsequent user correction supersedes the exact older preference; keep only a
-compact supersession reason. Judge efficiency by correct task completion at the
+compact supersession reason. Each scheduled review reconciles confirmed preferences,
+new/changed incidents, relevant official changes and unresolved candidates with
+the installed guidance, actual saved routine and report. Check contradictions,
+obsolete advice, omitted required tools and premature completion claims. Reuse
+matching reviews; classify each changed candidate as keep, apply, defer or unknown
+with evidence and a reconsideration trigger. Repair the actual authorized cause,
+then verify the original affected path; do not manufacture a daily rule change.
+Record completion and unpublished approved work separately. Judge efficiency by correct task completion at the
 same acceptance standard, avoidable corrections/retries and total task usage
 including verification and delegation when observable. Keep unavailable usage
 unknown; RTK estimates and shorter guidance do not establish whole-task savings. Retire obsolete guidance after conflict review,
@@ -75,6 +83,37 @@ conversations. Unavailable evidence and failed checks remain unknown/failed.
 
 Sources: [Customization feedback](https://learn.chatgpt.com/docs/customization/overview),
 [Best practices](https://learn.chatgpt.com/guides/best-practices).
+
+## Active-project tool routing and acceptance
+
+Use this procedure for an observed routing gap, cross-project setup question or
+durable workflow change. The agreement supplies lightweight defaults for normal
+tasks; do not load this guide or perform a full setup audit at every task start.
+
+1. Resolve the actual working root and effective global/project instructions.
+   Check relevant overrides and project runtime pins; non-Git document folders
+   use their applicable local guidance. Define the requested result and acceptance.
+2. Select available purpose-built tools, connectors and applicable skills for the
+   task; resolve required access when needed, rather than testing every integration.
+   Use existing project tools for project checks. Keep Ponytail/Archify explicit;
+   delegate only when the current host and applicable instructions permit it.
+3. Route each supported diagnostic through verified RTK, including orchestration
+   subprocesses; preserve native exact reads, structured data, mutations and final
+   acceptance. A missing tool, unsupported command or zero saving is not proof of
+   failure. Use an authorized native fallback and explain a material limitation.
+4. On an observed failure or skipped required tool, follow the incident procedure
+   below; distinguish selection mistakes, interception gaps, runtime defects and
+   permission limits. Validate the original affected path and review the diff.
+   Stop after acceptance; report unavailable checks as unverified. Instruction
+   installation proves deployment, not execution or obedience in every project.
+
+Reuse matching evidence. Starting a project does not authorize background sibling
+scans, dependency installs or source repairs in other projects. Tool usefulness
+and verified completion matter more than invocation counts. These are TRACE's
+operating choices, supported by official instruction layering and focused skills:
+[AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md),
+[skills](https://learn.chatgpt.com/docs/build-skills),
+[best practices](https://learn.chatgpt.com/guides/best-practices).
 
 ## Errors encountered during project work
 

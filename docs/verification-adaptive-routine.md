@@ -69,3 +69,46 @@ installation, repeat, migration, removal and restore in private evidence;
 [operations](operations.md) defines closure checks. A saved automation is not
 proof that a future scheduled run occurred. Historic v1.2 verification remains
 historical; use [the portable routine guide](portable-routine.md) for installation.
+
+
+## 2026-10-08 final flow and per-diagnostic routing addendum
+
+This branch adds the shareable Korean routine, active-root/tool/acceptance defaults,
+verified RTK for every supported diagnostic including nested orchestration, and
+scheduled reconciliation of confirmed preferences, incidents, relevant official
+changes and unresolved candidates. Exact reads, structured data, mutations and
+final acceptance remain native. The v1.2.4 release is unchanged.
+
+Current-host checks performed before publication:
+
+- Owned guidance plan/apply/verify/repeat passed. The final synthesis changed one
+  existing conditional guide; repeat application was unchanged for 121 entries.
+- Global source/installed instruction bytes matched. Current session received the
+  refreshed agreement; that evidence does not prove every project's obedience.
+- Daily automation readback matched the saved prompt, 08:00 Asia/Seoul cadence,
+  active status, thread and original creation identity. Model/effort configuration,
+  hook definition and separate weekly-cleanup file hashes were preserved.
+- Explicit owned-runner Git diagnosis inside Python orchestration succeeded.
+  Existing live simple-shell interception and two RTK processor binaries with
+  16 handler cases each were reused; these are distinct forms of evidence.
+- Current local report data/script checks passed: two lanes, eight steps, four
+  terminal branches, feedback/candidate filtering, internal anchors and private
+  projection. The updated portable template is additionally checked without host
+  history or a registered schedule. VM execution is not visual rendering.
+- Current repository validation passed: 120 managed files, 53 references, three
+  skills. Whitespace/diff review passed. Installation executable logic was not
+  changed, so prior lifecycle evidence is reused; final-head CI is checked on PR 15.
+
+Known limits retained: actual execution on another user's PC is untested;
+file-protocol UI access remains policy-blocked; RTK aggregate arithmetic cause
+and the earlier UI initialization recovery cause remain unknown. No API/model
+benchmark, permission expansion, hook-trust edit, project scan or source cleanup
+was performed. Branch publication is separate from main merge and a tagged release.
+
+
+The shared RTK report UI also includes the current cumulative-savings emphasis,
+separate saved probe bytes, latest recorded date and savings/rate/input-output
+chart modes. Host-specific successful history was not copied. Node VM checks
+passed for empty and zero-denominator data, synthetic totals, three modes,
+seven-day filtering, table binding, unique IDs and finite narrow-chart geometry.
+These are data/script checks; no new visual rendering claim is made.

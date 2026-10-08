@@ -1,5 +1,10 @@
 # Operations
 
+For browser/native UI capability checks, installed SDK ownership, sanitized failure
+records and narrowly scoped home cleanup, follow
+[Computer Use maintenance](computer-use-maintenance.md). The saved host schedule
+and separately approved dependency-cleanup policy remain authoritative.
+
 Start from the repository README and installer help for executable commands. Resolve paths from the script location, explicit root and supported user directories; never assume a drive letter or current shell directory. Honor CODEX_HOME. Authenticate separately on each host with the installed CLI's supported ChatGPT login flow; do not copy auth files into this repository.
 
 ## Managed lifecycle

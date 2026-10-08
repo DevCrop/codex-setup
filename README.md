@@ -5,6 +5,12 @@ and ownership-based deployment. Python 3.11+ and Git are required; Node.js is ne
 to render Archify. Use ChatGPT subscription login on each host. No API key and no
 50/200-run model benchmark are required.
 
+For the current reviewed development branch, start with the Korean
+[2026-10-08 setup handoff](docs/setup-handoff-20261008.md): what changed, why,
+host-specific authority, incident recovery, actual checks and another-PC acceptance.
+Portable report UI sources are in [templates/reports](templates/reports/README.md).
+The v1.2.4 tag remains the preceding published release; branch publication is separate.
+
 ## Install
 
 Clone this repository anywhere, including paths with spaces and non-Latin names.
@@ -31,6 +37,12 @@ TRACE adds only `agents/openai.yaml` with implicit invocation disabled for these
 two skills. Invoke `$ponytail` or `$archify` explicitly (or select the skill in the
 app). This retains their full upstream procedures; it does not shorten the skills.
 `setup.py` is the sole install/update/verify/remove entry point, including skills.
+
+The personal `computer-use-workflow` skill is deployed to the supported user skill
+root (`~/.agents/skills`, or `--personal-skills`) for use across projects. It follows
+the available official Computer Use runtime and keeps browser/native execution
+evidence separate. It is a TRACE-authored workflow, not an OpenAI-published plugin.
+See [Computer Use maintenance](docs/computer-use-maintenance.md).
 
 See [Ponytail·Archify usage examples](docs/skill-usage.md) for explicit selection,
 task scope, intensity and completion criteria. The English personalization source

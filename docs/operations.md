@@ -1,5 +1,10 @@
 # Operations
 
+For browser/native UI capability checks, installed SDK ownership, sanitized failure
+records and narrowly scoped home cleanup, follow
+[Computer Use maintenance](computer-use-maintenance.md). The saved host schedule
+and separately approved dependency-cleanup policy remain authoritative.
+
 Start from the repository README and installer help for executable commands. Resolve paths from the script location, explicit root and supported user directories; never assume a drive letter or current shell directory. Honor CODEX_HOME. Authenticate separately on each host with the installed CLI's supported ChatGPT login flow; do not copy auth files into this repository.
 
 ## Managed lifecycle
@@ -13,8 +18,8 @@ The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate
 ## Designated-host maintenance
 
 Preserve the operating host's actual registered automation, cadence and authority.
-The observed monitor on this installation is weekly Monday 10:00 Asia/Seoul;
-another host's daily routine is not permission to change it. The merged PR #9
+The observed monitor on this installation is daily 08:00 Asia/Seoul (authorized 2026-10-08);
+this cadence was explicitly changed by the user on 2026-10-08. The merged PR #9
 records a separately authorized daily maintenance context, not this scheduler.
 On 2026-10-05 the user authorized compatible small global guidance and stable
 Codex CLI/RTK updates after review and verification on the recorded host only.
@@ -61,7 +66,7 @@ no additional scheduler, hook or background event service is installed.
 |---|---|---|
 | Stable CLI/RTK release discovery | Existing registered cadence | Review relevant changes; install only an eligible changed release |
 | RTK ownership/hash | Each explicit owned-runner invocation | Existing local checks; no network lookup |
-| Output compression | Needed supported noisy diagnostic | Preserve exits/evidence; prefer native concise or final acceptance output |
+| Output compression | Needed supported noisy diagnostics when filtering helps, including nested orchestration | Use verified RTK; preserve exits/evidence and native exact reads, structured data, mutations and final acceptance |
 | Compression path health | Changed tool/filter identity or relevant failure | One affected byte/exit/evidence check; reuse matching success |
 | Affected runtime revalidation | Tool/filter change or new relevant failure | Smallest affected existing checks; reuse unchanged evidence |
 | Feedback and failure handling | Observation in active authorized task | Diagnose and finish authorized fix now; retain summary for scheduled review |
@@ -173,6 +178,15 @@ action, validation and last-notified fingerprint. Retain unresolved findings acr
 unchanged checks; do not equate a new collection timestamp with resolution. Keep
 history in Git where appropriate, not dated operational copies. Never store source
 diff bodies, credentials or authentication parameters in the routine record.
+
+Set `last_attempt` at run start. Replace sampled `current_checks` fields with this
+run's observations and timestamps; preserve historical tests and runtime diagnoses
+with their original dates. Advance `last_successful_collection` only after all
+required collections and owned report refreshes succeed. A source-only success
+updates `last_source_collection`; it does not refresh the whole routine's success.
+A successfully collected attention finding can coexist with collection success.
+Actual content review advances `last_substantive_review`; only deployment advances
+`last_policy_application`. Do not refresh either merely by regenerating a report.
 
 Stay quiet when unchanged, non-actionable or already reported without material new
 information. Notify on new actionable findings, changed severity/impact, confirmed
@@ -355,3 +369,35 @@ Only project-specific incidents belong in the project.
 Check C-only Windows, different checkout/home drives, Unicode and spaces, OneDrive paths, execution outside checkout, custom CODEX_HOME, missing/read-only paths and links/junctions. Also verify native macOS/Linux install, repeat install, conflict and rollback behavior before declaring those platforms tested. Simulated paths do not establish native OS support.
 
 Sources: [Configuration and paths](https://learn.chatgpt.com/docs/config-file/config-advanced), [Authentication](https://learn.chatgpt.com/docs/auth), [App settings](https://learn.chatgpt.com/docs/app/settings).
+
+## Computer/browser readiness and resume
+
+The installed [conditional interaction guide](../global/guides/computer-use.md)
+owns routing and recovery. Keep permissions and installed OpenAI plugin guidance
+on each host; TRACE neither copies caches nor changes always-allowed apps.
+A current successful helper initialization does not establish that a historical
+setup-refresh error is fixed. Browser and native actions need their own evidence.
+
+For an authorized interrupted QA task, record only opaque task/target/step IDs,
+capability statuses and sanitized error codes in a reviewed input JSON, then run:
+
+```text
+python -B scripts/interaction_checkpoint.py record --input PATH
+python -B scripts/interaction_checkpoint.py resume
+```
+
+The format has exactly task_id, target_id, stages and steps. Stages are independent
+shell/native/browser/input status objects; steps have id and status (pending,
+completed, failed or unknown-outcome). See the executable contract in
+[scripts/interaction_checkpoint.py](../scripts/interaction_checkpoint.py).
+One current checkpoint replaces the previous one in private routine-review.json;
+other lessons/findings remain intact. A fresh observation is mandatory on resume;
+unknown mutations are reconciled and failed steps diagnosed before any retry.
+The command does not click, grant access, restart, replay, or claim live readiness.
+Raw evidence belongs only in the authorized project QA record, never public Git.
+
+See [Codex storage and reports](storage-and-reports.md) for metadata-only home
+audits and the owned portable RTK report. The routine does not expand deletion
+authority to application state or mixed user work. Native accessibility, screenshot,
+native input and browser input are recorded separately; one success cannot clear
+another capability's failure.

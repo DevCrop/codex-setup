@@ -2,5 +2,7 @@
 vendor/** -text
 # Preserve upstream snapshot bytes, including their original whitespace.
 references/snapshots/** -text -whitespace
+# Preserve the licensed font's upstream notice byte-for-byte.
+assets/pretendard/LICENSE -text -whitespace
 *.png -text
 *.woff2 -text

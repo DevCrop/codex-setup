@@ -11,5 +11,6 @@ Historical observations are version-scoped. Diagnose before applying a workaroun
 | Browser says success; terminal unchanged | [Login status](incident-05-browser-terminal.md) |
 | Requested workspace-write renders read-only | [Windows sandbox](incident-06-windows-sandbox.md) |
 | Container temporary-path write failure | [Container tmpfs](incident-07-container-tmp.md) |
+| Accessibility succeeds; native capture/input fails | [Independent capability diagnosis](incident-08-computer-capabilities.md) |
 
 Evidence identifiers refer to preserved TRACE Lab historical documents, not runtime dependencies of this setup. These records summarize those documents without copying raw authentication or run outputs.

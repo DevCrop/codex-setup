@@ -1,9 +1,26 @@
-# TRACE Setup v1.2.4
+# TRACE Setup v1.2.5 (working revision)
 
 Portable Codex personal instructions, optional profiles, pinned Archify/Ponytail,
 and ownership-based deployment. Python 3.11+ and Git are required; Node.js is needed
 to render Archify. Use ChatGPT subscription login on each host. No API key and no
 50/200-run model benchmark are required.
+
+For the current reviewed development branch, start with the Korean
+[2026-10-08 setup handoff](docs/setup-handoff-20261008.md): what changed, why,
+host-specific authority, incident recovery, actual checks and another-PC acceptance.
+Portable report UI sources are in [templates/reports](templates/reports/README.md).
+Follow the [detailed Windows installation guide](docs/install-another-windows-pc.md)
+for missing dependencies/folders, project packages, login and host-local scheduling.
+The v1.2.4 tag remains the preceding published release; branch publication is separate.
+
+For the final two-lane task/maintenance flow, task-relevant RTK routing and
+confirmed-history review, see the Korean [shareable routine](docs/codex-routine-share.md).
+The current branch carries these added policies; installing v1.2.4 does not.
+
+The 2026-10-08 branch also includes an opt-in [RTK live viewer](docs/rtk-live-dashboard.md):
+local read-only aggregate polling, visible-tab refresh, pause/error states and a
+Windows launcher. The existing daily maintenance and stored probe timestamps
+remain independent. No startup task, hook or public web service is installed.
 
 ## Install
 
@@ -31,6 +48,12 @@ TRACE adds only `agents/openai.yaml` with implicit invocation disabled for these
 two skills. Invoke `$ponytail` or `$archify` explicitly (or select the skill in the
 app). This retains their full upstream procedures; it does not shorten the skills.
 `setup.py` is the sole install/update/verify/remove entry point, including skills.
+
+The personal `computer-use-workflow` skill is deployed to the supported user skill
+root (`~/.agents/skills`, or `--personal-skills`) for use across projects. It follows
+the available official Computer Use runtime and keeps browser/native execution
+evidence separate. It is a TRACE-authored workflow, not an OpenAI-published plugin.
+See [Computer Use maintenance](docs/computer-use-maintenance.md).
 
 See [Ponytail·Archify usage examples](docs/skill-usage.md) for explicit selection,
 task scope, intensity and completion criteria. The English personalization source
@@ -113,10 +136,11 @@ python -B scripts/index_docs.py
 ```
 
 See [documentation index](docs/index.md), [operations](docs/operations.md), and
-[current release verification](docs/verification-adaptive-routine.md). Update detection produces review
+[released v1.2.4 verification](docs/verification-adaptive-routine.md) and
+[v1.2.5 integrated checks and limitations](docs/verification-integration.md). Update detection produces review
 candidates only. Preserve the designated host's existing schedule and authorization;
 installing this repository does not create or transfer an automation. The current
-observed TRACE host preserves Monday 10:00 Asia/Seoul weekly review. A separately
+observed TRACE host preserves daily 08:00 Asia/Seoul review (authorized 2026-10-08). A separately
 authorized daily maintenance routine may update stable CLI/RTK releases within its approved scope,
 with integrity checks and verification; that authorization is not portable policy.
 Broader policy, skills, hooks and permission changes need separate approval.
@@ -167,9 +191,27 @@ acceptance checklist, see [the portable setup guide](docs/portable-routine.md) a
 per-invocation local RTK checks and responses to observed failures are separate;
 this repository does not install an event daemon or perform model training.
 
-The adaptive loop keeps the v1.2.3 always-loaded agreement unchanged. Confirmed
-feedback, minimal changes and retirement live in conditional guidance and the
-existing private routine state. Efficiency means correct completion with less
+The published v1.2.4 retains the preceding agreement. This development branch
+adds active-root/tool/acceptance routing and verified RTK for needed supported noisy
+diagnostics when filtering helps, including nested orchestration, while retaining native evidence and
+final acceptance. Confirmed feedback, minimal changes and retirement live in
+conditional guidance and the existing private routine state. Efficiency means correct completion with less
 avoidable rework and total task usage when observed, not a shorter prompt alone.
 RTK release planning reuses collection, preserves stable pins and reports conflicts
 before installation. Unchanged checks are reused only with matching identities.
+
+## Computer/browser reliability
+
+For computer or browser tasks the concise agreement loads only
+[the interaction guide](global/guides/computer-use.md). It keeps shell, helper and
+browser readiness independent, follows installed tool instructions, and reconciles
+unknown mutation outcomes before retry. The existing private routine keeps one
+[sanitized QA checkpoint](scripts/interaction_checkpoint.py); it does not replay
+actions, grant access or restart apps. The scheduled feedback loop reviews confirmed
+causes and identity-bound verification; it never claims self-awareness or a guarantee
+of error-free runtime.
+
+The existing routine also uses a [metadata-only Codex home audit and portable RTK
+report](docs/storage-and-reports.md). It does not infer cache deletion authority
+from size or age. The canonical global flow and local report embed pinned
+Pretendard offline; changed artifacts need their own verification evidence.

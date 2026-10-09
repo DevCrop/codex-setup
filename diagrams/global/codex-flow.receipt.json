@@ -1,86 +1,74 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "diagram_type": "workflow",
-  "specification_sha256": "57874918ede021cc00f26c28d5cfccf9f297a593bd70341a756686439867d5cd",
-  "artifact_sha256": "75dde827d7976255e6ed4d165880399ac51a125a12d32c77e35f7cce1d4127ef",
-  "specification_bytes": 19084,
-  "artifact_bytes": 803423,
-  "validation": {
-    "checks_passed": 9,
-    "checks_total": 9,
-    "profile": "showcase",
-    "errors": 0,
-    "warnings": 0
-  },
+  "specification_sha256": "2e72634463904e295ff778ca7b662a44370b45f8580accc8b6da6f0d88b493cc",
+  "artifact_sha256": "986afd9cef546c140dfff0e4695de4ad783a02a411dada9a28490b4e08701a27",
+  "specification_bytes": 26892,
+  "artifact_bytes": 3581574,
   "gates": {
     "validate": "pass",
     "deliver": "pass",
     "check": "pass",
-    "browser-check": "pass"
+    "browser-check": "not-performed"
   },
   "repository_evidence": {
     "verified": true,
-    "repository": "https://github.com/DevCrop/codex-setup",
-    "revision": "09db45214ee53c2c604dde3e7fcc35c25420b323",
-    "references": 43
+    "url": "https://github.com/DevCrop/codex-setup.git",
+    "revision": "46afed51fbaf82c5b48111e6537026b17a6b66c8",
+    "provider": "github",
+    "link_mode": "web"
   },
-  "browser_evidence": "pass",
-  "viewport_containment": [
-    {
-      "width": 1440,
-      "height": 900,
-      "theme": "light",
-      "overflowX": false,
-      "overflowY": true,
-      "verticalScrollAccepted": true,
-      "overflowDisposition": "readable-vertical-scroll",
-      "readerFit": "intrinsic-height",
-      "minimumProjectedNodeTextPx": 6.004938271604939,
-      "ok": true
+  "browser_evidence": "not-performed",
+  "visual_review": "not-performed",
+  "renderer_version": "3.0.0",
+  "presentation": "TRACE temporary-template adapter / Pretendard 1.3.9 embedded",
+  "adapted_template_sha256": "a23f84682ab7edd16dfe91464312f2ccea0baeaa15ff1a0d064925ac29de94f3",
+  "limit": "Static gates only. A denied file-preview protocol is not bypassed by a headless browser or alternate protocol; changed font/layout/browser behavior remain unverified.",
+  "static_validation": {
+    "checks_passed": 9,
+    "checks_total": 9,
+    "profile": "showcase",
+    "composition": {
+      "errors": 0,
+      "warnings": 0
     },
-    {
-      "width": 1600,
-      "height": 1000,
-      "theme": "light",
-      "overflowX": false,
-      "overflowY": false,
-      "verticalScrollAccepted": false,
-      "overflowDisposition": "contained",
-      "readerFit": "intrinsic-height",
-      "minimumProjectedNodeTextPx": 6.156378600823046,
-      "ok": true
-    },
-    {
-      "width": 1920,
-      "height": 1080,
-      "theme": "light",
-      "overflowX": false,
-      "overflowY": false,
-      "verticalScrollAccepted": false,
-      "overflowDisposition": "contained",
-      "readerFit": "intrinsic-height",
-      "minimumProjectedNodeTextPx": 6.7818930041152266,
-      "ok": true
-    },
-    {
-      "width": 2048,
-      "height": 1320,
-      "theme": "light",
-      "overflowX": false,
-      "overflowY": false,
-      "verticalScrollAccepted": false,
-      "overflowDisposition": "contained",
-      "readerFit": "intrinsic-height",
-      "minimumProjectedNodeTextPx": 8,
-      "ok": true
-    }
-  ],
-  "visual_review": "not-requested",
-  "visual_review_notes": [
-    "Automated browser gates passed; current captures were not perceptually inspected.",
-    "Existing return/delegation detour advisories retained; zero blocking diagnostics.",
-    "No desktop-pane, mobile or runtime-model claim."
-  ],
-  "diagram_scope": "Global operating policy at TRACE v1.2.4, not runtime trace or product-project architecture.",
-  "renderer_version": "3.0.0"
+    "checks": [
+      {
+        "name": "single_svg",
+        "ok": true
+      },
+      {
+        "name": "finite_svg",
+        "ok": true
+      },
+      {
+        "name": "orthogonal_arrows",
+        "ok": true
+      },
+      {
+        "name": "label_route_clearance",
+        "ok": true
+      },
+      {
+        "name": "relationship_crossings",
+        "ok": true
+      },
+      {
+        "name": "relationship_corridors",
+        "ok": true
+      },
+      {
+        "name": "container_border_runs",
+        "ok": true
+      },
+      {
+        "name": "route_rhythm",
+        "ok": true
+      },
+      {
+        "name": "legend_clearance",
+        "ok": true
+      }
+    ]
+  }
 }

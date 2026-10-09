@@ -179,6 +179,15 @@ unchanged checks; do not equate a new collection timestamp with resolution. Keep
 history in Git where appropriate, not dated operational copies. Never store source
 diff bodies, credentials or authentication parameters in the routine record.
 
+Set `last_attempt` at run start. Replace sampled `current_checks` fields with this
+run's observations and timestamps; preserve historical tests and runtime diagnoses
+with their original dates. Advance `last_successful_collection` only after all
+required collections and owned report refreshes succeed. A source-only success
+updates `last_source_collection`; it does not refresh the whole routine's success.
+A successfully collected attention finding can coexist with collection success.
+Actual content review advances `last_substantive_review`; only deployment advances
+`last_policy_application`. Do not refresh either merely by regenerating a report.
+
 Stay quiet when unchanged, non-actionable or already reported without material new
 information. Notify on new actionable findings, changed severity/impact, confirmed
 resolution or a failure requiring action. Record known missed runs honestly; do not

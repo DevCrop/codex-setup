@@ -2,7 +2,7 @@
 
 Integration source: PR #15 commit 7d8a825466e05a2d4407a0283eff7ab0dcf054ba and PR #14 commit 594654aa119b3f9369cd57021999d40f3ef7aef9. Imported branch records are historical, not this host's acceptance.
 
-## Current checks
+## Integration checks — 2026-10-08
 
 - Windows Python suite: 106 cases, 101 passed, five named platform skips; no failures.
 - Repository inventory: 121 managed files, 56 unique reference IDs/URLs, three skills.
@@ -14,7 +14,7 @@ Integration source: PR #15 commit 7d8a825466e05a2d4407a0283eff7ab0dcf054ba and P
 
 ## Installed and runtime evidence
 
-Current-host apply changed seven owned targets; verify passed and repeat apply was unchanged for 122 entries including the config patch. The exact current config SHA-256 remained 05681800958e5e69f510af7bc92cad3712731327e6c80def4658bd01d0e6a88d. CLI 0.161.0 and ChatGPT subscription login were confirmed.
+The October 8 integrated apply changed seven owned targets; verify passed and repeat apply was unchanged for 122 entries including the config patch. At that time the config SHA-256 remained 05681800958e5e69f510af7bc92cad3712731327e6c80def4658bd01d0e6a88d. CLI 0.161.0 and ChatGPT subscription login were confirmed. Later local config bytes changed outside this deployment; their origin is unconfirmed. Current managed-key verification and scoped model/effort observations do not establish whole-file preservation, and the older hash is not a restoration target.
 
 Actual loopback HTTP execution refreshed across two samples, retained the original probe time and scheduled report bytes, and added zero compression calls. Overview/RTK/sanitized JSON routes returned 200; the private ledger returned 404. The test server was shut down. Full-byte cache invalidation covers modified same-size/same-mtime binaries and unavailable files; the gain runner still validates each invocation. Global flow has 40 nodes/nine lanes: nine static checks passed, zero composition errors/warnings; browser gates remain unperformed. RTK 0.51.0 verifies and the release plan is unchanged. Exact-head CI for integrated artifact commit f5483701118052d70b8e9c6296d9f12e7d3510ac passed all 12 push/PR checks across Windows/macOS/Linux and Python 3.11/3.14; later commits need their own result. Public release remains v1.2.4. User-requested screen-control hold remains in force; no visual/native success is inherited.
 
@@ -81,3 +81,34 @@ remain separate. The existing daily 08:00 routine retains this unresolved findin
 No model calls, manual permission reset, process termination, app-runtime removal
 or new monitor were introduced. Browser/native acceptance and final release gates
 remain outstanding; app restart does not authorize screen manipulation.
+
+## Routine closure — 2026-10-10
+
+The source collector fetched all 27 monitored sources without access errors.
+The current Codex landing-page delta changed only its commit count; its exact
+hash was reviewed as requiring no policy edit. Five retained source candidates
+remain pending, including earlier unreviewed history and optional skill revisions.
+The registered project's HEAD/content fingerprint matches its previous scoped
+review. Process ambiguity and tracked vendor contents block dependency deletion.
+
+Managed installation verification and RTK 0.51.0 ownership verification passed.
+The RTK stable-release plan is unchanged. All five generated report hashes match
+their ownership receipt; current FLOW JSON/HTML match the existing static receipt.
+The overview preserves the dated sandbox failure and does not claim a published
+v1.2.5 release. RTK history remains estimated, mixed and arithmetically discrepant;
+no actual OpenAI token saving is inferred. No files were deleted.
+
+The existing trace automation was updated through the app's automation tool.
+Readback confirms ACTIVE, daily 08:00 Asia/Seoul, the same thread/host authority
+and a prompt matching the repository renderer. The revised completion contract
+separates source collection, whole-routine collection/report refresh, substantive
+review and policy application. Historical test/diagnosis dates are retained rather
+than refreshed when a report is regenerated. No additional monitor was created.
+
+All eight targeted heartbeat contract tests and the repository validator passed
+for this documentation/prompt change. Exact commit
+`6ac1ef754c4d2a3f1631f62721b6f47933851642` has 12 passing CI checks; subsequent
+commits require their own checks. CLI 0.162.0 remains a reviewed deferred update
+because its stable source lacks the targeted ACL repair; no alternative sandbox
+engine was enabled. The screen-control hold, actual browser/native acceptance,
+runtime repair and final release gates remain unchanged.

@@ -45,6 +45,7 @@ def backup(database, tool, tool_sha256, state):
         receipt = read_json(receipt_path, {})
         if not isinstance(receipt, dict) or (receipt_path.exists() and
                 (not isinstance(receipt.get('current'), dict) or
+                 not isinstance(receipt['current'].get('sha256'), str) or
                  not re.fullmatch(r'[0-9a-f]{64}', receipt['current'].get('sha256', '')))):
             raise ValueError('Unowned backup receipt refused')
         for name in ('current', 'previous'):

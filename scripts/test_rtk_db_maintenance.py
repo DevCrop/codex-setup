@@ -97,6 +97,17 @@ class BackupTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '3.51.3'):
             self.backup()
 
+    def test_invalid_receipt_is_rejected_without_overwrite(self):
+        self.backup()
+        folder = self.state / 'rtk-db-backup'
+        before = (folder / 'current.db').read_bytes()
+        receipt = b'{"current":{"sha256":42}}'
+        (folder / 'receipt.json').write_bytes(receipt)
+        with self.assertRaisesRegex(ValueError, 'Unowned backup receipt'):
+            self.backup()
+        self.assertEqual((folder / 'current.db').read_bytes(), before)
+        self.assertEqual((folder / 'receipt.json').read_bytes(), receipt)
+
 
 if __name__ == '__main__':
     unittest.main()

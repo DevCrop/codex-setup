@@ -56,6 +56,13 @@ DB 손상 후 일부 이력만 복구한 호스트는 `history_recovery` 허용 
 이전 누적 스냅샷을 구분한다. 이전 집계와 복구 DB를 합산하거나 가짜 기록을
 삽입하지 않는다. 선택적 `rtk-history-snapshot.html`은 손상 전 화면을 읽는 링크다.
 
+화면 위의 두 카드는 **이전 누적·고정 스냅샷**과 **현재 DB·별도 집계**다.
+현재 DB에는 복구된 과거 기록과 이후 신규 기록이 함께 있다. 순증 실행 수는
+현재 실행 수에서 최초 복구 수를 뺀 값이며, 손상 전 누적 대비 증가량이 아니다.
+KPI·일별 차트·표·CSV는 현재 DB만 사용한다. 이전 누적은 별도 카드와 링크에만
+표시하고 합산·증감률 비교를 하지 않는다. 이전 누적 카드에서 아카이브 링크를
+제공하며 저장된 원본 HTML은 수정하지 않는다.
+
 이 서버는 DB 자동 초기화·삭제·복구를 하지 않는다. 실제 손상은 원본과 sidecar의
 일관된 보존, 활성 쓰기 확인, 격리 복구 및 무결성/집계 비교 후 승인 범위에서
 처리한다. [SQLite 공식 복구](https://sqlite.org/recovery.html)는 복구 데이터가
@@ -64,6 +71,54 @@ DB 손상 후 일부 이력만 복구한 호스트는 `history_recovery` 허용 
 실시간 조회는 메모리에서만 동작한다. 일일 정본·날짜별 집계와 저장 HTML을
 덮어쓰지 않는다. 기존 등록된 점검은 그 호스트의 실제 일정대로 계속 수집한다.
 이 기능이 없던 과거 날짜에 기록을 만들지 않는다.
+
+## DB 재손상 위험과 일일 복구점
+
+손상 발생 원인은 미확인이다. 정상 집계와 백업은 무손상 보장이 아니다.
+2026-10-12 확인한 공식 RTK 안정판은 0.51.0이며, 해당 태그는 bundled
+rusqlite 0.31을 사용한다. 이 호스트의 검증된 바이너리에서 발견한 SQLite
+3.45.0 버전·SOURCE_ID는 [공식 3.45.0 기록](https://sqlite.org/releaselog/3_45_0.html)과
+일치했다. [SQLite WAL-reset 안내](https://sqlite.org/wal.html#walresetbug)는
+3.7.0–3.51.2의 드문 동시 쓰기/체크포인트 결함과 수정 버전을 설명한다.
+이는 재검토할 위험 근거이며 이번 손상의 원인 증명은 아니다.
+새 RTK 안정판 검토 때 내장 SQLite의 수정 여부를 확인한다. SQLite 도구를
+업데이트해도 RTK에 내장된 SQLite는 교체되지 않는다. 임의 RTK 빌드, DLL 교체,
+강제 WAL 전환, synchronous=OFF, VACUUM·수동 체크포인트를 해결책으로 적용하지 않는다.
+`gain`은 집계 조회지만 RTK의 일반 DB 초기화 경로를 사용한다. HTTP의 읽기 전용
+성격이 RTK 내부 연결까지 SQLite read-only로 강제한다는 뜻은 아니다.
+
+사용자가 이 호스트에서 승인한 일일 DB 보존은 `scripts/rtk_db_maintenance.py`로
+실행한다. 새 자동화·훅은 만들지 않는다. 확인한 실제 DB 경로와 사전에 검토한
+SQLite 3.51.3+ 도구 및 그 SHA-256을 명시한다. 설치·다운로드·경로 재지정은 하지 않는다.
+
+```text
+python -B scripts/rtk_db_maintenance.py --database DATABASE --sqlite REVIEWED_SQLITE --sqlite-sha256 REVIEWED_SHA256
+```
+
+1. 소유 경로·링크·도구 해시·버전을 검사한다. 기본 private state는 CODEX_HOME을
+   존중하며 `--state`로 기존 사용자 정의 상태를 명시할 수 있다.
+2. 원본을 `-readonly`로 열어 quick_check를 실행한다. 일관된 온라인 `.backup`으로
+   WAL에 커밋된 데이터까지 새 후보에 포함한다. 원본 DB만 단순 복사하지 않는다.
+3. 후보의 전체 integrity_check와 commands 테이블을 검사한 후에만 최신 백업을
+   교체한다. 직전 정상 백업 한 개를 유지한다. 잠금/시간 초과/손상/경로 불명확은
+   실패로 남기며 기존 정상 백업을 덮어쓰지 않는다. 중단으로 영수증과 파일이
+   어긋나도 자동 추정·덮어쓰기 대신 중단한다.
+4. 두 DB 백업과 해시 영수증은 private `rtk-db-backup/`에만 둔다. 백업에는 원래
+   RTK 이력이 포함되므로 내용을 열람·정규 기록/보고서로 복제·Git 게시하지 않는다.
+   `routine-review.json`에는 시각·무결성·크기·건수·해시·실패 상태만 기록한다.
+5. 매일 한 번, 또는 실제 DB 오류/승인된 DB 변경 전후에만 검사한다. 매 명령·2초
+   화면 조회마다 백업하지 않는다. 기존 일일 집계와 이전 누적 스냅샷도 보존한다.
+6. 실패하면 원본·WAL/SHM을 보존하고 자동 초기화·삭제·복구를 하지 않는다.
+   활성 DB의 이름 변경/교체 및 sidecar 제거는 금지한다. 복구가 필요한 경우 별도
+   검토에서 활성 연결 종료 확인, 격리 복구, 무결성·집계·원래 경로 검증을 수행한다.
+
+이 절차는 조기 감지와 복구 가능성을 높이며 마지막 백업 이후 이력까지 보장하지 않는다.
+업스트림 수정 여부·중복 DB 경로·디스크/동기화/강제 종료 가설을 확정 원인으로
+표시하지 않는다. 임의 저장소·브라우저 프로필·대화 DB는 이 절차의 대상이 아니다.
+근거: [SQLite Online Backup API](https://sqlite.org/backup.html),
+[손상 방지 주의사항](https://sqlite.org/howtocorrupt.html),
+[quick_check 한계](https://sqlite.org/pragma.html#pragma_quick_check),
+[RTK 고정 태그의 초기화](https://github.com/rtk-ai/rtk/blob/v0.51.0/src/core/tracking.rs).
 
 ## 범위와 검증
 
@@ -76,6 +131,7 @@ DB 손상 후 일부 이력만 복구한 호스트는 `history_recovery` 허용 
 ```text
 python -B scripts/test_rtk_dashboard.py
 node scripts/test_rtk_dashboard_client.cjs
+python -B scripts/test_rtk_db_maintenance.py
 python -B scripts/validate_repo.py
 ```
 

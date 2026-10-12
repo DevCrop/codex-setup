@@ -341,6 +341,16 @@ transparent hook loading. RTK's native auto-rewrite is not installed because of
 its documented approval-classifier limitation; do not run `rtk init -g` as a
 shortcut. See [conditional RTK guidance](../global/guides/rtk.md).
 
+### Optional RTK database recovery points and historical report
+
+Follow [RTK dashboard and database operations](rtk-live-dashboard.md) only within
+separate host-recorded backup/report authorization. Preserve valid recovery points
+on health/lock/ownership failures; never auto-reset or replace the active database.
+Retained daily aggregates are a frozen report projection, not recovered command
+rows. Keep them separate from current live metrics and preserve the history slot
+when generating daily reports. Installing this source does not grant backup
+permission or copy another host's history, schedule or runtime evidence.
+
 ## Manifest migration
 
 Manifest schema 2 adds optional `root: personal_skills` to file/retirement entries;

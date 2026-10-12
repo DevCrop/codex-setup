@@ -38,6 +38,14 @@ RTK 보고 데이터의 top-level 필드는 `collected_at`, `collection_date_kst
   `null` 또는 생략한다. 공유 템플릿은 이를 미수집/미확인으로 표시한다.
   null을 성공·0·완료 배지로 만들지 않는다. 실제 기록 배열에는 정상적인 숫자와 날짜만 넣는다.
 
+이전 날짜별 집계를 보존한 호스트는 별도 `rtk-history-data` JSON 슬롯을 사용한다.
+공유 템플릿의 기본값은 `{}`이며 실제 호스트 집계는 포함하지 않는다. 승인된 호스트만
+보존 원본에서 날짜/숫자 필드를 투영하고 원본은 유지한다. 이전 표·막대는 고정하고
+현재 DB의 KPI·차트·표·CSV와 합산하지 않는다. 복구 메타데이터의 기준 시각이
+다르면 이전 표시는 보류한다. 일일 생성은 이 고정 슬롯을 보존한 뒤 기존
+`__RTK_REPORT_DATA__` 한 자리에 현재 집계를 삽입한다. 허용 필드·검사·실시간
+표시 계약은 [RTK 보고 운영](../../docs/rtk-live-dashboard.md)을 따른다.
+
 개선 루틴 데이터는 `preferences`, `lessons`, `checks`, `sources`,
 `timing_policy.rows`의 배열과 독립적인 `last_review_at`, `last_apply_at`,
 `last_verify_at`, `reported_at`을 포함한다. 미실행 시각은 `null`이다.

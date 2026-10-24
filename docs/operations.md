@@ -18,9 +18,10 @@ The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate
 ## Designated-host maintenance
 
 Preserve the operating host's actual registered automation, cadence and authority.
-The observed monitor on this installation is weekly Monday 10:00 Asia/Seoul;
-another host's daily routine is not permission to change it. The merged PR #9
-records a separately authorized daily maintenance context, not this scheduler.
+Earlier verification records describe a Monday 10:00 weekly monitor on another
+host. The designated Windows host's private record describes daily 08:00 Asia/Seoul;
+verify the actual scheduler independently. Neither historical schedule authorizes
+creating another monitor or resetting an unknown scheduler state.
 On 2026-10-05 the user authorized compatible small global guidance and stable
 Codex CLI/RTK updates after review and verification on the recorded host only.
 This does not create a monitor, transfer ownership, change cadence or apply to
@@ -37,7 +38,7 @@ does not inherit monitoring ownership merely by installing this repository.
 |---|---|---|
 | First project registration | Inspect applicable instructions, runtime, existing checks and project flow if present | Record findings and unknowns; do not invent missing configuration or diagrams |
 | Normal implementation | Relevant project rules and affected code | Run task-appropriate acceptance checks; preserve unrelated edits |
-| Existing scheduled heartbeat | Official guidance/articles/products, managed installation and registered project deltas | Apply pre-authorized compatible updates, verify actual results and report only meaningful changes or required decisions |
+| Existing scheduled heartbeat | Daily source deltas; installation checks on change and registered-project checks weekly | Follow Compact maintenance cadence; report only meaningful changes or required decisions |
 | Architecture/dependency/rule change | Affected contracts, documentation and verification commands | Review semantic consistency and run relevant checks after an authorized change |
 | Approved maintenance | Exact reviewed files and versions | Apply, verify, account for removals and preserve rollback |
 
@@ -70,7 +71,7 @@ no additional scheduler, hook or background event service is installed.
 | Compression path health | Changed tool/filter identity or relevant failure | One affected byte/exit/evidence check; reuse matching success |
 | Affected runtime revalidation | Tool/filter change or new relevant failure | Smallest affected existing checks; reuse unchanged evidence |
 | Feedback and failure handling | Observation in active authorized task | Diagnose and finish authorized fix now; retain summary for scheduled review |
-| Aggregate/UI refresh | Existing successful collection | Replace same-date snapshot; preserve unknown/missing days |
+| Aggregate/report | Lightweight daily aggregate; interpretation on request or material anomaly | Replace same-date snapshot; refresh only an existing authorized report contract |
 
 ### Normal implementation contract
 
@@ -97,55 +98,49 @@ checks, diff review and concise guidance refined from recurring mistakes:
 [Astra guidance](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)
 and [Codex best practices](https://learn.chatgpt.com/guides/best-practices).
 
-### Collection, review and cost controls
+### Compact maintenance cadence
 
-1. Run `python -B scripts/check_updates.py`; inspect new and retained candidates.
-   R01 Astra guidance remains the primary instruction-design source. Discover
-   published articles through the official developer blog (R38), OpenAI news RSS
-   (R47, latest 60 entries) and product-update index (R48); scheduling guidance is
-   R46. New/edited first-party URLs are preserved rather than stripped with HTML.
-   An initial index is a collection baseline, not semantic acceptance of its links.
-   Review relevant current entries once; later review only new/edited entries and
-   unresolved relevant articles. Open the original article and applicable current
-   Codex docs before changing policy. Titles, feed summaries and hashes alone are
-   not adoption evidence. Direct access failure can use an available official web
-   retrieval tool; if the original cannot be read, keep it unknown and do not apply.
-   Prioritize Codex subscription/MCP/full-stack guidance. API-only prices, cloud,
-   Pro 500, advertisements and unsupported client features are not local requirements.
-2. Run `python -B scripts/setup.py verify`. Treat unmanaged skill findings separately
-   from managed-file integrity; neither proves whole-home cleanliness or runtime loading.
-3. For each registered project, check path availability, Git HEAD and working-tree
-   changes, including relevant untracked instructions. Inspect only changed rules,
-   configuration, package/runtime pins, scripts and affected source. Check the selected
-   runtime against a project pin when present. An unchanged dirty filename list is
-   not evidence of unchanged content: compare content/diff fingerprints too.
-4. Only meaningful changes or failures trigger model review. Do not reread the
-   entire reference inventory or project. Default to direct review; use bounded
-   delegation only when independent work justifies it. Do not schedule model benchmarks.
-5. Run `python -B scripts/tools.py verify` and `python -B scripts/project_cleanup.py scan`.
-   Do not execute arbitrary project scripts, dependency installs, builds or browser
-   tests during the heartbeat. Approved CLI/RTK installation and affected existing
-   setup verification are covered by the bounded update section below. The sole deletion exception is the pre-authorized dependency
-   policy below, executed only by `project_cleanup.py prune`. Recommend the smallest checks for other candidates;
-   execute them during approved implementation. Missing paths and failed collection
-   stay unknown/failed, not healthy. An offline host cannot guarantee scheduled execution.
-6. Run `python -B scripts/check_closure.py`. Verify actual owned file/config
-   integrity, then compare checkout, installed policy,
-   reviewed CLI/RTK and latest GitHub release versions. Inspect the existing PR's
-   final-head checks and immutable tag/artifact identity when publication differs.
-   A merged PR, prepared package and installed policy are separate from a published
-   release. The current published tag/commit and GitHub ZIP digest must match
-   private `release-verification.json`; a stale/missing receipt requires a fresh
-   download and disposable-root install/repeat/removal/restore validation. Missing
-   GitHub access is unknown, never successful publication.
-   For a registered project with no recorded substantive review, perform one scoped
-   initial instruction/configuration/acceptance-contract review even when its
-   content fingerprint is unchanged. Do not equate collection or a dirty file list
-   with completed onboarding. Do not edit its source or manufacture a project flow.
+Approved on 2026-10-24. This section supersedes earlier unconditional daily command
+lists in handoffs and portable guides. It changes work inside the existing heartbeat,
+not the number of schedulers or its cadence. The model-neutral prompt source is
+`templates/maintenance-prompt.md`; render it with the existing host authorization.
+
+| Trigger | Required scope | Reuse / stop condition |
+|---|---|---|
+| Existing daily heartbeat | Git status/fetch comparison, `check_updates.py` once, new or retained relevant candidates | Unchanged settled content requires no original reread or policy edit |
+| Changed owned source/installed identity, application, or relevant failure | `setup.py verify`, `tools.py verify`, smallest affected existing tests | Reuse successful evidence only for matching identity; failed checks stay unresolved |
+| Changed valid RTK release evidence or new related failure | `tools.py plan-rtk-update`, exact release/asset review | A stable tag is not adoption approval; do not reinstall unchanged binaries |
+| Seven days since successful registered-project scan, or missing baseline | `project_cleanup.py scan`; inspect changed registered instructions/configuration/runtime/content fingerprints | Missing registry is empty scope. Failed collection stays due; no drive discovery |
+| Active project work | That project's affected rules and acceptance checks | No sibling inspection or routine full-project audits |
+| Verified RTK available | One lightweight `gain --daily --format json` aggregate | Replace same-date snapshot. Analyze only on request/material anomaly; no extra savings probes |
+| Actual deployment/tool/publication change or a new related finding | `check_closure.py` and relevant diff/acceptance | Do not repeat network publication/artifact audits daily without a changed identity |
+| Relevant update or explicit cleanup request | Exact owned, inactive, authorized cleanup targets | No scheduled whole-home purge; blocked deletion stays blocked |
+
+The weekly scan uses the same existing project registration and dependency-cleanup
+policy below. Store its actual successful time as
+`maintenance_cadence.last_project_scan` in the existing private routine record;
+seven elapsed days determines when it is due again. Do not advance it for a failed
+or skipped scan. Onboarding still requires a scoped substantive contract review;
+fingerprint collection alone never establishes that a project was reviewed.
+
+R01 Astra guidance remains the primary instruction-design source. Developer blog
+R38, news RSS R47 and product index R48 discover relevant official originals, not
+permission to adopt every article. Preserve a per-URL backlog and failed access;
+titles, hashes, punctuation and example model names alone are not policy changes.
+For expanded official changelog R27, only that source has an 8 MB response budget;
+the default remains 4 MB and oversize/error responses fail without truncation.
+API prices and third-party case studies do not measure subscription savings.
+
+Keep actual attempt/source/review/application/verification timestamps distinct.
+A source-only run advances `last_source_collection`, not
+`last_successful_collection` or `last_policy_application`. Reused dated checks
+remain dated; current_checks must say when an observation was actually made.
+No new relevant evidence means keep existing policy and end quietly. Meaningful
+pending candidates and failures remain recorded without repeated unchanged notices.
 
 ### Completion audit and notification
 
-At the end of each routine, reconcile unresolved stable findings with the collected
+At the end of scoped work, reconcile unresolved stable findings with the collected
 evidence. Each actionable candidate should name exact target files/versions, impact,
 the smallest relevant checks and whether approval or session evidence is required.
 Report new unfinished release/install/migration work proactively, without waiting

@@ -1,4 +1,4 @@
-# TRACE Setup v1.3.3
+# TRACE Setup v1.3.4
 
 Portable Codex personal instructions, optional profiles, pinned Ponytail,
 RTK and ownership-based deployment. Python 3.11+ and Git are required. Use ChatGPT subscription login on each host. No API key and no
@@ -26,8 +26,12 @@ remain independent. No startup task, hook or public web service is installed.
 
 The [v1.3.2 skills/profile fix](docs/release-1.3.2.md) moves bundled skills to
 `~/.agents/skills` and reports conflicting legacy profiles without editing them.
-The [v1.3.3 subagent defaults](docs/release-1.3.3.md) set spawned agents to GPT-6.1 Sol
-medium and add a read-only `explorer` agent on GPT-6 Luna high.
+The [v1.3.3 subagent defaults](docs/release-1.3.3.md) introduced spawned-agent presets.
+Version 1.3.4 preserves the deployed Sol medium default and Sol high
+explorer; exploration is an instruction, not enforced sandbox isolation.
+See [v1.3.4 reconciliation](docs/release-1.3.4.md) and
+[compact maintenance cadence](docs/operations.md#compact-maintenance-cadence).
+Older release tags remain unchanged; published assets have separate verification receipts.
 
 ## Install
 

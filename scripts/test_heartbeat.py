@@ -63,6 +63,32 @@ class HeartbeatTests(unittest.TestCase):
         self.assertIn('No drive discovery, registration or dependency deletion',
                       render(record, host_identity='first-host'))
 
+    def test_retired_integration_stays_out_of_deployment_and_watch_scope(self):
+        from setup import ROOT, read_json
+
+        prompt = render({})
+        self.assertIn('Archify is retired by user preference', prompt)
+        self.assertIn('do not invoke, reinstall, monitor or propose upgrades for it', prompt)
+        manifest = read_json(ROOT / 'manifest.json')
+        lock = read_json(ROOT / 'versions.lock.json')
+        registry = read_json(ROOT / 'references/registry.json')
+        self.assertFalse((ROOT / 'vendor/archify').exists())
+        for entry in manifest['files'] + manifest.get('retired', []):
+            self.assertNotIn('archify', str(entry).lower())
+        self.assertNotIn('archify', [skill['name'] for skill in lock['skills']])
+        for source in registry['sources']:
+            self.assertNotIn('archify', str(source).lower())
+
+    def test_compact_cadence_keeps_daily_collection_and_conditional_verification(self):
+        prompt = render({})
+        for clause in ['Daily lightweight collection', 'check_updates.py once',
+                       'Conditional work', 'changed owned source/installed identity',
+                       'Weekly project check: when seven days', 'failures remain due',
+                       'not every unchanged heartbeat', 'source-only run',
+                       'interpret aggregates only on request or a material anomaly',
+                       'blocked deletion remains blocked']:
+            self.assertIn(clause, prompt)
+
 
 if __name__ == '__main__':
     unittest.main()

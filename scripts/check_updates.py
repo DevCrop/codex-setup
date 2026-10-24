@@ -123,10 +123,13 @@ def github_body(payload):
 def fetch(item):
     url = item["url"]
     try:
+        limit = item.get('max_response_bytes', 4_000_000)
+        if type(limit) is not int or not 1 <= limit <= 8_000_000:
+            raise ValueError('Invalid source response limit')
         req = urllib.request.Request(url, headers={"User-Agent": "TRACE-Setup-source-monitor/1"})
         with urllib.request.urlopen(req, timeout=25) as response:
-            data = response.read(4_000_001)
-            if len(data) > 4_000_000:
+            data = response.read(limit + 1)
+            if len(data) > limit:
                 raise ValueError("Response exceeds monitor limit")
             text = data.decode("utf-8")
             articles = article_index(text, item) if item.get('discovery') else None

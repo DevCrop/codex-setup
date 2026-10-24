@@ -2,11 +2,31 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from check_updates import Body, article_index, check, github_body, official_url, resolve_candidate
+from check_updates import Body, article_index, check, fetch, github_body, official_url, resolve_candidate
 from setup import read_json, save_json
 
 
 class MonitorTests(unittest.TestCase):
+    def test_large_official_page_budget_is_bounded_and_not_silently_truncated(self):
+        from unittest.mock import patch
+        import io
+
+        data = b'<main>' + b'original guidance ' * 240_000 + b'</main>'
+
+        class Response(io.BytesIO):
+            headers = {'Content-Type': 'text/html'}
+
+        item = {'id': 'R27', 'url': 'https://learn.chatgpt.com/docs/changelog'}
+        with patch('check_updates.urllib.request.urlopen', side_effect=lambda *a, **k: Response(data)):
+            self.assertEqual(fetch(item)['status'], 'error')
+            result = fetch({**item, 'max_response_bytes': 8_000_000})
+            self.assertEqual(result['status'], 'fetched')
+            self.assertTrue(result['body'].endswith('guidance'))
+        for limit in (True, -1, 0, 8_000_001, '8000000'):
+            with patch('check_updates.urllib.request.urlopen') as network:
+                self.assertEqual(fetch({**item, 'max_response_bytes': limit})['status'], 'error')
+                network.assert_not_called()
+
     def test_discovery_links_are_first_party_and_drop_query_state(self):
         base = 'https://openai.com/news/rss.xml'
         self.assertEqual(official_url('/index/guide/?utm_source=x#part', base),

@@ -10,7 +10,7 @@ capabilities; OpenAI does not publish or endorse this complete setup.
 | Profile files and precedence | [Advanced config](https://learn.chatgpt.com/docs/config-file/config-advanced) | Separate sol/astra presets; base, session and project selections preserved |
 | GPT-6.1 Sol and effort selection | [Models](https://learn.chatgpt.com/docs/models) | Sol preset updated; client-default starting point; no claim of universal Medium superiority |
 | Agent controls and inheritance | [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) | Supported delegation only; explicit higher-priority host requirements win |
-| Implicit skill invocation policy | [Build skills](https://learn.chatgpt.com/docs/build-skills) | Ponytail/Archify retain upstream bytes and explicit-only invocation policy |
+| Implicit skill invocation policy | [Build skills](https://learn.chatgpt.com/docs/build-skills) | Ponytail retains upstream bytes and explicit-only invocation policy |
 | Hook rewrite/trust and scope | [Hooks](https://learn.chatgpt.com/docs/hooks) | No RTK transparent hook; never bypass exact-definition trust; cloud and local runtime differ |
 | Runtime version | [Changelog](https://learn.chatgpt.com/docs/changelog) | CLI 0.160.0 reviewed and independently installed; not an app version |
 | Subscription usage | [Pricing](https://learn.chatgpt.com/docs/pricing) | No API key, token savings guarantee or API-price-to-Pro-quota conversion |
@@ -39,6 +39,8 @@ reason was not established. Do not label it obsolete based on model release alon
 
 The October 5 completion audit adds read-only release/install alignment and missing
 initial-project-review detection. The read-only audit itself does not apply upgrades or publish;
-the later October 5 host authorization controls bounded application separately. Archify 3.0.1 reminder adoption is deliberately deferred; the existing
-central monitor avoids duplicating unchanged notices. Reconsider a later meaningful
-functional/security release. Ponytail stable 4.11.0 changes no deployed SKILL bytes.
+the later October 5 host authorization controls bounded application separately.
+The former diagram-tool watch and adoption deferral are retired by
+[Decision 003](003-remove-archify.md); later upstream releases do not reopen them.
+The existing central monitor avoids duplicating unchanged notices. The Ponytail
+4.11.0 comparison was historical evidence, not the current package pin.

@@ -2,7 +2,7 @@
 
 Approved by the user on 2026-09-14. The 50/200-run routing benchmark is cancelled. Historical TRACE records are not active instructions. The user chooses the parent model (subagent defaults: decision 004); optional profiles are conveniences, not measured recommendations. Use bounded delegation only when useful; two children and no recursion are local limits, not official optimal settings.
 
-Global policy owns shared behavior; each project owns code conventions and acceptance checks. Archify and Ponytail are required tools with pinned source versions. Architecture diagrams are models, not runtime correctness proofs. Source changes generate review candidates; approved updates perform additions, replacements, removals and verification.
+Global policy owns shared behavior; each project owns code conventions and acceptance checks. Ponytail is available on explicit request with a pinned source version. The former diagram-tool requirement was retired by [Decision 003](003-remove-archify.md). Architecture diagrams are models, not runtime correctness proofs. Source changes generate review candidates; approved updates perform additions, replacements, removals and verification.
 
 Evidence distinction: official configuration defines supported behavior; the user's accepted plan defines operating choices; historical incidents support only their recorded runtime and checks. No measured token-saving percentage is claimed.
 

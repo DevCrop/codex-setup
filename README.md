@@ -3,6 +3,10 @@
 See [v1.3.5 completion and remaining limits](docs/release-1.3.5.md). The current
 local candidate is newer than the published v1.3.4 ZIP; they are not identical.
 
+Existing installed-component refresh and the Codex-only monitoring fields are
+documented in [software updates](docs/software-updates.md). Host authorization
+and the saved existing automation remain local; cloning does not activate updates.
+
 Portable Codex personal instructions, optional profiles, pinned Ponytail,
 RTK and ownership-based deployment. Python 3.11+ and Git are required. Use ChatGPT subscription login on each host. No API key and no
 50/200-run model benchmark are required.

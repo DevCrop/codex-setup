@@ -33,6 +33,15 @@ are recorded in the private routine record; no future success is predeclared her
 Exact old report artifacts and historical diagram diagnostics remain retained
 where execution policy blocked deletion. No retry through another tool is allowed.
 
+The existing daily heartbeat now supports host-approved native refresh of enrolled
+installed plugins, with matching 24-hour owner checks reused. App-owned runtimes
+remain owner-managed. The Codex-only dashboard projects package/skill identities,
+dated account quota percentages and approved MCP metadata observations; it excludes
+credentials, account balances and raw sessions. See [update operations](software-updates.md).
+The source collector's `--summary` bounds routine output while retaining full
+private evidence and unresolved source candidates. No extra global rule, hook,
+scheduler or automatic model switching is introduced.
+
 Sources: [Ponytail v5.3.2](https://github.com/DietrichGebert/ponytail/releases/tag/v5.3.2),
 [RTK 1.0.1](https://github.com/rtk-ai/rtk/releases/tag/v1.0.1),
 [RTK edition build](https://github.com/rtk-ai/rtk/blob/v1.0.1/Cargo.toml),

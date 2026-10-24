@@ -237,12 +237,23 @@ def check(state, items, fetcher=fetch):
     return report
 
 
+def summary(report):
+    fields=('id','status','change','sha256')
+    return {'checked_at':report.get('checked_at'),
+            'fetched':sum(r.get('status')=='fetched' for r in report.get('results',[])),
+            'total':len(report.get('results',[])),
+            'results':[{k:r[k] for k in fields if k in r} for r in report.get('results',[])],
+            'pending':[{k:r[k] for k in ('id','sha256','monitor_retired') if k in r} for r in report.get('pending',[])],
+            'limit':'Summary only; inspect the exact retained source report before semantic decisions.'}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--state", type=Path)
     parser.add_argument('--resolve', help='Resolve a reviewed source ID; never applies policy')
     parser.add_argument('--expected-sha')
     parser.add_argument('--reason')
+    parser.add_argument('--summary',action='store_true',help='Bound stdout; full evidence remains in private source report')
     args = parser.parse_args()
     state = args.state or Deployment().state
     if args.resolve:
@@ -256,7 +267,7 @@ def main():
     for s in read_json(ROOT / "versions.lock.json")["skills"]:
         items.append({"id": "upstream-" + s["name"], "url": f'https://api.github.com/repos/{s["repository"]}/commits?per_page=1'})
     report = check(state, items)
-    print(json.dumps(report, ensure_ascii=False, indent=2))
+    print(json.dumps(summary(report) if args.summary else report, ensure_ascii=False, indent=2))
     return 1 if any(r['status'] == 'error' for r in report['results']) else 0
 
 

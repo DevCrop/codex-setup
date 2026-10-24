@@ -67,3 +67,23 @@ runtime checks passed. The latter checks cover Git evidence, Unicode/space paths
 stderr, nonzero exits and argument preservation; they do not cover every filter.
 An optional extra version-label/restart attempt was policy-blocked. That optional
 source change was reverted; the already verified running viewer is retained.
+
+## 2026-10-25 existing-component monitoring follow-up
+
+The later, explicitly authorized dashboard update was restarted after fresh
+readiness/health ownership checks. The running Codex page shows 29 installed
+plugins, 121 discovered SKILL.md files, zero unavailable inventory entries,
+dated quota percentages and the exact MCP probe limitations. These counts are
+metadata checks, not execution of every installed skill or tool.
+
+The affected final workspace suite ran 131 cases: 127 passed and four
+environment-dependent cases were skipped. Managed installation and RTK native
+verification passed. Desktop rendering and a 390px monitoring-card view were
+inspected; the mobile document did not overflow its viewport. Browser error logs
+were empty. The temporary viewport override was reset. Private current screenshots
+replace the previous final image; they are not committed here.
+
+Native Windows input failures, standalone MCP authentication/connectivity limits,
+blocked historical artifact deletion and unpublished v1.3.5 remain separate dated
+findings. This follow-up does not claim cross-platform CI or universal runtime
+health. No Claude process or setup was modified.

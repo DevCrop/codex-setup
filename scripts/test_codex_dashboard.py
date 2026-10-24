@@ -6,7 +6,7 @@ import threading
 import unittest
 from unittest.mock import patch
 
-from codex_dashboard import Projection, local_link, make_server, schedule_label, write_ready
+from codex_dashboard import Projection, local_link, make_server, schedule_label, write_ready, monitoring
 from setup import Deployment, ROOT, save_json
 
 
@@ -30,6 +30,24 @@ class FakeRTK:
 
 
 class CodexDashboardTests(unittest.TestCase):
+    def test_active_findings_exclude_terminal_records_before_row_limit(self):
+        findings={str(i):{'status':'resolved'} for i in range(101)}
+        findings['still-open']={'status':'unknown'}
+        save_json(self.dep.state/'routine-review.json',{'unresolved_findings':findings})
+        result=self.projection.snapshot()
+        self.assertEqual(result['findings_total'],1)
+        self.assertEqual(result['findings'],[{'id':'still-open','status':'unknown'}])
+
+    def test_monitoring_projects_only_allowed_quota_and_package_metadata(self):
+        value=monitoring({'codex_monitoring':{'usage_limits':{'accountId':'SECRET_ACCOUNT',
+            'balance':'SECRET_BALANCE','windows':[{'label':'7일','used_percent':10,'duration_minutes':10080,
+            'resets_at':'2026-10-31T00:00:00Z','token':'SECRET_TOKEN'}]}},'setup_health':{'mcp':{
+            'fixture':{'status':'connected_metadata_only','url':'SECRET_ENDPOINT'}}}})
+        self.assertEqual(value['usage']['windows'][0]['remaining_percent'],90)
+        self.assertNotIn('SECRET',json.dumps(value))
+        self.assertIsNone(value['software']['plugin_count'])
+        self.assertEqual(monitoring({'codex_monitoring':{'usage_limits':{'windows':[{'used_percent':True},{'used_percent':float('nan')} ]}}})['usage']['windows'],[])
+
     def test_optional_disk_link_is_host_local_and_never_copies_credentials(self):
         self.assertEqual(local_link('http://127.0.0.1:8765/'), 'http://127.0.0.1:8765/')
         for url in [None, 'https://example.com/', 'http://127.0.0.1:8765/?token=secret',

@@ -4,6 +4,36 @@ from render_heartbeat import render
 
 
 class HeartbeatTests(unittest.TestCase):
+    def test_existing_software_updates_require_exact_host_and_scope(self):
+        auth = {'mode':'compatible-global-stable-tools','approved_on':'2026-10-05',
+                'automation_id':'trace','host_identity':'host','software_updates':{
+                    'automation_id':'trace','host_identity':'host','approved_on':'2026-10-25',
+                    'policy':'reviewed-existing-software-v1'}}
+        prompt=render({'maintenance_authorization':auth},host_identity='host')
+        for text in ['Human-approved existing-component auto-updates','supported native owner operations',
+                     'Never edit plugin/system caches','repeat/no-op','GitHub publication']:
+            self.assertIn(text,prompt)
+        self.assertNotIn('{{software_update_scope}}',prompt)
+        self.assertIn('review-only on this host',render({'maintenance_authorization':auth},host_identity='other'))
+        del auth['software_updates']
+        self.assertIn('review-only on this host',render({'maintenance_authorization':auth},host_identity='host'))
+
+    def test_setup_health_requires_separate_exact_scope(self):
+        auth = {'mode': 'compatible-global-stable-tools', 'approved_on': '2026-10-05',
+                'automation_id': 'trace', 'host_identity': 'host', 'setup_health': {
+                    'automation_id': 'trace', 'host_identity': 'host', 'approved_on': '2026-10-25',
+                    'policy': 'paths-mcp-drift-monthly-recovery-v1'}}
+        prompt = render({'maintenance_authorization': auth}, host_identity='host')
+        for clause in ['maintenance_health.py collect', 'disposable directory', 'unknown stays unknown',
+                       'preserve cadence', 'No tools/call', 'Failed recovery remains due']:
+            self.assertIn(clause, prompt)
+        for host, automation in [('other', 'trace'), ('host', 'other')]:
+            self.assertIn('No setup-health execution or recovery authority',
+                          render({'maintenance_authorization': auth}, host_identity=host, automation_id=automation))
+        del auth['setup_health']
+        self.assertIn('No setup-health execution or recovery authority',
+                      render({'maintenance_authorization': auth}, host_identity='host'))
+
     def test_new_host_cannot_inherit_automatic_upgrade_authority(self):
         for record in ({}, {'maintenance_authorization': {'mode':'compatible-global-stable-tools',
                                                          'approved_on':'2026-10-05','automation_id':'other'}}):
@@ -81,7 +111,7 @@ class HeartbeatTests(unittest.TestCase):
 
     def test_compact_cadence_keeps_daily_collection_and_conditional_verification(self):
         prompt = render({})
-        for clause in ['Daily lightweight collection', 'check_updates.py once',
+        for clause in ['Daily lightweight collection', 'check_updates.py --summary once',
                        'Conditional work', 'changed owned source/installed identity',
                        'Weekly project check: when seven days', 'failures remain due',
                        'not every unchanged heartbeat', 'source-only run',

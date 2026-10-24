@@ -2,11 +2,20 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from check_updates import Body, article_index, check, fetch, github_body, official_url, resolve_candidate
+from check_updates import Body, article_index, check, fetch, github_body, official_url, resolve_candidate, summary
 from setup import read_json, save_json
 
 
 class MonitorTests(unittest.TestCase):
+    def test_summary_retains_failures_and_pending_identity_without_raw_diffs(self):
+        report={'checked_at':'time','results':[{'id':'one','status':'fetched','change':'candidate','sha256':'a',
+            'diff_excerpt':'RAW_DIFF'},{'id':'two','status':'error','error':'RAW_ERROR'}],
+            'pending':[{'id':'older','sha256':'b','monitor_retired':True,'diff_excerpt':'RAW_DIFF'}]}
+        value=summary(report)
+        self.assertEqual((value['fetched'],value['total']),(1,2))
+        self.assertEqual(value['results'][1],{'id':'two','status':'error'})
+        self.assertEqual(value['pending'][0],{'id':'older','sha256':'b','monitor_retired':True})
+        self.assertNotIn('RAW_',str(value))
     def test_large_official_page_budget_is_bounded_and_not_silently_truncated(self):
         from unittest.mock import patch
         import io

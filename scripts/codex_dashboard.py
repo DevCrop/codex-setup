@@ -3,7 +3,9 @@ import argparse
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 import os
+import platform
 from pathlib import Path
 import re
 import threading
@@ -37,6 +39,44 @@ def read_document(path, kind='json'):
 
 def text(value):
     return value[:200] if isinstance(value, str) else None
+
+
+def monitoring(routine):
+    updates=routine.get('software_updates', {})
+    inventory=updates.get('inventory', {})
+    telemetry=routine.get('codex_monitoring', {})
+    usage=telemetry.get('usage_limits', {})
+    health=routine.get('setup_health', {})
+    windows=[]
+    for row in usage.get('windows', [])[:8]:
+        used=row.get('used_percent')
+        if type(used) not in (int,float) or not math.isfinite(used) or not 0<=used<=100:
+            continue
+        windows.append({'label':text(row.get('label')),'used_percent':used,'remaining_percent':100-used,
+                        'duration_minutes':row.get('duration_minutes') if type(row.get('duration_minutes')) is int else None,
+                        'resets_at':text(row.get('resets_at'))})
+    auth=routine.get('maintenance_authorization', {}).get('software_updates', {})
+    def count(key):
+        value=inventory.get(key)
+        return value if type(value) is int and value>=0 else None
+    return {
+        'software':{'status':text(updates.get('status')),'plugin_count':count('plugin_count'),
+            'skill_count':count('skill_count'),'unavailable_count':count('unavailable_count'),
+            'collected_at':text(updates.get('last_inventory_collection')),'owner_checked_at':text(updates.get('last_owner_refresh')),
+            'verified_at':text(updates.get('last_verification')),
+            'auto_updates_approved':auth.get('policy')=='reviewed-existing-software-v1' and bool(auth.get('approved_on'))
+                and auth.get('host_identity')==platform.node() and auth.get('automation_id')=='trace',
+            'plugins':[{k:text(p.get(k)) for k in ('name','display_name','version','marketplaceName','status')}
+                       for p in inventory.get('plugins', [])[:100]]},
+        'usage':{'observed_at':text(usage.get('observed_at')),'windows':windows,
+                 'scope':'Account-shared Codex quota; not this chat token usage or RTK savings.'},
+        'mcp_health':{'checked_at':text(health.get('checked_at')),'last_attempt':text(health.get('last_mcp_attempt')),
+                     'rows':[{'name':text(k),'status':text(v.get('status')),'checked_at':text(v.get('checked_at'))}
+                             for k,v in health.get('mcp', {}).items()][:30]},
+        'app':{'version':text(telemetry.get('app', {}).get('version')),
+               'status':text(telemetry.get('app', {}).get('status')),
+               'observed_at':text(telemetry.get('app', {}).get('observed_at'))},
+    }
 
 
 def schedule_label(value):
@@ -140,6 +180,8 @@ class Projection:
                'scope': 'TRACE private history including validation calls; earlier shared history is not added.' if self.last_rtk.get('history_scope') == 'trace-private' else 'Shared local RTK history; may include Claude, Codex, fixtures and other versions.'}
         rtk['daily'] = rtk.get('daily')[-90:] if isinstance(rtk.get('daily'), list) else []
         findings = routine.get('unresolved_findings', {})
+        active_findings = [(k,v) for k,v in findings.items() if v.get('status') not in
+            ('resolved','retired','retired-historical-artifact','superseded')] if isinstance(findings,dict) else []
         rows = sources.get('results')
         data = {
             'schema_version': 1,
@@ -175,9 +217,11 @@ class Projection:
                             'checked_at': text(release.get('checked_at')), 'commit': text(release.get('commit'))},
             'runtime': {'cli_last_observed': text(closure.get('cli')), 'checked_at': text(closure.get('checked_at'))},
             'links': {'disk_map': local_link(routine.get('dashboard_links', {}).get('disk_map'))},
-            'findings': [{'id': text(k), 'status': text(v.get('status'))} for k, v in list(findings.items())[:30]] if isinstance(findings, dict) else [],
+            'findings': [{'id': text(k), 'status': text(v.get('status'))} for k, v in active_findings[:100]],
+            'findings_total':len(active_findings),
             'unavailable_sources': issues,
             'actual_openai_tokens': None, 'actual_cache_hit_rate': None,
+            'monitoring': monitoring(routine),
         }
         comparable = {**data, 'rtk': {k: v for k, v in rtk.items() if k != 'collected_at'}}
         data['revision'] = hashlib.sha256(json.dumps(comparable, sort_keys=True).encode()).hexdigest()

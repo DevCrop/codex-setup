@@ -11,6 +11,11 @@ Start from the repository README and installer help for executable commands. Res
 
 Run plan before apply. Inspect additions, changes, removals and conflicts. Apply only approved owned files; preserve user edits, permissions, model selection, MCP secrets and unrelated settings. Verify after apply. Keep one previous managed state in the local state directory for rollback, not backup copies in active paths. On failure restore that state and report conflicts. Installer-owned temporary artifacts are cleaned after success; application caches, sessions and credentials are not general cleanup targets.
 
+Existing-component automatic updates have an additional host-local approval from
+2026-10-25. Follow [software updates](software-updates.md) and the exact
+`maintenance_authorization.software_updates` scope. This extends existing package
+maintenance, not new installations, permissions, Claude settings or publication.
+
 ## Profiles and fresh sessions
 
 The optional CLI profiles are `sol`, `astra` and `astra-deep`. They are separate `.config.toml` files selected with `--profile`. Check host model support; the app composer remains user-controlled. A parsed configuration is not proof of a fresh session's effective instruction or model behavior. Inspect new-session loading separately. Legacy overrides and project trust can affect effective configuration.
@@ -137,6 +142,47 @@ A source-only run advances `last_source_collection`, not
 remain dated; current_checks must say when an observation was actually made.
 No new relevant evidence means keep existing policy and end quietly. Meaningful
 pending candidates and failures remain recorded without repeated unchanged notices.
+
+### Opt-in setup health, drift and recovery
+
+The 2026-10-25 host approval adds three checks inside the existing TRACE heartbeat;
+it creates no schedule. Record `maintenance_authorization.setup_health` with exact
+host, automation ID, policy `paths-mcp-drift-monthly-recovery-v1`, approved backup
+root, enrolled MCP configuration fingerprints and registered path bindings. The
+portable renderer and `scripts/maintenance_health.py collect` reject missing or
+different host authority. Future commands/endpoints require a new explicit review;
+an edited MCP configuration never enrolls itself.
+
+Run collection once per daily heartbeat. Read selected saved settings and registered
+C-to-D link metadata; never traverse their contents or repair them. Probe enrolled
+MCP configurations on change or seven days since the last attempt, using only
+approved `server/discover` or legacy initialize/list metadata. The modern
+2026-07-28 protocol requires an explicit `metadata_protocols` entry in the exact
+host's setup-health approval; older approvals keep legacy behavior. Protocol
+fallback is bounded and never retries authentication errors. Do not call tools, start application-bound GUI servers,
+read OAuth stores or change settings. Record attempt and full success separately;
+401/403 means this collector lacks client authentication, not that the user's login
+expired. A closed application, refused startup or timeout remains unverified.
+Preserve unresolved results between attempts and deduplicate notifications.
+
+Compare saved model, reasoning, approval and sandbox values only with explicitly
+observed execution values supplied to this invocation. Unknown values stay unknown.
+[Configuration precedence](https://learn.chatgpt.com/docs/config-file/config-basic)
+permits session overrides; a difference does not establish an installer fault.
+[MCP configuration](https://learn.chatgpt.com/docs/extend/mcp) distinguishes stdio
+launch settings and HTTP authentication; a standalone probe cannot borrow the
+desktop's OAuth connection. These collection limits are local TRACE policy.
+
+Every 30 elapsed days after a successful drill, back up only approved receipt-owned
+text with matching hashes and a nonsecret selected-settings summary. Exclude full
+mixed user config, credentials, chats, DB and work files even if an unexpected
+receipt lists them. Restore/hash-test copies only in a disposable directory under
+the approved backup root. Never restore into the live home. Failures retain their
+due status. Private `routine-review.json.setup_health`, daily `health-logs` snapshots
+and timestamped change events record actual results without MCP arguments, URLs,
+environment values or authentication data. This does not alter model, effort,
+permissions or existing storage-cleanup tasks. Local runs require the designated
+host/app to be available; see [automations](https://learn.chatgpt.com/docs/automations).
 
 ### Completion audit and notification
 

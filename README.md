@@ -1,4 +1,7 @@
-# TRACE Setup v1.3.4
+# TRACE Setup v1.3.5 — local candidate, not published
+
+See [v1.3.5 completion and remaining limits](docs/release-1.3.5.md). The current
+local candidate is newer than the published v1.3.4 ZIP; they are not identical.
 
 Portable Codex personal instructions, optional profiles, pinned Ponytail,
 RTK and ownership-based deployment. Python 3.11+ and Git are required. Use ChatGPT subscription login on each host. No API key and no
@@ -90,8 +93,17 @@ Choose models in the app. Optional CLI commands: `codex --profile sol`,
 `codex --profile astra`, `codex --profile astra-deep`. Profiles do not change
 the persistent base model selection and do not implement automatic model switching.
 The sol preset selects GPT-6.1 Sol Medium; existing app/base effort choices are preserved.
+The user's everyday preference is GPT-6.1 Sol, with Astra reserved for the most
+demanding work. This preference does not switch models or change selected effort.
+See [the bounded subagent workflow](docs/subagent-workflow.md) for conditional
+delegation, ownership, integration and stopping rules used by new local sessions.
 
 ## Optional RTK and project maintenance
+
+For a Codex-specific dashboard using the existing monitor UI, see
+[the opt-in Codex dashboard](docs/codex-dashboard.md). It runs separately on loopback
+port 47812, refreshes read-only metadata every ten seconds, and preserves the Claude
+monitor and disk-map servers. It does not add a scheduler or background model calls.
 
 ```text
 python -B scripts/tools.py install-rtk

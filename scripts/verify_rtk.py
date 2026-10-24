@@ -29,7 +29,7 @@ def main():
     checks = []
 
     def compare(label, raw, wrapped, cwd, required=None, expected=0):
-        task_env = {**env, **runtime_env(cwd)}
+        task_env = {**env, **runtime_env(cwd, state=state)}
         a = run(raw, cwd, task_env)
         b = run([binary, *wrapped], cwd, task_env)
         passed = a[0] == b[0] and (a[0] != 0 if expected == 'nonzero' else a[0] == expected)

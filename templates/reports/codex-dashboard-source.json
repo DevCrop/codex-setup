@@ -1,0 +1,7 @@
+{
+  "source": "User-owned local Claude monitor UI",
+  "reference_url": "http://127.0.0.1:47811/",
+  "review_date": "2026-10-24",
+  "css_sha256": "f58504dc10ffecb198173ffbdf640095fc3e91fa22085af006abbad5b807eba1",
+  "reuse": "Original layout/theme/component CSS; no private Claude data, logs or renderer collector copied."
+}

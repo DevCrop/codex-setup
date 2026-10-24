@@ -14,6 +14,28 @@ from setup import read_json, save_json
 
 
 class ToolTests(unittest.TestCase):
+    def test_oss_assets_and_history_do_not_use_shared_host_database(self):
+        self.assertEqual(target_name('Windows', 'AMD64', 'oss'), 'rtk-oss-x86_64-pc-windows-msvc.zip')
+        with self.assertRaises(ValueError):
+            target_name('Windows', 'AMD64', 'other')
+        with tempfile.TemporaryDirectory() as directory:
+            state = Path(directory)
+            with patch.dict(os.environ, {'RTK_DB_PATH': 'unrelated-shared-history'}):
+                env = runtime_env(state=state)
+            self.assertEqual(env['RTK_DB_PATH'], str(state/'tools/rtk/history.db'))
+            self.assertEqual(env['RTK_TELEMETRY_DISABLED'], '1')
+            self.assertFalse((state/'tools/rtk/history.db').exists())
+
+    def test_oss_install_uses_owned_archive_and_retains_edition(self):
+        with tempfile.TemporaryDirectory() as directory:
+            state = Path(directory)
+            lock, fetch = self.package('fixture')
+            lock['edition'] = 'oss'
+            lock['assets'] = {target_name(edition='oss'): next(iter(lock['assets'].values()))}
+            result = install(state, lock, fetch, verify_binary=False)
+            self.assertEqual(result['edition'], 'oss')
+            self.assertEqual(result['asset_name'], target_name(edition='oss'))
+
     def release_fixture(self, version='0.51.0'):
         names = ['rtk-x86_64-pc-windows-msvc.zip', 'rtk-aarch64-apple-darwin.tar.gz']
         assets = [{'name': name, 'digest': 'sha256:' + 'a'*64,

@@ -1,15 +1,12 @@
 # Global Working Agreement
 
-- Respond in Korean unless requested otherwise. Report results, checks actually performed, and material limitations; distinguish evidence from inference.
-- Infer intent; retain explicit preferences and corrections. Route durable lessons through guides/official-source-workflow.md; clarify consequential ambiguity and scale tools to the task.
-- Follow project rules. Resolve the active root, available tools and acceptance checks; search narrowly and read affected code/docs. Keep project rules local; load applicable skills/guides.
-- Preserve the user's selected model and reasoning effort.
-- For reviews/plans, inspect and explain. For implementation, establish outcome, scope and smallest acceptance checks, run them and finish authorized work. Review the affected diff and stop when acceptance is met. Ask only for missing authority or a consequential decision.
-- Reuse existing tools/checks and unchanged verified evidence. Batch independent reads with bounded output; keep dependent edits sequential. Expand or repeat checks only for new evidence, failure or unresolved risk.
-- For task errors, follow guides/official-source-workflow.md to capture, diagnose, fix and verify; retry only with new evidence.
-- Preserve unrelated user changes and credentials. Use UTF-8 for text. Confirm exact targets and ownership before removing files.
-- Use verified TRACE RTK for every supported diagnostic, including nested Python/PowerShell calls; do not assume hook interception. Keep exact reads, structured data, mutations and final acceptance native; never double-wrap. Follow guides/rtk.md; if unavailable, continue normally.
-- Handle small or coupled work directly. Delegate only when supported and independent work justifies overhead; the parent owns integration and verification.
-- Use Ponytail only when explicitly requested, within the requested task. Its upstream procedure does not expand the task's scope or persist into unrelated work.
+- Respond in Korean unless asked otherwise. Report outcomes, checks actually run and material limits; distinguish evidence from inference.
+- Follow applicable project instructions. Read only relevant code/docs; keep project rules in the project. Retain explicit preferences and corrections.
+- Preserve the selected model and reasoning effort. The user's everyday model is GPT-6.1 Sol; Astra is reserved for their most demanding work. Do not auto-switch.
+- For reviews/plans, inspect and explain. For implementation, complete the authorized outcome, run the smallest relevant acceptance checks, fix failures caused by the change and review the affected diff. Stop when acceptance is met; ask only for missing authority or consequential ambiguity.
+- Preserve unrelated edits, credentials and other agents' setups. Use UTF-8. Before deletion, verify exact paths and ownership; account for superseded owned files and active references without deleting user data.
+- Reuse existing tools/checks and matching verified evidence. Batch independent reads with bounded output; keep dependent edits sequential. Retry or expand checks only for new evidence, failures or unresolved risks.
+- Use verified TRACE RTK for supported diagnostics, including nested calls; never double-wrap or assume hook interception. Keep exact reads, structured data, mutations and final acceptance native. If unavailable, continue normally.
+- Handle small or coupled work directly. Standing request: use subagents for bounded independent work when parallelism or context isolation materially helps and the host permits it. Follow the delegation guide; the parent owns integration and verification. Use Ponytail only when explicitly requested within task scope. Archify is retired; do not use it.
 
-Conditional guides in the Codex home (honor CODEX_HOME): read `guides/agent-orchestration.md` for substantial delegation, `guides/model-operations.md` for CLI profiles, `guides/github-workflow.md` for Git publishing, `guides/official-source-workflow.md` when changing durable guidance, and `guides/rtk.md` when filtering noisy command output. Do not load these guides for unrelated tasks.
+Load Codex-home guides only when relevant (honor CODEX_HOME): `guides/agent-orchestration.md` for delegation, `guides/model-operations.md` for profiles, `guides/github-workflow.md` for publishing, `guides/official-source-workflow.md` for durable preferences, guidance changes or task errors, and `guides/rtk.md` for filtered diagnostics.

@@ -1,6 +1,6 @@
 # v1.3.4 — compact maintenance and local reconciliation
 
-Working revision, approved 2026-10-24; publication is separate from local deployment.
+Approved 2026-10-24; publication is separate from local deployment.
 
 - Daily source discovery and lightweight RTK aggregation remain. Full installation
   checks run after changed identity/application/error, registered-project scans

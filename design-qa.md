@@ -7,9 +7,11 @@ global-policy deployment. Reviewed 2026-10-25, Asia/Seoul.
 
 ## Reference and fidelity
 
-The reference is the existing local monitor. Its stylesheet is reused with the
-same warm dark/light palette, typography, segmented navigation, KPI band, panel
-grid and chart components. The checked stylesheet identity is recorded in
+The reference is the existing local monitor. Its layout, typography, segmented
+navigation, KPI band, panel grid and chart components are reused. The Codex-only
+palette has since been adapted to neutral light/dark colors; the warm palette
+described in earlier checks belongs to the original monitor. Both source and
+adapted stylesheet identities are recorded in
 `templates/reports/codex-dashboard-source.json`. Labels, values and chart contents
 intentionally represent Codex metadata. This is layout/style reuse, not a claim
 that unlike datasets produce pixel-identical pages.
@@ -87,3 +89,20 @@ Native Windows input failures, standalone MCP authentication/connectivity limits
 blocked historical artifact deletion and unpublished v1.3.5 remain separate dated
 findings. This follow-up does not claim cross-platform CI or universal runtime
 health. No Claude process or setup was modified.
+
+## Codex-only palette follow-up
+
+The Codex viewer now uses independent neutral white/graphite/cool-gray surfaces
+and monochrome chart/brand accents. Semantic success, warning and failure colors
+remain distinct. Claude's warm palette and files were not changed. The terminal
+marker is generic text, not an official OpenAI logo or official color-token claim.
+
+Both light and dark themes were rendered and toggled in the existing Codex browser
+tab. The original light preference was restored. Rendered token values matched the
+stylesheet; primary, muted and faint text tokens have a minimum calculated 4.68:1
+contrast on the tested panel/canvas colors. This is a token contrast check, not a
+complete accessibility certification. Nine existing dashboard tests, repository
+validation and the affected diff check passed; browser error logs were empty.
+Current light/dark screenshots are retained privately. Original-reference and
+adapted stylesheet hashes are recorded separately. No dashboard data, global
+instruction, collection cadence or Claude server was modified.

@@ -9,7 +9,7 @@
 </head>
 <body>
 <header class="top"><div class="topin">
-<div class="brand"><span class="mark" aria-hidden="true">✻</span><h1>Codex 설정 모니터</h1></div>
+<div class="brand"><span class="mark" aria-hidden="true">&gt;_</span><h1>Codex 설정 모니터</h1></div>
 <nav class="tabs" aria-label="화면 탭">
 <button type="button" data-tab="ov" aria-current="page">개요</button>
 <button type="button" data-tab="routine">루틴</button>
@@ -48,7 +48,7 @@ function chart(rtk){
  const days=(rtk.daily||[]).filter(r=>finite(r.input_tokens)&&finite(r.output_tokens)&&r.input_tokens>=r.output_tokens&&r.output_tokens>=0).slice(-7);
  if(!days.length)return '<p class="empty">기록된 일별 집계가 없습니다. 누락된 날짜를 0으로 채우지 않습니다.</p>';
  const max=Math.max(1,...days.map(r=>r.input_tokens));
- return `<div class="chart"><div class="cols" role="group" aria-label="현재 RTK 집계 범위의 일별 출력 추정치">${days.map(r=>`<div class="cd"><div class="stk" style="height:128px"><i class="sg f-opus" style="height:${128*(r.input_tokens-r.output_tokens)/max}px" title="출력 차이 추정 ${esc(num(r.input_tokens-r.output_tokens))}"></i><i class="sg f-haiku" style="height:${128*r.output_tokens/max}px" title="필터 후 추정 ${esc(num(r.output_tokens))}"></i></div><span class="cl">${esc(String(r.date).slice(5).replace('-','/'))}<span class="cv-v">${esc(short(r.input_tokens))}</span></span></div>`).join('')}</div></div><ul class="legend"><li class="lg"><i class="dot f-opus"></i>출력 차이 추정</li><li class="lg"><i class="dot f-haiku"></i>필터 후 추정</li></ul>`;
+ return `<div class="chart"><div class="cols" role="group" aria-label="현재 RTK 집계 범위의 일별 출력 추정치">${days.map(r=>`<div class="cd"><div class="stk" style="height:128px"><i class="sg series-primary" style="height:${128*(r.input_tokens-r.output_tokens)/max}px" title="출력 차이 추정 ${esc(num(r.input_tokens-r.output_tokens))}"></i><i class="sg series-filtered" style="height:${128*r.output_tokens/max}px" title="필터 후 추정 ${esc(num(r.output_tokens))}"></i></div><span class="cl">${esc(String(r.date).slice(5).replace('-','/'))}<span class="cv-v">${esc(short(r.input_tokens))}</span></span></div>`).join('')}</div></div><ul class="legend"><li class="lg"><i class="dot series-primary"></i>출력 차이 추정</li><li class="lg"><i class="dot series-filtered"></i>필터 후 추정</li></ul>`;
 }
 function fingerprint(d){
  const total=d.owned_total,match=d.matched;

@@ -1,9 +1,11 @@
 # Codex dashboard — existing monitor UI, separate Codex data
 
 The user requested reuse of the existing local Claude monitor's HTML/CSS appearance.
-The Codex viewer uses the same layout tokens, panels, tabs, typography and chart
-components, with Codex-specific content. The reference stylesheet is copied without
-private Claude statistics; its identity is in
+The Codex viewer retains the layout, panels, tabs, typography and chart components,
+with Codex-specific content. Its independent light/dark palette now uses neutral
+white, graphite and cool gray, with semantic status colors. These are local
+Codex-inspired choices, not published official Codex color tokens. The warm Claude
+palette and original monitor remain unchanged. Source and adapted identities are in
 `templates/reports/codex-dashboard-source.json`.
 
 Claude settings, hooks, collectors, files and its port 47811 listener are not edited

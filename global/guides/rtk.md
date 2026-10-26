@@ -1,7 +1,7 @@
 # RTK command output
 
 Load for filtered diagnostics. RTK is third-party software, not an OpenAI feature
-or evidence of subscription savings. TRACE pins RTK 1.0.1's Apache-2.0 OSS edition
+or evidence of subscription savings. TRACE pins RTK 1.1.0's Apache-2.0 OSS edition
 and all five platform asset digests in versions.lock.json. Its CLI binary is still
 named rtk. Pipeline engines, proxy daemons, native rewrite hooks and RTK.md injection
 are not installed.

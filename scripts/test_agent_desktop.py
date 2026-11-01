@@ -23,7 +23,9 @@ class DesktopComponentTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='trace-desktop-test-')
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        # macOS exposes its temporary directory through /var -> /private/var.
+        # Use a canonical fixture path; keep production link rejection intact.
+        self.root = Path(self.temp.name).resolve()
         self.home = self.root / 'Codex home 한글'
         self.state = self.root / 'state'
         self.source = self.root / 'source'

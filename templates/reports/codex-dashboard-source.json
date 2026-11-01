@@ -1,0 +1,16 @@
+{
+  "source": "User-owned local Claude monitor UI",
+  "reference_url": "http://127.0.0.1:47811/",
+  "review_date": "2026-10-24",
+  "reuse": "Original layout, typography and component structure; independent Codex neutral light/dark palette and semantic chart series. No Claude files or data modified.",
+  "reference_css_sha256": "f58504dc10ffecb198173ffbdf640095fc3e91fa22085af006abbad5b807eba1",
+  "codex_css_sha256": "2795b0edda86c1e28e685282fa98ef2f25993ef0c8eae9f212b83701cde32fa3",
+  "palette_review_date": "2026-10-25",
+  "palette_basis": {
+    "type": "local Codex-inspired UI; not official color tokens",
+    "references": [
+      "https://openai.com/codex/",
+      "https://openai.com/brand/"
+    ]
+  }
+}

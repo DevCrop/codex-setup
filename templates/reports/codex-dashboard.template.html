@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Codex 설정 모니터</title>
+<link rel="stylesheet" href="/assets/dashboard.css">
+<style>@font-face{font-family:"Pretendard Variable";src:url('/assets/PretendardVariable.woff2') format('woff2');font-weight:100 900;font-display:swap}</style>
+<script>try{var t=localStorage.getItem('codex-monitor-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="top"><div class="topin">
+<div class="brand"><span class="mark" aria-hidden="true">&gt;_</span><h1>Codex 설정 모니터</h1></div>
+<nav class="tabs" aria-label="화면 탭">
+<button type="button" data-tab="ov" aria-current="page">개요</button>
+<button type="button" data-tab="routine">루틴</button>
+<button type="button" data-tab="agents">에이전트</button>
+<button type="button" data-tab="rtk">RTK</button>
+<button type="button" data-tab="ponytail">Ponytail</button>
+<button type="button" data-tab="settings">설정 상태</button>
+</nav>
+<div class="meta"><span class="st live" id="connection" role="status"><span class="pip"></span><span id="live-label">10초 상태 갱신</span><span class="lcw" id="last-fetch"></span></span><button class="btn" id="theme" type="button" aria-label="테마 전환 (밝게/어둡게)">테마</button></div>
+</div><i class="prog" aria-hidden="true"></i></header>
+<main class="stage" id="stage">
+<section class="view" id="v-ov" aria-label="개요"></section>
+<section class="view" id="v-routine" aria-label="루틴" hidden></section>
+<section class="view" id="v-agents" aria-label="에이전트" hidden></section>
+<section class="view" id="v-rtk" aria-label="RTK" hidden></section>
+<section class="view" id="v-ponytail" aria-label="Ponytail" hidden></section>
+<section class="view" id="v-settings" aria-label="설정 상태" hidden></section>
+</main>
+<script id="codex-dashboard-data" type="application/json">__CODEX_DASHBOARD_DATA__</script>
+<script>
+'use strict';
+const ids=['ov','routine','agents','rtk','ponytail','settings'];
+const esc=v=>String(v??'미확인').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const finite=v=>typeof v==='number'&&Number.isFinite(v);
+const num=v=>finite(v)?v.toLocaleString('ko-KR'):'미수집';
+const short=v=>finite(v)?(Math.abs(v)>=1e4?(v/1e4).toFixed(1)+'만':num(v)):'미수집';
+const yes=v=>v===true?'일치':v===false?'불일치':'미확인';
+function stamp(v){if(!v||!Number.isFinite(new Date(v).valueOf()))return '미확인';return new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date(v))}
+function panel(title,body,hint='',cls=''){return `<section class="panel ${cls}"><div class="ph"><h2>${esc(title)}</h2><span class="hint">${esc(hint)}</span></div>${body}</section>`}
+function kv(k,v){return `<div class="kv"><span>${esc(k)}</span><span title="${esc(v)}">${esc(v)}</span></div>`}
+function row(k,v,ok){return `<div class="lrow"><i class="pip" style="color:var(--${ok===true?'ok':ok===false?'bad':'faint'})"></i><span class="ln" title="${esc(k)}">${esc(k)}</span><span class="lv ${ok===false?'warn':''}">${esc(v)}</span></div>`}
+function kpi(k,v,n){return `<div class="kpi"><div class="k">${esc(k)}</div><div class="vr"><div class="v">${esc(v)}</div></div><div class="ft"><div class="n" title="${esc(n)}">${esc(n)}</div></div></div>`}
+function table(head,rows){return `<div class="tw"><table class="utable"><thead><tr>${head.map(v=>`<th>${esc(v)}</th>`).join('')}</tr></thead><tbody>${rows.map(c=>`<tr>${c.map(v=>`<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+const cap=v=>`<p class="cap">${esc(v)}</p>`;
+function chart(rtk){
+ const days=(rtk.daily||[]).filter(r=>finite(r.input_tokens)&&finite(r.output_tokens)&&r.input_tokens>=r.output_tokens&&r.output_tokens>=0).slice(-7);
+ if(!days.length)return '<p class="empty">기록된 일별 집계가 없습니다. 누락된 날짜를 0으로 채우지 않습니다.</p>';
+ const max=Math.max(1,...days.map(r=>r.input_tokens));
+ return `<div class="chart"><div class="cols" role="group" aria-label="현재 RTK 집계 범위의 일별 출력 추정치">${days.map(r=>`<div class="cd"><div class="stk" style="height:128px"><i class="sg series-primary" style="height:${128*(r.input_tokens-r.output_tokens)/max}px" title="출력 차이 추정 ${esc(num(r.input_tokens-r.output_tokens))}"></i><i class="sg series-filtered" style="height:${128*r.output_tokens/max}px" title="필터 후 추정 ${esc(num(r.output_tokens))}"></i></div><span class="cl">${esc(String(r.date).slice(5).replace('-','/'))}<span class="cv-v">${esc(short(r.input_tokens))}</span></span></div>`).join('')}</div></div><ul class="legend"><li class="lg"><i class="dot series-primary"></i>출력 차이 추정</li><li class="lg"><i class="dot series-filtered"></i>필터 후 추정</li></ul>`;
+}
+function fingerprint(d){
+ const total=d.owned_total,match=d.matched;
+ if(!finite(total)||total<=0||!finite(match))return '<p class="empty">설치 소유권 기록이 없습니다.</p>';
+ const ratio=Math.max(0,Math.min(1,match/total)),arc=ratio*289.03;
+ // Original monitor donut asset; its values now represent owned fingerprints.
+ return `<div class="donut"><svg class="dn" viewBox="0 0 120 120" role="img" aria-label="소유 파일 ${esc(match)}개 중 ${esc(total)}개 지문 일치"><circle class="tr" cx="60" cy="60" r="46"/><circle class="d-sub" cx="60" cy="60" r="46" stroke-dasharray="${arc} ${289.03-arc}" transform="rotate(-90 60 60)"/><text class="dv" x="60" y="60" text-anchor="middle">${Math.round(ratio*100)}%</text><text class="dk" x="60" y="78" text-anchor="middle">파일 지문</text></svg><ul class="dlg"><li><i class="sw d-sub"></i><span class="nm">일치</span><b>${esc(match)}</b></li><li><i class="sw d-main"></i><span class="nm">전체</span><b>${esc(total)}</b></li></ul></div>${cap('파일 지문 확인 · 전체 검증·세션 실행과 별도')}`;
+}
+let current;
+function monitoringCards(d){
+ const m=d.monitoring||{},s=m.software||{},u=m.usage||{};
+ const quota=(u.windows||[]).length?u.windows.map(w=>kv(w.duration_minutes===10080?'7일 한도':w.duration_minutes===300?'5시간 한도':w.label||'계정 한도',`${num(w.used_percent)}% 사용 · ${num(w.remaining_percent)}% 남음`)+kv('리셋 시각',stamp(w.resets_at))).join(''):cap('사용 한도 미수집');
+ return `<div class="g22">${panel('Codex 계정 한도',quota+kv('실제 조회 시각',stamp(u.observed_at))+cap('계정 공유 한도입니다. 이 대화의 토큰·비용·RTK 절감량이 아닙니다. 화면은 저장된 관측을 표시합니다.'))}${panel('스킬·플러그인 자동 업데이트',kv('이 호스트 승인',s.auto_updates_approved?'기존 설치 구성 자동 갱신':'승인 미확인')+kv('설치 플러그인 / 스킬',`${num(s.plugin_count)} / ${num(s.skill_count)}`)+kv('메타데이터 미확인',num(s.unavailable_count))+kv('마지막 소유자 확인',stamp(s.owner_checked_at))+kv('마지막 설치 검증',stamp(s.verified_at))+cap('같은 identity의 24시간 이내 소유자 확인은 재사용합니다. 새 권한·연결·플러그인은 자동 추가하지 않습니다.'))}</div>`;
+}
+function monitoringDetails(d){
+ const m=d.monitoring||{},s=m.software||{},h=m.mcp_health||{},app=m.app||{};
+ const packages=(s.plugins||[]).length?table(['설치 패키지','버전','소유 출처','검사'],s.plugins.map(p=>[p.display_name||p.name,p.version,p.marketplaceName,p.status==='observed'?'설치 메타데이터 일치':p.status])):cap('패키지 목록 미수집');
+ const statusLabel=v=>({connected_metadata_only:'메타데이터 연결 확인',client_auth_unavailable:'점검 클라이언트 인증 없음',transport_unavailable:'연결 미확인',waiting_for_application_or_manual_session:'앱 실행·수동 확인 대기',disabled:'비활성',observed:'설치 메타데이터 일치',up_to_date:'최신 상태'})[v]||v;
+ const health=(h.rows||[]).length?table(['등록 MCP','마지막 관측','관측 시각'],h.rows.map(r=>[r.name,statusLabel(r.status),stamp(r.checked_at)])):cap('승인된 MCP 점검 결과 미수집');
+ return panel('설치 구성 검증',kv('인벤토리 조회',stamp(s.collected_at))+packages,'현재 설치 범위만')+
+ `<div class="g22">${panel('승인된 MCP 점검',kv('점검 기록',stamp(h.checked_at))+health+cap('독립 점검의 마지막 관측입니다. 앱의 실제 연결·OAuth 상태나 도구 실행 성공을 대신하지 않습니다.'))}${panel('앱 소유 업데이트',kv('관측 버전',app.version)+kv('업데이트 검사',statusLabel(app.status))+kv('검사 시각',stamp(app.observed_at))+cap('앱·런타임 파일은 해당 소유자의 업데이트 방식으로 관리합니다. 캐시를 직접 고치거나 별도 CLI로 덮어쓰지 않습니다.'))}</div>`;
+}
+function render(d){
+ current=d; const i=d.installation,a=d.agents,p=d.ponytail,r=d.routine,t=d.rtk,s=t.summary||{},probe=t.probe||{};
+ const running=r.status==='ACTIVE';
+ const privateHistory=t.history_scope==='trace-private';
+ const historyLabel=privateHistory?'TRACE 격리 기록 · 검증 호출 포함':'공용 기록 · Claude/Codex 혼합 가능';
+ const stateRows=row('관리 파일 지문',i.owned_total===null?'미확인':`${i.matched} / ${i.owned_total}`,i.mismatch_count===0&&i.owned_total!==null)+row('예약 루틴',r.status||'미확인',running)+row('Ponytail 원본',yes(p.pinned_hash_matches),p.pinned_hash_matches)+row('Ponytail 명시 호출',p.explicit_only?'명시 요청 전용':'확인 필요',p.explicit_only)+row('RTK 집계',t.status==='live'?'읽기 전용 실시간':t.status==='stale'?'이전 값 유지':'미수집',t.status==='live');
+ const cadence=table(['시점','처리'],[['매일','공식 변경 수집 · 가벼운 집계'],['변경·오류 발생','관련 설치·도구 검사'],['7일마다 / 해당 작업','등록 프로젝트 변경 점검'],['요청·의미 있는 이상','집계 해석 · 정리 · 마감 점검']]);
+ document.getElementById('v-ov').innerHTML=`<div class="kpis band">${kpi('글로벌 설정',i.version||'미확인','원본 '+(i.source_version||'미확인'))}${kpi('RTK 추정 감축',short(s.total_saved),historyLabel)}${kpi('자식 에이전트 상한',num(a.max_children),'설정값 · 현재 실행 수는 미수집')}${kpi('Ponytail',p.available?'설치됨':'미확인',p.explicit_only?'명시 요청 전용':'호출 정책 확인 필요')}${kpi('예약 루틴',running?'활성':r.status||'미확인','마지막 수집 '+stamp(r.last_source_collection))}</div><div class="g12">${panel('일별 RTK 출력 추정치',chart(t)+cap(historyLabel+' · 실제 OpenAI 사용량 아님 · 이전 공용 이력 합산 안 함'),'관측된 최근 7일','c8')}${panel('설치 파일 지문',fingerprint(i),'현재 읽기 전용 관측','c4')}${panel('간소화 루틴',cadence+cap('바뀐 항목만 검토·검증 · 실제 수행 시각은 루틴 탭에서 확인'),'매일 전체 검사 없음','c8')}${panel('상태 점검',stateRows,'실제 기록 기준','c4')}</div>`;
+ document.getElementById('v-routine').innerHTML=`<div class="g22">${panel('예약과 빈도',kv('상태',r.status)+kv('등록 일정',r.schedule)+cadence,'실제 저장된 자동화')}${panel('마지막 수행 기록',kv('원문 수집',stamp(r.last_source_collection))+kv('내용 검토',stamp(r.last_review))+kv('정책 적용',stamp(r.last_application))+kv('전체 수집 성공',stamp(r.last_successful_collection))+kv('등록 프로젝트 점검',stamp(r.last_project_scan)),'화면 갱신 시각과 별도')}</div>${panel('출처 검토',kv('수집 성공 / 대상',r.source_count===null?'미확인':`${r.source_success} / ${r.source_count}`)+kv('보류 후보',num(r.pending_count))+kv('수집 시각',stamp(r.source_checked_at))+cap('해시 변경과 수집 성공을 정책 승인으로 해석하지 않습니다. 미해결 후보는 유지합니다.'))}`;
+ document.getElementById('v-agents').innerHTML=`<div class="g22">${panel('부모 에이전트',kv('개인 설정 기본 모델',a.parent_model_default||'클라이언트 선택')+kv('기본 추론 강도',a.parent_effort_default||'클라이언트 선택')+cap('설정 파일 기본값입니다. 대화·프로젝트에서 선택한 실제 모델과 다를 수 있습니다.'))}${panel('위임 기본값',kv('기본 자식 모델',a.child_model)+kv('기본 추론 강도',a.child_effort)+kv('동시 자식 상한',num(a.max_children))+cap('독립 작업에만 위임합니다. 현재 실행 수·실제 호출 횟수·모델별 사용량은 수집하지 않습니다.'))}</div>${panel('탐색 에이전트',kv('이름','explorer')+kv('설치 설정',a.explorer_available?'확인됨':'미확인')+kv('모델',a.explorer_model)+kv('추론 강도',a.explorer_effort)+cap('읽기 전용 탐색은 행동 지침입니다. 별도 쓰기 차단 샌드박스가 강제된다는 뜻은 아닙니다.'))}${panel('관측 범위',table(['항목','표시'],[['설정된 모델·강도','실제 TOML에서 읽음'],['현재 실행 에이전트 수','미수집'],['요청별 모델 선택·토큰','미수집'],['실행 위임 비율','미측정']]))}`;
+ document.getElementById('v-rtk').innerHTML=`<div class="band k4">${kpi('원래 출력 추정',short(s.total_input),'RTK 기록')}${kpi('필터 후 추정',short(s.total_output),'RTK 기록')}${kpi('RTK 보고 감축',short(s.total_saved),'OpenAI 구독 절약량 아님')}${kpi('기록 호출 수',num(s.total_commands),historyLabel)}</div><div class="g22">${panel('일별 기록',chart(t)+cap(t.rtk_record_date_basis||'기록 시간대 미확인'))}${panel('집계와 실제 사용량',kv('집계 상태',t.status)+kv('집계 관측',stamp(t.collected_at))+kv('산술 차이',num(t.arithmetic_difference))+kv('실제 OpenAI 토큰','미측정')+kv('Codex 캐시 적중률','미측정')+cap('RTK 보고 감축과 입력−출력 차이가 다를 수 있습니다. 모델·비용·구독 한도 절감으로 환산하지 않습니다.'))}</div>${panel('마지막 압축 경로 검사',kv('검사 시각',stamp(probe.checked_at))+kv('원본 / 필터 바이트',finite(probe.raw_bytes)&&finite(probe.filtered_bytes)?`${num(probe.raw_bytes)} / ${num(probe.filtered_bytes)}`:'미확인')+kv('종료 코드',finite(probe.raw_exit)&&finite(probe.filtered_exit)?`${probe.raw_exit} / ${probe.filtered_exit}`:'미확인')+kv('필요 증거 보존',yes(probe.required_evidence_preserved))+cap('이 검사 시각은 화면 갱신으로 바꾸지 않습니다. 과거 검사가 현재의 모든 명령을 검증하지는 않습니다.'))}`;
+ document.getElementById('v-ponytail').innerHTML=`<div class="g22">${panel('Ponytail 설치',kv('스킬 파일',p.available?'존재':'없음 / 미확인')+kv('고정 원본 해시',yes(p.pinned_hash_matches))+kv('고정 버전',p.version||'커밋으로 고정')+kv('고정 커밋',p.commit?p.commit.slice(0,12):'미확인'))}${panel('호출 정책',kv('자동 호출',p.explicit_only===true?'허용 안 함':'정책 확인 필요')+kv('호출 예시','$ponytail 현재 작업을 간결하게 구현해줘')+cap('명시적으로 요청한 작업에만 적용합니다. 설치됨과 실제 호출됨은 다릅니다.'))}</div>${panel('측정 범위',table(['항목','현재 근거'],[['설치·원본·호출 정책','실제 파일에서 확인'],['호출 횟수·현재 모드','미수집'],['이 PC의 토큰 절감률','미측정'],['공개 벤치마크','이 PC의 성과로 표시하지 않음']]))}`;
+ document.getElementById('v-settings').innerHTML=`<div class="g22">${panel('설정과 배포',stateRows+kv('최근 전체 검증',stamp(i.last_verified_at))+kv('배포 태그',d.publication.tag)+kv('배포 검증',d.publication.status)+kv('릴리스 검증 시각',stamp(d.publication.checked_at)))}${panel('클라이언트와 보호 범위',kv('마지막 CLI 관측',d.runtime.cli_last_observed)+kv('CLI 관측 시각',stamp(d.runtime.checked_at))+cap('프리뷰·안정 버전 차이는 자동으로 숨기지 않습니다. 인증·세션·대화 파일과 원시 명령 이력은 읽지 않습니다. 설정의 MCP 비밀은 응답에 포함하지 않습니다.')+(d.links.disk_map?`<p><a href="${esc(d.links.disk_map)}" target="_blank" rel="noopener noreferrer">이 PC의 기존 디스크 지도 열기</a></p>`:cap('이 PC에 등록된 디스크 지도 연결이 없습니다.'))+cap('이 화면에서 전체 디스크를 다시 스캔하거나 파일을 삭제하지 않습니다.'))}</div>${panel('유지 중인 확인 사항',d.findings.length?table(['항목','상태'],d.findings.map(v=>[v.id,v.status])):'<p class="empty">기록된 항목이 없습니다. 전체 환경의 완전성을 뜻하지 않습니다.</p>')}${panel('메타데이터 접근 상태',cap(d.unavailable_sources.length?d.unavailable_sources.join(' · '):'필요한 메타데이터 파일을 읽었습니다.')+cap('화면 조회: '+stamp(d.observed_at)),'실행 검증과 별도')}`;
+ document.getElementById('v-ov').insertAdjacentHTML('beforeend',monitoringCards(d));
+ document.getElementById('v-settings').insertAdjacentHTML('beforeend',monitoringDetails(d));
+}
+function show(){let id=location.hash.slice(1);if(!ids.includes(id))id='ov';ids.forEach(v=>document.getElementById('v-'+v).hidden=v!==id);document.querySelectorAll('[data-tab]').forEach(b=>{if(b.dataset.tab===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')})}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{location.hash=b.dataset.tab}));
+window.addEventListener('hashchange',()=>{show();window.scrollTo(0,0)});
+document.getElementById('theme').addEventListener('click',()=>{const r=document.documentElement;const dark=r.getAttribute('data-theme')==='dark'||(!r.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);const next=dark?'light':'dark';r.setAttribute('data-theme',next);try{localStorage.setItem('codex-monitor-theme',next)}catch(e){}});
+render(JSON.parse(document.getElementById('codex-dashboard-data').textContent));show();
+let pending=false;
+async function refresh(){if(pending||document.hidden)return;pending=true;try{const response=await fetch('/api/dashboard',{cache:'no-store'});if(!response.ok)throw Error('unavailable');const d=await response.json();if(d.revision!==current.revision){render(d);show()}document.getElementById('connection').className='st live';document.getElementById('live-label').textContent='10초 상태 갱신';document.getElementById('last-fetch').textContent=' · '+stamp(d.observed_at);}catch(e){document.getElementById('connection').className='st warn';document.getElementById('live-label').textContent='연결 오류 · 이전 값 유지';}finally{pending=false}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh()});
+setInterval(refresh,10000);
+</script>
+</body></html>

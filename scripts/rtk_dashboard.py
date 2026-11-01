@@ -78,6 +78,7 @@ def saved_snapshot(reports):
     if not isinstance(probe, dict):
         raise ValueError('Invalid probe')
     result = {k: raw[k] for k in ('collected_at', 'collection_date_kst') if k in raw}
+    result['history_scope'] = 'trace-private' if raw.get('history_scope') == 'trace-private' else 'shared-or-unknown'
     result.update(summary=summary, daily=daily,
                   probe={k: v for k, v in probe.items() if k in PROBE_FIELDS},
                   arithmetic_difference=summary['total_saved'] - (summary['total_input'] - summary['total_output']),
@@ -153,6 +154,13 @@ class Collector:
                     raise RuntimeError('Aggregate unavailable')
                 raw = json.loads(proc.stdout)
                 summary, daily = aggregate_fields(raw)
+                history_scope = 'shared-or-unknown'
+                try:
+                    receipt = json.loads(safe_file(self.reports.parent / 'tools-installed.json').read_text(encoding='utf-8'))
+                    if receipt.get('rtk_history', {}).get('scope') == 'trace-private':
+                        history_scope = 'trace-private'
+                except (OSError, ValueError, TypeError):
+                    pass
                 now = datetime.now(timezone.utc)
                 # The scheduled snapshot is evidence, not live raw command history.
                 probe = {}
@@ -172,6 +180,7 @@ class Collector:
                     'collection_date_kst': now.astimezone(timezone(timedelta(hours=9))).date().isoformat(),
                     'rtk_record_date_basis': 'RTK recorded date; source timezone not established',
                     'summary': summary, 'daily': sorted(daily, key=lambda r: r['date']),
+                    'history_scope': history_scope,
                     'probe': probe,
                     'arithmetic_difference': summary['total_saved'] -
                         (summary['total_input'] - summary['total_output']),
@@ -198,6 +207,7 @@ class DashboardServer(ThreadingHTTPServer):
 class Handler(BaseHTTPRequestHandler):
     server_version = 'TRACE'
     sys_version = ''
+    content_security_policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; frame-ancestors 'none'"
 
     def log_message(self, *args):
         pass  # No access/command history log.
@@ -209,7 +219,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'no-referrer')
-        self.send_header('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; frame-ancestors 'none'")
+        self.send_header('Content-Security-Policy', self.content_security_policy)
         self.end_headers()
         self.wfile.write(content)
 

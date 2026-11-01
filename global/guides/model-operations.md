@@ -10,9 +10,13 @@ Sources: [Models](https://learn.chatgpt.com/docs/models), [Pricing](https://lear
 
 ## Host defaults
 
-For new work, prefer GPT-6.1 Sol when available to the account and client. Keep
-Astra for user-selected tasks. To choose a host default, explicitly review that
+User preference confirmed 2026-10-25: use GPT-6.1 Sol for everyday work and reserve
+Astra for the most demanding tasks. This is a preference, not automatic routing or
+a measured ranking. Preserve the selected effort; do not impose a higher setting
+or switch models on task keywords or repeated failures. To choose a host default, explicitly review that
 host's base model setting; an existing base choice takes precedence. TRACE does
 not force this preference onto another host or change an existing conversation.
 Source: [Current model recommendations](https://learn.chatgpt.com/docs/models),
-reviewed 2026-10-01.
+reviewed 2026-10-25. The current Models page recommends starting Sol with the
+client's default effort and keeping Astra for the most demanding work. Optional
+medium/high presets above remain convenience choices, not official optimums.

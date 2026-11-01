@@ -1,92 +1,72 @@
 # RTK command output
 
-Load when choosing output handling for development diagnostics. RTK is a third-party output filter, not an OpenAI feature or proof of subscription token savings. TRACE pins the reviewed release in versions.lock.json and installs one binary into private host state with scripts/tools.py install-rtk. No shared machine path, credentials, permission change, PATH edit, injected RTK.md or transparent rewrite hook is installed.
+Load for filtered diagnostics. RTK is third-party software, not an OpenAI feature
+or evidence of subscription savings. TRACE pins RTK 1.1.0's Apache-2.0 OSS edition
+and all five platform asset digests in versions.lock.json. Its CLI binary is still
+named rtk. Pipeline engines, proxy daemons, native rewrite hooks and RTK.md injection
+are not installed.
 
-Use scripts/tools.py verify from the setup checkout to locate the owned binary, or scripts/tools.py run git status for explicit filtering. Use the verified runner for every supported read-only diagnostic invocation by default, including short output. Keep searches narrowly scoped; short output can have zero savings. Do not add a diagnostic or repeat it merely to generate a gain record. Preserve arguments, exit codes and needed evidence. Read exact source code and authoritative acceptance-check output directly; rerun the original command when filtering obscures failures. Never interpret rtk gain estimates as actual OpenAI billed tokens or included allowance saved.
+## Run only needed diagnostics
 
-Outside the setup checkout, run the managed `bin/trace_rtk.py` in Codex home by absolute path with Python. Resolve Codex home from CODEX_HOME, otherwise the supported user home `.codex`; for example pass `git status` as arguments from the current project directory. The runner derives private tool state from that home, verifies the binary ownership/hash and preserves the caller's working directory. No project-local RTK files or extra project installation are needed. Custom deployment `--state` locations require tools.py --state STATE run instead; they are not guessed by the global runner.
+Use the verified CODEX_HOME/bin/trace_rtk.py runner for supported read-only
+commands, including nested Python/PowerShell invocations. Honor CODEX_HOME and
+retain the project working directory. From the setup checkout, tools.py run is
+also supported; a custom deployment state must be passed to that tool explicitly.
+The runner verifies binary ownership/hash on each invocation; do not double-wrap
+or assume an existing native hook catches nested commands.
 
-For JavaScript/TypeScript tools, use the TRACE runner from the project working directory: it temporarily prioritizes that project's node_modules/.bin, blocks implicit npm downloads and disables RTK telemetry for the invocation. Direct rtk tsc can choose a global compiler; this was observed on Windows. Do not infer matching tool versions from two successful exits. Use the project-native acceptance command for final verification. The runner does not modify persistent PATH.
+Keep exact source reads, structured JSON, mutations and final acceptance native.
+Do not wrap deletion, installation, migration, publishing, authentication or
+permission decisions. Never use bypass (formerly proxy) to claim an unsupported
+command was compressed. If filtering hides needed evidence, use native output.
+If the runner is unavailable, continue normally and report a material limitation.
 
-Do not transparently wrap deletes, installs, migrations, publishing, authentication or security decisions. Upstream's Codex hook rewrites commands before native approval checks, whose safety classifier does not unwrap RTK; this may obscure mutating-command signals. Hook setup is a separate opt-in review, with official /hooks trust, and is not included in this release. Do not bypass hook trust or add sandbox writable roots to make analytics work. Keep local analytics outside Git; analytics write failure does not establish filtering failure.
+Search narrowly and bound output. Do not add diagnostics or repeat checks merely
+to increase gain. Preserve arguments, exits and required evidence. Use the project
+compiler: the runner temporarily prioritizes node_modules/.bin, requires local
+TypeScript for tsc, blocks implicit npm downloads and leaves persistent PATH alone.
+Final acceptance still uses the project's native command.
 
-Sources: [RTK 0.51.0 release](https://github.com/rtk-ai/rtk/releases/tag/v0.51.0), [pinned Codex integration](https://github.com/rtk-ai/rtk/blob/v0.51.0/hooks/codex/README.md), [OpenAI hooks](https://learn.chatgpt.com/docs/hooks).
+## Keep this host's data separate
 
-## Savings reporting
+The managed runner and tools.py run use a private tools/rtk/history.db under the
+resolved TRACE deployment state. Reject linked history paths. Do not migrate,
+merge or modify Claude's RTK database, hooks, config or binary. The 1.0 schema
+change is confined to this private database. Environment overrides exist only for
+the invoked process; telemetry remains disabled. No service or watcher is added.
 
-When reporting efficiency, use the verified runner's `gain --daily --format json`
-aggregate snapshot; keep command text and project paths out of reports. Label
-counts as local recorded invocations and values as RTK token estimates, never
-OpenAI usage, money saved or subscription quota. Recorded aggregates may include
-other RTK versions, repeated diagnostics and fixtures; do not attribute all savings
-to the current runner. Compare arithmetic totals and disclose inconsistencies.
-Pair estimates with a scoped raw/filtered byte comparison, exit/evidence checks
-and recall/fallback limitations. Missing records mean unknown, not zero benefit.
-On the authorized scheduled routine, collect date-keyed aggregates into one
-current private record. Refresh an optional authorized chart only when its local
-data/template contract exists; no duplicate totals or routine notifications.
-Preserve recorded date/timezone limits and missing days as unknown. Reuse a matching successful raw/runner check. Changed tool/filter identity or a
-relevant failure justifies one affected read-only comparison, counted separately.
-Other hosts need their own authorization. Do not run commands to increase gain.
+Earlier saved aggregates may contain shared Claude/Codex/fixture/version history.
+Keep them labelled historical/shared and do not add them to the new private totals.
+Private history can include explicit validation calls and is not pure task usage.
+Missing dates are unknown, never invented zero rows. UI counters can restart at
+this scope boundary; that is not deletion of the earlier history.
 
-## Existing host integrations
+## Evidence and update lifecycle
 
-A host may have its own user-local PATH binary and an opt-in native hook.
-The installer neither removes nor upgrades that separately owned integration.
-Prefer the verified TRACE runner to avoid silently selecting a second binary.
-Inspect any existing hook with the supported Codex `/hooks` review and trust flow;
-do not alter trust records or assume a processor smoke test proves desktop
-interception. A CLI upgrade and a desktop app update are separate operations.
-Do not copy host-local sandbox recovery paths or asset hashes other than the current pin into a
-new computer. Preserve unrelated hooks, credentials, environment and permissions.
-Sources: [Codex configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference),
-[Hooks and trust](https://learn.chatgpt.com/docs/hooks).
+Use gain --daily --format json through the owned runner for an authorized
+aggregate. These are RTK token estimates and recorded invocations, not actual
+OpenAI tokens, money or quota. Keep raw/filtered bytes, original probe time,
+binary/runner identity, source timezone uncertainty and arithmetic discrepancies
+separate. Version 1.0 changes the headline treatment of oversized outputs; compare
+only matching scopes and definitions. Preserve stale snapshots as stale.
 
-## Use, release review and validation timing
+Collect releases and date-keyed snapshots on the existing cadence. Interpret on
+request or a material anomaly. plan-rtk-update validates exact stable assets from
+the current collection; it does not approve or install. Review changed features,
+licence, platform assets and argument/JSON compatibility. Same-version drift,
+missing assets or user edits block replacement; never reinstall an unchanged pin.
+Use the owned installer, verify and one previous binary. After a changed tool/filter
+or relevant failure, run only affected existing byte/exit/evidence checks; reuse
+matching dated success. Count validation calls separately where observable.
 
-Use the owned runner on every actually needed, supported read-only diagnostic
-invocation. Exact source reads, machine-readable JSON, mutating operations and
-final acceptance use native output; do not add checks only to increase savings. Ownership
-and SHA-256 verification already run per invocation in trace_rtk.py. This is a
-local runtime check, not a network release lookup or universal hook interception.
+Existing user-local RTK binaries and opt-in hooks have separate ownership. TRACE
+neither upgrades nor removes them. The upstream Codex hook rewrites commands before
+native approval classification, which does not unwrap RTK; keep hook trust and
+permissions unchanged. CLI/app runtimes are also separately owned. Never replace
+an application-managed executor to match a standalone CLI release number.
 
-Keep stable-release discovery and date-keyed gain collection on the existing
-registered cadence. `tools.py plan-rtk-update` reuses the current source collection
-and checks the stable tag, every pinned platform asset and exact digest/URL. It
-never approves, installs or changes the version lock. Missing evidence, duplicate
-assets, changed same-version assets and older releases block automatic adoption.
-Review breaking changes before updating pins; use the owned installer, verify,
-affected runtime checks and rollback on failure. Same versions are not reinstalled.
-Count any affected raw/filtered comparison separately as validation. A changed RTK/CLI version, filter or relevant new failure
-triggers only the affected existing checks during approved work, before relying
-on the changed path. Do not reinstall an unchanged release or run probes at every
-task start. Use native output immediately if compression hides needed evidence.
-Confirm release compatibility before installation; stable releases may change
-argument handling. Preserve existing hooks, trust, permissions and tool selection.
-A task-observed failure is handled in that task, then summarized for scheduled review;
-this does not install an event listener or authorize unrelated project commands.
-
-## Per-invocation routing preference — 2026-10-08
-
-This user explicitly wants RTK used whenever an eligible diagnostic runs. Resolve
-`CODEX_HOME/bin/trace_rtk.py` once per task and pass the diagnostic arguments to
-that runner, retaining the project working directory. In Python orchestration,
-invoke Python plus that runner rather than hiding a bare diagnostic in
-`subprocess`. PowerShell environment setup does not itself need filtering. Read
-code files and structured JSON directly; never use `rtk proxy` to pretend that
-an unsupported command was compressed. A native hook recognizes only supported
-command forms and does not recursively inspect Python or PowerShell programs.
-
-An existing opt-in hook may also rewrite simple diagnostics automatically. Its
-configuration, trust and legacy binary are separate from the verified runner;
-keep their evidence separate. The existing hook can be restricted with RTK's
-user-owned `[hooks].exclude_commands` setting for mutating command families.
-Review and test those exclusions against every installed hook binary before
-relying on them. Exclusions narrow rewriting; they are not an execution permission
-policy. For exact native commands use the verified executable directly, and
-retain the platform's normal approval and sandbox checks. Changing a hook
-definition still needs official `/hooks` review; never edit its trust hash.
-
-Sources: [RTK hook exclusions](https://github.com/rtk-ai/rtk/blob/v0.51.0/src/core/config.rs),
-[rewrite prefix matching](https://github.com/rtk-ai/rtk/blob/v0.51.0/src/discover/registry.rs),
-[Codex hook behavior and trust](https://learn.chatgpt.com/docs/hooks).
+Sources reviewed 2026-10-25: [RTK 1.0.1](https://github.com/rtk-ai/rtk/releases/tag/v1.0.1),
+[edition build](https://github.com/rtk-ai/rtk/blob/v1.0.1/Cargo.toml),
+[tracking schema](https://github.com/rtk-ai/rtk/blob/v1.0.1/src/core/tracking.rs),
+[Codex integration](https://github.com/rtk-ai/rtk/blob/v1.0.1/hooks/codex/README.md),
+[OpenAI hooks](https://learn.chatgpt.com/docs/hooks).

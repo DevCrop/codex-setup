@@ -69,14 +69,16 @@ def plan_update(state, lock=None):
             'source_sha256': row['sha256'], 'limit': 'Candidate identity only; no semantic approval or installation.'}
 
 
-def target_name(system=None, machine=None):
+def target_name(system=None, machine=None, edition='standard'):
     system, machine = system or platform.system(), (machine or platform.machine()).lower()
     arch = {'amd64': 'x86_64', 'x86_64': 'x86_64', 'arm64': 'aarch64', 'aarch64': 'aarch64'}.get(machine)
     suffix = {'Windows': 'pc-windows-msvc.zip', 'Darwin': 'apple-darwin.tar.gz',
               'Linux': 'unknown-linux-musl.tar.gz' if arch == 'x86_64' else 'unknown-linux-gnu.tar.gz'}.get(system)
     if not arch or not suffix or (system == 'Windows' and arch != 'x86_64'):
         raise ValueError('Unsupported RTK platform')
-    return f'rtk-{arch}-{suffix}'
+    if edition not in ('standard', 'oss'):
+        raise ValueError('Unsupported RTK edition')
+    return f'rtk-{"oss-" if edition == "oss" else ""}{arch}-{suffix}'
 
 
 def extract(data, archive_name):
@@ -109,7 +111,7 @@ def download(url):
 
 def install(state, lock=None, fetcher=download, verify_binary=True):
     lock = lock or read_json(ROOT / 'versions.lock.json')['tools']['rtk']
-    name = target_name()
+    name = target_name(edition=lock.get('edition', 'standard'))
     asset = lock['assets'][name]
     binary = safe(state, 'tools/rtk/' + ('rtk.exe' if os.name == 'nt' else 'rtk'))
     record_path = safe(state, 'tools-installed.json')
@@ -142,10 +144,13 @@ def install(state, lock=None, fetcher=download, verify_binary=True):
                 raise ValueError('Unexpected RTK version')
         previous_backup = backup.read_bytes() if backup.exists() else None
         new = {'version': lock['version'], 'path': str(binary),
+               'edition': lock.get('edition', 'standard'),
                'sha256': hashlib.sha256(payload).hexdigest(),
                'asset_name': name, 'asset_sha256': asset['sha256'],
                'previous': {k: v for k, v in owned.items() if k != 'previous'} or None}
         record['rtk'] = new
+        if lock.get('edition') == 'oss':
+            record['rtk_history'] = {'scope': 'trace-private'}
         try:
             if old is not None:
                 atomic(backup, old)
@@ -251,7 +256,7 @@ def main():
         checked = verify(state)
         if checked['status'] != 'pass' or not args.argv:
             raise ValueError('Install RTK first; supply its command arguments')
-        env = runtime_env()
+        env = runtime_env(state=state)
         validate_command(args.argv)
         return subprocess.call([checked['path'], *args.argv], env=env)
     with deployment_lock(state):

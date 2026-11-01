@@ -325,7 +325,17 @@
       },
       "snapshot": null,
       "applicable_files": [],
-      "monitor": false
+      "monitor": false,
+      "latest_relevant_review": {
+        "date": "2026-10-25",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "sections": [
+          "Configuration precedence"
+        ],
+        "claim": "Saved configuration is distinct from observed session overrides; preserve selected model, reasoning and permissions.",
+        "scope": "Relevant sections only; historical snapshot bytes preserved; TRACE health cadence and backup policy are local human-authorized choices."
+      }
     },
     {
       "id": "R12",
@@ -1129,15 +1139,15 @@
       },
       "monitor": true,
       "latest_relevant_review": {
-        "date": "2026-10-07",
+        "date": "2026-10-25",
         "retrieval": "official-web-page",
         "status": "relevant-body-reviewed",
         "sections": [
           "Local scheduled tasks",
           "Manage scheduled tasks"
         ],
-        "claim": "Local files require host/app availability; saved prompts preserve recurring work; future executions are not guaranteed.",
-        "scope": "Relevant sections only; original snapshot bytes preserved"
+        "claim": "Extend the existing host-bound automation without duplicating its schedule; execution requires local host/app availability.",
+        "scope": "Relevant sections only; historical snapshot bytes preserved; TRACE health cadence and backup policy are local human-authorized choices."
       },
       "applicable_files": [
         "docs/operations.md",
@@ -1313,6 +1323,189 @@
         "scripts/rtk_dashboard.py",
         "templates/reports/rtk-efficiency.template.html",
         "docs/rtk-live-dashboard.md"
+      ]
+    },
+    {
+      "id": "R56",
+      "url": "https://learn.chatgpt.com/docs/extend/mcp",
+      "canonical_url": "https://learn.chatgpt.com/docs/extend/mcp",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Health checks distinguish stdio launch settings and HTTP authentication; standalone probes do not establish desktop OAuth session state. No MCP tools are called.",
+      "review_status": "relevant-sections-reviewed-2026-10-25",
+      "body_fetched": true,
+      "monitor": true,
+      "applicable_files": [
+        "scripts/maintenance_health.py",
+        "docs/operations.md",
+        "templates/maintenance-prompt.md"
+      ],
+      "latest_relevant_review": {
+        "date": "2026-10-25",
+        "retrieval": "official-web-page",
+        "status": "relevant-body-reviewed",
+        "sections": [
+          "STDIO servers",
+          "Streamable HTTP servers",
+          "Authentication"
+        ],
+        "claim": "Configured command/args/env/cwd and HTTP URL/authentication have different launch and credential requirements.",
+        "scope": "Relevant sections only; initialize/list-only probes and backup restrictions are TRACE policy."
+      }
+    },
+    {
+      "id": "R57",
+      "url": "https://api.github.com/repos/dietrichgebert/ponytail/releases/latest",
+      "canonical_url": "https://api.github.com/repos/dietrichgebert/ponytail/releases/latest",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "adopted",
+      "reason": "Track stable Ponytail tags as well as repository changes; pin reviewed commit and skill bytes together.",
+      "review_status": "relevant-sections-reviewed-2026-10-25",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": true,
+      "applicable_files": [
+        "scripts/software_updates.py",
+        "docs/software-updates.md",
+        "templates/maintenance-prompt.md"
+      ]
+    },
+    {
+      "id": "R58",
+      "url": "https://learn.chatgpt.com/docs/cli/reference",
+      "canonical_url": "https://learn.chatgpt.com/docs/cli/reference",
+      "origin": "implementation",
+      "authority": "official-vendor",
+      "disposition": "adopted",
+      "reason": "Supported plugin add/list and Git marketplace upgrade have different scopes.",
+      "review_status": "relevant-sections-reviewed-2026-10-25",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": true,
+      "applicable_files": [
+        "scripts/software_updates.py",
+        "docs/software-updates.md",
+        "templates/maintenance-prompt.md"
+      ]
+    },
+    {
+      "id": "R59",
+      "url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/AGENTS.md",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/AGENTS.md",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "context",
+      "reason": "Native accessibility tool scope; web automation is directed to browser-specific tooling.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R60",
+      "url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/docs/json-output.md",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/docs/json-output.md",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "adopted",
+      "reason": "Delivery uncertainty and unsafe replay remain distinct from not-delivered technical initialization failure.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R61",
+      "url": "https://github.com/openai/codex/issues/43373",
+      "canonical_url": "https://github.com/openai/codex/issues/43373",
+      "origin": "implementation",
+      "authority": "user-primary-report",
+      "disposition": "context",
+      "reason": "Dated Windows initialization symptom report; runtime cause and current-version resolution are not established.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R62",
+      "url": "https://github.com/openai/codex/issues/51524",
+      "canonical_url": "https://github.com/openai/codex/issues/51524",
+      "origin": "implementation",
+      "authority": "user-primary-report",
+      "disposition": "context",
+      "reason": "Dated Windows URL-confidence policy-stop report; not evidence of transport failure or permission to substitute a driver.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R63",
+      "url": "https://github.com/vercel-labs/agent-desktop/issues/395",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/issues/395",
+      "origin": "implementation",
+      "authority": "user-primary-report",
+      "disposition": "context",
+      "reason": "Windows Chromium input investigation; tool version is unspecified and reported web-event concerns are not locally reproduced.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R64",
+      "url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/skills/agent-desktop-windows/references/chromium-and-electron.md",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/skills/agent-desktop-windows/references/chromium-and-electron.md",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "context",
+      "reason": "Version-specific accessibility settle, depth and provider limitations; do not infer generic transport failure.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R65",
+      "url": "https://github.com/vercel-labs/agent-desktop/pull/400",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/pull/400",
+      "origin": "implementation",
+      "authority": "user-proposed-change",
+      "disposition": "context",
+      "reason": "Open Windows background typing proposal on 2026-11-01; not a merged/stable/locally validated fix and not applied.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md"
       ]
     }
   ]

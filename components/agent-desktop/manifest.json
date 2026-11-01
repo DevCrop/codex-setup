@@ -1,0 +1,20 @@
+{
+  "schema_version": 2,
+  "version": "1.1.0",
+  "agent_settings": {},
+  "files": [
+    {"source": "SKILL.md", "target": "SKILL.md"},
+    {"source": "scripts/desktop.py", "target": "scripts/desktop.py"},
+    {"source": "scripts/fallback.py", "target": "scripts/fallback.py"},
+    {"source": "references/fallback.md", "target": "references/fallback.md"}
+  ],
+  "upstream": {
+    "repository": "https://github.com/vercel-labs/agent-desktop",
+    "reviewed_commit": "9eb9b296192fcb70bda25e918cd6dd66abfa3d0d",
+    "version": "1.0.2",
+    "platform": "x86_64-pc-windows-msvc",
+    "url": "https://github.com/vercel-labs/agent-desktop/releases/download/v1.0.2/agent-desktop-v1.0.2-x86_64-pc-windows-msvc.tar.gz",
+    "archive_sha256": "2186c76e7df197c0e67365e45d36d869f74714c56bb8a73817e2a66f3e18e222",
+    "binary_sha256": "409e58cbdd6aed47e29771ffa60bc122a9843505a227af488cded85215943988"
+  }
+}

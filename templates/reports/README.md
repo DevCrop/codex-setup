@@ -1,5 +1,13 @@
 # 공유 가능한 보고 UI 템플릿
 
+현재 Codex 화면의 진입점은 [Codex 대시보드](../../docs/codex-dashboard.md)다.
+`codex-dashboard.template.html`과 `codex-dashboard.css`를 사용하며, 기존 Claude
+화면과 서버는 수정하지 않는다. 폰트 정본은 이 폴더의 `assets`에 한 벌만 둔다.
+호스트의 옛 `overview.html`·`rtk-status.html`을 다시 생성하지 않는다.
+
+아래 RTK 단독 뷰어와 보고 데이터 계약은 기존 선택형 기능을 위한 자료다.
+새 Codex 화면 설치 때문에 별도 HTML 사본을 만들 필요는 없다.
+
 노션처럼 담백한 사이드바·차트·배지·근거 카드 UI와 Pretendard 폰트를 제공한다.
 현재 호스트의 실제 집계·개인 개선 기록·스크린샷은 포함하지 않는다.
 이 파일들은 설치 manifest 대상이 아니며 `setup.py`가 각 PC의 보고서를 생성하거나

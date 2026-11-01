@@ -86,6 +86,16 @@ class CollectorTests(unittest.TestCase):
         c.run = self.runner
         self.assertTrue(c.snapshot()['live']['enabled'])
 
+    def test_private_history_is_labelled_without_adding_shared_baseline(self):
+        (self.root/'tools-installed.json').write_text(json.dumps({'rtk_history':{'scope':'trace-private'}}),encoding='utf-8')
+        saved=json.loads(self.baseline.read_text())
+        saved['summary']={'total_saved':999999}
+        self.baseline.write_text(json.dumps(saved),encoding='utf-8')
+        result=self.collector().snapshot()
+        self.assertEqual(result['history_scope'],'trace-private')
+        self.assertEqual(result['summary']['total_saved'],40)
+        self.assertEqual(result['probe']['checked_at'],'2026-10-08T05:25:00Z')
+
     def test_invalid_date_duplicates_and_nonfinite_counts(self):
         for change in ('date', 'duplicate', 'nan', 'bool', 'fraction'):
             self.raw = aggregate()

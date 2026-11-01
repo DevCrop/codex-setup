@@ -28,9 +28,17 @@ def local_binaries(cwd=None):
     return None
 
 
-def runtime_env(cwd=None):
+def runtime_env(cwd=None, state=None):
     env = {**os.environ, 'RTK_TELEMETRY_DISABLED':'1', 'RTK_SUPPRESS_HOOK_WARNING':'1',
            'npm_config_offline':'true', 'npm_config_yes':'false'}
+    if state is not None:
+        database = Path(state).absolute()/'tools/rtk/history.db'
+        for p in (database, *database.parents):
+            if p.is_symlink() or (p.exists() and getattr(p.lstat(),'st_file_attributes',0)&0x400):
+                if sys.platform=='darwin' and str(p) in ('/var','/tmp') and p.resolve()==Path('/private')/p.name:
+                    continue
+                raise ValueError('Linked RTK history path refused')
+        env['RTK_DB_PATH'] = str(database)
     binaries = local_binaries(cwd)
     if binaries:
         env['PATH'] = str(binaries)+os.pathsep+env.get('PATH','')
@@ -60,7 +68,7 @@ def main():
     if str(binary)!=record['path'] or hashlib.sha256(binary.read_bytes()).hexdigest()!=record['sha256']:
         raise ValueError('RTK ownership mismatch')
     validate_command(sys.argv[1:])
-    return subprocess.call([str(binary),*sys.argv[1:]],env=runtime_env())
+    return subprocess.call([str(binary),*sys.argv[1:]],env=runtime_env(state=state))
 
 
 if __name__=='__main__':

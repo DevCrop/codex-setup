@@ -1,7 +1,8 @@
-# TRACE Setup v1.3.5 — local candidate, not published
+# TRACE Setup v1.3.5 — release candidate
 
 See [v1.3.5 completion and remaining limits](docs/release-1.3.5.md). The current
-local candidate is newer than the published v1.3.4 ZIP; they are not identical.
+source candidate is newer than the published v1.3.4 ZIP; they are not identical.
+Git branch publication and a tagged ZIP release are separate states.
 
 Existing installed-component refresh and the Codex-only monitoring fields are
 documented in [software updates](docs/software-updates.md). Host authorization
@@ -65,13 +66,22 @@ upstream instructions unchanged; the global working agreement limits applicabili
 TRACE adds only `agents/openai.yaml` with implicit invocation disabled for this
 skill. Invoke `$ponytail` explicitly (or select the skill in the
 app). This retains its full upstream procedure; it does not shorten the skill.
-`setup.py` is the sole install/update/verify/remove entry point, including skills.
+`setup.py` is the install/update/verify/remove entry point for the base manifest,
+including its bundled skills. Separately requested optional components have their
+own scoped receipts and commands.
 
 The personal `computer-use-workflow` skill is deployed to the supported user skill
 root (`~/.agents/skills`, or `--personal-skills`) for use across projects. It follows
 the available official Computer Use runtime and keeps browser/native execution
 evidence separate. It is a TRACE-authored workflow, not an OpenAI-published plugin.
 See [Computer Use maintenance](docs/computer-use-maintenance.md).
+
+Optional Windows x64 native UI integration: [Codex agent-desktop](docs/agent-desktop.md).
+Install with `python -B scripts/agent_desktop.py install`, verify with its `verify`
+command, and select `$codex-agent-desktop`. This isolates Codex from Claude and
+does not alter browser safety rules or global model/settings choices.
+Confirmed pre-action initialization/transport failures can use its conditional
+one-switch recovery; policy stops and uncertain access/outcomes remain blocked.
 
 See [Ponytail usage examples](docs/skill-usage.md) for explicit selection,
 task scope, intensity and completion criteria. The English personalization source

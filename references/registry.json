@@ -1389,6 +1389,124 @@
         "docs/software-updates.md",
         "templates/maintenance-prompt.md"
       ]
+    },
+    {
+      "id": "R59",
+      "url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/AGENTS.md",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/AGENTS.md",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "context",
+      "reason": "Native accessibility tool scope; web automation is directed to browser-specific tooling.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R60",
+      "url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/docs/json-output.md",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/docs/json-output.md",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "adopted",
+      "reason": "Delivery uncertainty and unsafe replay remain distinct from not-delivered technical initialization failure.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R61",
+      "url": "https://github.com/openai/codex/issues/43373",
+      "canonical_url": "https://github.com/openai/codex/issues/43373",
+      "origin": "implementation",
+      "authority": "user-primary-report",
+      "disposition": "context",
+      "reason": "Dated Windows initialization symptom report; runtime cause and current-version resolution are not established.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R62",
+      "url": "https://github.com/openai/codex/issues/51524",
+      "canonical_url": "https://github.com/openai/codex/issues/51524",
+      "origin": "implementation",
+      "authority": "user-primary-report",
+      "disposition": "context",
+      "reason": "Dated Windows URL-confidence policy-stop report; not evidence of transport failure or permission to substitute a driver.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R63",
+      "url": "https://github.com/vercel-labs/agent-desktop/issues/395",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/issues/395",
+      "origin": "implementation",
+      "authority": "user-primary-report",
+      "disposition": "context",
+      "reason": "Windows Chromium input investigation; tool version is unspecified and reported web-event concerns are not locally reproduced.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R64",
+      "url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/skills/agent-desktop-windows/references/chromium-and-electron.md",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/blob/v1.0.2/skills/agent-desktop-windows/references/chromium-and-electron.md",
+      "origin": "implementation",
+      "authority": "project-primary",
+      "disposition": "context",
+      "reason": "Version-specific accessibility settle, depth and provider limitations; do not infer generic transport failure.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md",
+        "components/agent-desktop/references/fallback.md"
+      ]
+    },
+    {
+      "id": "R65",
+      "url": "https://github.com/vercel-labs/agent-desktop/pull/400",
+      "canonical_url": "https://github.com/vercel-labs/agent-desktop/pull/400",
+      "origin": "implementation",
+      "authority": "user-proposed-change",
+      "disposition": "context",
+      "reason": "Open Windows background typing proposal on 2026-11-01; not a merged/stable/locally validated fix and not applied.",
+      "review_status": "relevant-sections-reviewed-2026-11-01",
+      "body_fetched": true,
+      "snapshot": null,
+      "monitor": false,
+      "applicable_files": [
+        "docs/ui-error-routing.md"
+      ]
     }
   ]
 }
